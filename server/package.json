@@ -27,7 +27,6 @@
     "node": "14"
   },
   "author": "Julian Hecker",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/barbago/barbago-api/issues"
   },
