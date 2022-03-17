@@ -109,7 +109,11 @@ typings/
 # TernJS port file
 .tern-port
 
+# Expo cache
+.expo/
+
 # Compiled Files
 dist/
 lib/
 docs/
+web-build/
