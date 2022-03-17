@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    // project options
+    "lib": [],
+    "outDir": "lib",
+    "rootDir": "src",
+    "target": "es5",
+    // module resolution
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    // source maps
+    "sourceMap": true,
+    // strict checking and linting
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    // Experimental (used for dependency injection)
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "compileOnSave": true,
+  "exclude": ["node_modules", "test", "**/*.[spec|test].ts"],
+  "include": ["src/**/*"]
+}

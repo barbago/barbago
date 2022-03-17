@@ -1,0 +1,27 @@
+{
+  "projects": {
+    "dev": "barbago-dev",
+    "prod": "barbago-prod"
+  },
+  "targets": {
+    "barbago-dev": {
+      "hosting": {
+        "app-dev": [
+          "barbago-dev"
+        ],
+        "api-dev": [
+          "api-barbago-dev"
+        ],
+        "api-docs": [
+          "docs-barbago-dev"
+        ],
+        "site": [
+          "site-barbago-dev"
+        ]
+      }
+    },
+    "barbago-prod": {
+      "hosting": {}
+    }
+  }
+}

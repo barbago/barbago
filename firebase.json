@@ -1,0 +1,50 @@
+{
+  "emulators": {
+    "hosting": {
+      "port": 5000,
+      "host": "0.0.0.0"
+    }
+  },
+  "functions": {
+    "source": "./",
+    "predeploy": ["npm run build --prefix server"]
+  },
+  "hosting": [
+    {
+      "target": "app-dev",
+      "public": "app/web-build",
+      "predeploy": ["npm run build --prefix app"]
+    },
+    {
+      "target": "api-dev",
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "api"
+        }
+      ]
+    },
+    {
+      "target": "api-docs",
+      "public": "server/docs",
+      "predeploy": ["npm run docs --prefix server"],
+      "rewrites": [
+        {
+          "source": "/",
+          "destination": "/index.html"
+        },
+        {
+          "source": "/api/**",
+          "function": "api"
+        }
+      ],
+      "cleanUrls": "true",
+      "ignore": ["**/.*", "**/node_modules/**"],
+      "trailingSlash": false
+    },
+    {
+      "target": "site",
+      "public": "site"
+    }
+  ]
+}
