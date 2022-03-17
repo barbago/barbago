@@ -16,7 +16,7 @@ export function isRole(role: Role) {
       return next();
     }
     throw httpError(403);
-  }
+  };
 }
 
 export const isRoleAdmin = isRole(Role.ADMIN);
