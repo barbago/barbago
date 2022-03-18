@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "Barbago Mobile",
+    "slug": "barbago-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icons/icon.png",
+    "scheme": "barbago",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/icons/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you choose a profile picture and upload testimonials or service images."
+        }
+      ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.barbagoapp.mobile",
+      "supportsTablet": true,
+      "usesAppleSignIn": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/icons/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": ""
+        }
+      },
+      "package": "com.barbagoapp.mobile"
+    },
+    "web": {
+      "build": {
+        "babel": {
+          "include": [
+            "react-leaflet"
+          ]
+        }
+      },
+      "favicon": "./src/assets/icons/favicon.png"
+    },
+    "description": "",
+    "githubUrl": "https://github.com/barbago/barago-mobile"
+  }
+}
