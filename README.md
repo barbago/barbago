@@ -8,17 +8,17 @@ This project is organized as a monorepository, with all code pertaining to Barba
 
 ### Functions Directory
 
-Contains Firebase functions and Express app. Deploys to [https://api.barbago.app].
+Contains Firebase functions and Express app. Deploys to <https://api.barbago.app>.
 
-Also contains a `/docs` directory for API Documentation which deploys to [https://docs.barbago.app].
+Also contains a `/docs` directory for API Documentation which deploys to <https://docs.barbago.app>.
 
 ### Site Directory
 
-Contains static HTML for deployment. Deploys to [https://site.barbago.app].
+Contains static HTML for deployment. Deploys to <https://site.barbago.app>.
 
 ### UI Directory
 
-All the code for the React Native project is located here. Deploys to [https://barbago.app].
+All the code for the React Native project is located here. Deploys to <https://barbago.app>.
 
 ## Deployment
 
