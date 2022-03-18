@@ -12,8 +12,14 @@
   "hosting": [
     {
       "target": "app-dev",
-      "public": "app/web-build",
-      "predeploy": ["npm run build --prefix ui"]
+      "public": "ui/web-build",
+      "predeploy": ["npm run build --prefix ui"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     },
     {
       "target": "api-dev",
@@ -26,16 +32,12 @@
     },
     {
       "target": "api-docs",
-      "public": "server/docs",
+      "public": "functions/docs",
       "predeploy": ["npm run docs --prefix functions"],
       "rewrites": [
         {
-          "source": "/",
+          "source": "**",
           "destination": "/index.html"
-        },
-        {
-          "source": "/api/**",
-          "function": "api"
         }
       ],
       "cleanUrls": "true",
