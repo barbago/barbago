@@ -2,7 +2,7 @@
   "name": "barbago",
   "version": "1.0.0",
   "description": "Monorepo for everything Barbago",
-  "main": "server/src/index.ts",
+  "main": "",
   "scripts": {},
   "repository": {
     "type": "git",

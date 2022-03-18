@@ -6,14 +6,14 @@
     }
   },
   "functions": {
-    "source": "./",
-    "predeploy": ["npm run build --prefix server"]
+    "source": "functions",
+    "predeploy": ["npm run build --prefix functions"]
   },
   "hosting": [
     {
       "target": "app-dev",
       "public": "app/web-build",
-      "predeploy": ["npm run build --prefix app"]
+      "predeploy": ["npm run build --prefix ui"]
     },
     {
       "target": "api-dev",
@@ -27,7 +27,7 @@
     {
       "target": "api-docs",
       "public": "server/docs",
-      "predeploy": ["npm run docs --prefix server"],
+      "predeploy": ["npm run docs --prefix functions"],
       "rewrites": [
         {
           "source": "/",

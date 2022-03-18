@@ -5,7 +5,7 @@ import {
   getConnection,
 } from 'typeorm';
 
-import { config, environment } from './';
+import { config, environment } from '.';
 import { entities } from '../entities';
 
 const { host, port, name, username, password } = config;
