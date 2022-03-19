@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { maybeCompleteAuthSession } from 'expo-web-browser';
 import { useIdTokenAuthRequest } from 'expo-auth-session/providers/google';
+import { googleConfig } from '../../config';
 import { useAuth } from '../../hooks';
 
 maybeCompleteAuthSession();
@@ -10,8 +11,7 @@ maybeCompleteAuthSession();
 export function GoogleAuth() {
   const { signInGoogle } = useAuth();
   const [request, response, promptAsync] = useIdTokenAuthRequest({
-    clientId:
-      '98881312343-921jrliba5991ah5g3pimfg9k3e2029j.apps.googleusercontent.com',
+    clientId: googleConfig.clientId
   });
 
   useEffect(() => {
