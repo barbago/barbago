@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import MapView, { EdgePadding, Region } from 'react-native-maps';
+import { windowHeight, windowWidth } from '../../../config';
 import { useColorScheme } from '../../../hooks';
 import { isIOS } from '../../../utils';
 
@@ -38,8 +39,8 @@ export const Map = () => {
 
 const styles = StyleSheet.create({
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: windowWidth,
+    height: windowHeight
   },
 });
 

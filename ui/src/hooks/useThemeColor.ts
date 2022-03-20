@@ -1,9 +1,9 @@
-import { Colors } from '../config';
+import { colors } from '../config';
 import { useColorScheme } from './useColorScheme';
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
+  colorName: keyof typeof colors.light & keyof typeof colors.dark,
 ) {
   const theme = useColorScheme();
   const colorFromProps = props[theme];
@@ -11,6 +11,6 @@ export function useThemeColor(
   if (colorFromProps) {
     return colorFromProps;
   } else {
-    return Colors[theme][colorName];
+    return colors[theme][colorName];
   }
 }

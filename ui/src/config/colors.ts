@@ -40,11 +40,11 @@ export const light = {
     ...PaperDefaultTheme.colors,
     ...NavDefaultTheme.colors,
     primary: '#ff0000',
-    accent: '#1A1A1A',
+    accent: '#1a1a1a',
   },
 };
 
-export const Colors = {
+export const colors = {
   light,
   dark,
 };
