@@ -6,7 +6,6 @@
   - https://www.npmjs.com/package/react-error-boundary
   - https://www.npmjs.com/package/react-native-error-boundary
 
-Use firebase to host frontend pages like privacy policy and TOS. Also host a copy of web-build just to have it. Can do something like barbagoapp.com/app
 
 Login screen, allow barbers to sign up
 Find barber, barber detail, checkout flow

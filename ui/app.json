@@ -27,7 +27,7 @@
       ]
     ],
     "ios": {
-      "bundleIdentifier": "com.barbagoapp.mobile",
+      "bundleIdentifier": "app.barbago.mobile",
       "supportsTablet": true,
       "usesAppleSignIn": true
     },
@@ -41,7 +41,7 @@
           "apiKey": ""
         }
       },
-      "package": "com.barbagoapp.mobile"
+      "package": "app.barbago.mobile"
     },
     "web": {
       "build": {
