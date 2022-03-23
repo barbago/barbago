@@ -1,3 +1,4 @@
+export * from './axios';
 export * from './colors';
 export * from './consts';
 export * from './firebase';

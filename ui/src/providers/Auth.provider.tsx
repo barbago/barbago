@@ -21,10 +21,10 @@ import {
 } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 
-import { auth } from '../config';
-import { authService } from '../services';
+import { api, auth } from '../config';
 
 const handleFirebaseError = (error: FirebaseError) => {
+  // todo: fix this mess
   let { message } = error;
 
   switch (error.code) {
@@ -57,10 +57,7 @@ const handleFirebaseError = (error: FirebaseError) => {
 const signInCredential = async (credential: AuthCredential) => {
   try {
     await signInWithCredential(auth, credential);
-    // @ts-ignore credential has hidden idToken
-    // authService.setToken(credential.idToken);
   } catch (err: any) {
-    // authService.setToken('');
     if (err instanceof FirebaseError) handleFirebaseError(err);
     else console.error(err);
   }
@@ -172,9 +169,17 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     setIsLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      const roles =
-        ((await user?.getIdTokenResult())?.claims?.roles as Role[]) ??
-        [];
+      const tokenResult = await user?.getIdTokenResult();
+
+      const roles = (tokenResult?.claims?.roles as Role[]) ?? [];
+
+      // Modify the base class's authorization header once token exists
+      (api.defaults.headers as any).authorization = tokenResult
+        ? `Bearer ${tokenResult.token}`
+        : undefined;
+
+      console.log(api.defaults.headers);
+
       setUser(user);
       setRoles(roles);
       setIsLoading(false);
