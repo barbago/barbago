@@ -178,8 +178,6 @@ export const AuthProvider: React.FC = ({ children }) => {
         ? `Bearer ${tokenResult.token}`
         : undefined;
 
-      console.log(api.defaults.headers);
-
       setUser(user);
       setRoles(roles);
       setIsLoading(false);
