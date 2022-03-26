@@ -4,16 +4,11 @@ import { Screen, Text } from '../../components';
 import { RootTabScreenProps } from '../../navigation';
 import { GoogleAuth, NoAuth, SignOut } from '../../components';
 import { useLazyGetUsersQuery } from '../../store/api/user.api';
-import { api } from '../../store/api';
 
 export const HomePage = ({
   navigation,
 }: RootTabScreenProps<'Home'>) => {
   const [trigger, users] = useLazyGetUsersQuery();
-
-  useEffect(() => {
-    console.log(users);
-  }, [api, users]);
 
   return (
     <Screen>
