@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import {
   useDispatch,
   TypedUseSelectorHook,
@@ -6,6 +7,7 @@ import {
 } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { api } from './api';
 
 import { authReducer } from './auth';
 import { searchReducer } from './search';
@@ -15,12 +17,16 @@ const reducer = {
   auth: authReducer,
   search: searchReducer,
   settings: settingsReducer,
+  [api.reducerPath]: api.reducer,
 };
 
-// rtk auto configures thunk, logger, dev tools
 export const store = configureStore({
   reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type AppDispatch = typeof store.dispatch;
 
