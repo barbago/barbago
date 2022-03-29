@@ -8,3 +8,5 @@ export const {
   firebase: firebaseConfig,
   google: googleConfig,
 } = constants;
+
+export const apiUrl = __DEV__ ? 'http://localhost:3000' : 'https://dev.api.barbago.app';
