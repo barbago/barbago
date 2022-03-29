@@ -7,7 +7,6 @@
     "start": "npm run shell",
     "build": "npm run clean && tsc",
     "build:watch": "tsc --watch --preserveWatchOutput",
-    "config": "sh ./scripts/config.sh",
     "clean": "rm -rf ./lib ./docs",
     "dev": "run-p build:watch docs:watch serve",
     "docs": "apidoc -f \".*.routes.ts$\" -i src -o docs",

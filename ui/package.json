@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "start": "expo start --https",
+    "start": "expo start --web --https",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

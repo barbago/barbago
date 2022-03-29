@@ -2,8 +2,18 @@
   "name": "barbago",
   "version": "1.0.0",
   "description": "Monorepo for everything Barbago",
-  "main": "",
-  "scripts": {},
+  "main": "package.json",
+  "scripts": {
+    "start": "run-p start:*",
+    "build": "run-p build:*",
+    "start:ui": "npm start --prefix ui",
+    "start:functions": "npm run dev --prefix functions",
+    "build:ui": "npm run build --prefix ui",
+    "build:functions": "npm run build --prefix functions",
+    "deploy:ui": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy": "run-p deploy:*"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/barbago/barbago.git"
@@ -14,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/barbago/barbago/issues"
   },
-  "homepage": "https://github.com/barbago/barbago#readme"
+  "homepage": "https://github.com/barbago/barbago#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
