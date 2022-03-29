@@ -7,8 +7,8 @@ import {
 } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { api } from './api';
 
+import { api } from './api';
 import { authReducer } from './auth';
 import { searchReducer } from './search';
 import { settingsReducer } from './settings';
