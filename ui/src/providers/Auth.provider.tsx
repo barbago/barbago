@@ -21,7 +21,8 @@ import {
 } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 
-import { http, auth } from '../config';
+import { auth } from '../config';
+import { setToken, store } from '../store';
 
 const handleFirebaseError = (error: FirebaseError) => {
   // todo: fix this mess
@@ -173,10 +174,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       const roles = (tokenResult?.claims?.roles as Role[]) ?? [];
 
-      // Modify the base class's authorization header once token exists
-      (http.defaults.headers as any).authorization = tokenResult
-        ? `Bearer ${tokenResult.token}`
-        : undefined;
+      store.dispatch(setToken(tokenResult?.token ?? null));
 
       setUser(user);
       setRoles(roles);
