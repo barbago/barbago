@@ -9,4 +9,6 @@ export const {
   google: googleConfig,
 } = constants;
 
-export const apiUrl = __DEV__ ? 'http://localhost:3000' : 'https://dev.api.barbago.app';
+export const apiUrl = __DEV__
+  ? 'http://localhost:5001/barbago-dev/us-central1/api'
+  : 'https://dev.api.barbago.app';
