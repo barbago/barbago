@@ -5,14 +5,17 @@
   "main": "package.json",
   "scripts": {
     "start": "run-p start:*",
+    "postinstall": "run-p install:*",
     "build": "run-p build:*",
+    "deploy": "run-p deploy:*",
     "start:ui": "npm start --prefix ui",
     "start:functions": "npm run dev --prefix functions",
+    "install:ui": "cd ui && npm install",
+    "install:functions": "cd functions && npm install",
     "build:ui": "npm run build --prefix ui",
     "build:functions": "npm run build --prefix functions",
     "deploy:ui": "firebase deploy --only hosting",
-    "deploy:functions": "firebase deploy --only functions",
-    "deploy": "run-p deploy:*"
+    "deploy:functions": "firebase deploy --only functions"
   },
   "repository": {
     "type": "git",
