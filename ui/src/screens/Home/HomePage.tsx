@@ -11,7 +11,7 @@ export const HomePage = ({
   const [trigger, data] = userApi.useLazyFetchUserQuery();
   return (
     <Screen>
-      <Text>Home Page</Text>
+      <Text>AUTOMATICALLY DEPLOYED HOME PAGE</Text>
       <GoogleAuth />
       <NoAuth />
       <SignOut />
