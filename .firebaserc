@@ -1,7 +1,8 @@
 {
   "projects": {
     "dev": "barbago-dev",
-    "prod": "barbago-prod"
+    "prod": "barbago-prod",
+    "default": "barbago-dev"
   },
   "targets": {
     "barbago-dev": {
