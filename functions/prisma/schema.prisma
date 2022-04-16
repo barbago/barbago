@@ -1,0 +1,167 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uid           String        @id
+  email         String        @unique
+  name          String
+  image_url     String?
+  phone         String?
+  settings      Json?
+  referral_code String?
+  client        Client?
+  vendor        Vendor?
+  contact_forms ContactForm[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+}
+
+model Client {
+  uid       String    @id
+  user      User      @relation(fields: [uid], references: [uid])
+  bookings  Booking[]
+  reviews   Review[]
+  favorites Listing[] @relation("Favorite")
+  listings  Listing[] @relation("Previous")
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+}
+
+model Vendor {
+  uid      String    @id
+  // Barber, Sr. Engineer, MA, PhD, etc
+  title    String?
+  user     User      @relation(fields: [uid], references: [uid])
+  listings Listing[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+}
+
+model Listing {
+  id         Int            @id @default(autoincrement())
+  link       String         @unique // editable profile link
+  // Location
+  // availability
+  // Address
+  // Hours
+  vendor_uid String
+  vendor     Vendor         @relation(fields: [vendor_uid], references: [uid])
+  favorited  Client[]       @relation("Favorite")
+  clients    Client[]       @relation("Previous")
+  images     ListingImage[]
+  reviews    Review[]
+  services   Service[]
+  bookings   Booking[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+}
+
+model ListingImage {
+  id         Int     @id @default(autoincrement())
+  image_url  String
+  caption    String?
+  listing_id Int
+  listing    Listing @relation(fields: [listing_id], references: [id])
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+}
+
+model Review {
+  id         Int     @id @default(autoincrement())
+  rating     Int
+  content    String?
+  image_url  String?
+  client_uid String
+  listing_id Int
+  client     Client  @relation(fields: [client_uid], references: [uid])
+  listing    Listing @relation(fields: [listing_id], references: [id])
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+}
+
+model Service {
+  id           Int       @id @default(autoincrement())
+  name         String
+  price        Float
+  duration     String?
+  description  String?
+  is_available Boolean
+  listing_id   Int
+  listing      Listing   @relation(fields: [listing_id], references: [id])
+  bookings     Booking[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+}
+
+model Booking {
+  id     Int           @id @default(autoincrement())
+  status BookingStatus @default(requested)
+
+  price      Float
+  time       DateTime
+  // payment type how?
+  client_uid String
+  listing_id Int
+  client     Client    @relation(fields: [client_uid], references: [uid])
+  listing    Listing   @relation(fields: [listing_id], references: [id])
+  services   Service[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+}
+
+model ContactForm {
+  id      Int     @id @default(autoincrement())
+  email   String
+  subject String
+  message String
+  uid     String?
+  user    User?   @relation(fields: [uid], references: [uid])
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+}
+
+// Vendor Bank Info
+// Client Payment Details
+// Reported Users / Profiles
+
+enum BookingStatus {
+  requested
+  rejected
+  canceled
+  accepted
+  confirmed
+  no_showed
+}
