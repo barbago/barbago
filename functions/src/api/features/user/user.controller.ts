@@ -1,5 +1,9 @@
 import { Router } from 'express';
+import asyncHandler from 'express-async-handler';
+import { UserRecord } from 'firebase-functions/v1/auth';
+import httpError from 'http-errors';
 
+import { userService } from '.';
 import { isAuthenticated, isRoleAdmin } from '../../middlewares';
 
 export const userRouter = Router();
@@ -17,7 +21,23 @@ export const userRouter = Router();
  * @apiUse BearerAuth
  * @apiUse UnauthorizedError
  */
-userRouter.post('/', isAuthenticated, (req, res) => {});
+userRouter.post(
+  '/',
+  isAuthenticated,
+  asyncHandler(async (req, res) => {
+    // todo: take given, then firebase, then default params
+    // allow optional image_url, phone, settings
+    
+    let { uid, displayName: name, email } = req['user'] as UserRecord;
+    
+
+    if (!uid || !email || !name) throw httpError(400);
+
+    const user = await userService.createUser(uid, email, name);
+    await userService.createClient(user);
+    res.json(user);
+  }),
+);
 
 /**
  * @api {delete} /user/ Delete current user
@@ -31,7 +51,11 @@ userRouter.post('/', isAuthenticated, (req, res) => {});
  * @apiError UnauthorizedError
  * @apiError NotFoundError
  */
-userRouter.delete('/', isAuthenticated, (req, res) => {});
+userRouter.delete(
+  '/',
+  isAuthenticated,
+  asyncHandler(async (req, res) => {}),
+);
 
 /**
  * @api {delete} /user/:uid Delete one user by uid
@@ -47,7 +71,11 @@ userRouter.delete('/', isAuthenticated, (req, res) => {});
  * @apiUse ForbiddenError
  * @apiUse NotFoundError
  */
-userRouter.delete('/:uid', isRoleAdmin, (req, res) => {});
+userRouter.delete(
+  '/:uid',
+  isRoleAdmin,
+  asyncHandler(async (req, res) => {}),
+);
 
 /**
  * @api {get} /user/all Get all users
@@ -77,7 +105,11 @@ userRouter.delete('/:uid', isRoleAdmin, (req, res) => {});
  * @apiUse UnauthorizedError
  * @apiUse ForbiddenError
  */
-userRouter.get('/all', isRoleAdmin, (req, res) => {});
+userRouter.get(
+  '/all',
+  isRoleAdmin,
+  asyncHandler(async (req, res) => {}),
+);
 
 /**
  * @api {get} /user Get current user
@@ -101,7 +133,10 @@ userRouter.get('/all', isRoleAdmin, (req, res) => {});
  * @apiUse BearerAuth
  * @apiUse UnauthorizedError
  */
-userRouter.get('/', (req, res) => {});
+userRouter.get(
+  '/',
+  asyncHandler(async (req, res) => {}),
+);
 
 /**
  * @api {get} /user/:uid Get one user by its uid
@@ -116,7 +151,11 @@ userRouter.get('/', (req, res) => {});
  * @apiUse UnauthorizedError
  * @apiUse ForbiddenError
  */
-userRouter.get('/:uid', isRoleAdmin, (req, res) => {});
+userRouter.get(
+  '/:uid',
+  isRoleAdmin,
+  asyncHandler(async (req, res) => {}),
+);
 
 /**
  * @api {put} /user/ Update current user
@@ -131,7 +170,11 @@ userRouter.get('/:uid', isRoleAdmin, (req, res) => {});
  * @apiUse UnauthorizedError
  * @apiUse NotFoundError
  */
-userRouter.put('/', isAuthenticated, (req, res) => {});
+userRouter.put(
+  '/',
+  isAuthenticated,
+  asyncHandler(async (req, res) => {}),
+);
 
 /**
  * @api {put} /user/:uid Update one user by id
@@ -147,4 +190,8 @@ userRouter.put('/', isAuthenticated, (req, res) => {});
  * @apiUse ForbiddenError
  * @apiUse NotFoundError
  */
-userRouter.put('/:uid', isRoleAdmin, (req, res) => {});
+userRouter.put(
+  '/:uid',
+  isRoleAdmin,
+  asyncHandler(async (req, res) => {}),
+);
