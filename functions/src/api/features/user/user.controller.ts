@@ -1,101 +1,150 @@
-import { Request, Response } from 'express';
-import asyncHandler from 'express-async-handler';
-import { UserRecord } from 'firebase-admin/lib/auth/user-record';
-import httpError from 'http-errors';
-import { Service } from 'typedi';
-import { User } from '.';
+import { Router } from 'express';
 
-import { UserService } from './user.service';
+import { isAuthenticated, isRoleAdmin } from '../../middlewares';
 
-@Service()
-export class UserController {
-  constructor(private userService: UserService) {}
+export const userRouter = Router();
 
-  public getAllUsers = asyncHandler(
-    async (req: Request, res: Response) => {
-      const limit = parseInt((req.query.limit as string) ?? '20');
-      let offset = parseInt((req.query.offset as string) ?? '0');
-      if (offset > 20) offset = 20;
+/**
+ * @api {post} /user/ Create a new user
+ * @apiBody {String} name
+ * @apiBody {String} email
+ *
+ * @apiGroup Users
+ * @apiName createUser
+ * @apiVersion 1.0.0
+ * @apiPermission Authenticated
+ *
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ */
+userRouter.post('/', isAuthenticated, (req, res) => {});
 
-      const users = await this.userService.getAllUsers(limit, offset);
-      res.json(users);
-    },
-  );
+/**
+ * @api {delete} /user/ Delete current user
+ *
+ * @apiGroup Users
+ * @apiName deleteCurrentUser
+ * @apiVersion 1.0.0
+ * @apiPermission Current User
+ *
+ * @apiUse BearerAuth
+ * @apiError UnauthorizedError
+ * @apiError NotFoundError
+ */
+userRouter.delete('/', isAuthenticated, (req, res) => {});
 
-  public getCurrentUser = asyncHandler(
-    async (req: Request, res: Response) => {
-      const user = req['user'] as UserRecord;
-      if (!user) throw httpError(401);
-      const found = await this.userService.getUser(user.uid);
-      if (!found) throw httpError(404);
-      res.json(found);
-    },
-  );
+/**
+ * @api {delete} /user/:uid Delete one user by uid
+ * @apiParam {String} uid Firebase UID
+ *
+ * @apiGroup Users
+ * @apiName deleteUserByUid
+ * @apiVersion 1.0.0
+ * @apiPermission Admin
+ *
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ * @apiUse ForbiddenError
+ * @apiUse NotFoundError
+ */
+userRouter.delete('/:uid', isRoleAdmin, (req, res) => {});
 
-  public getUserById = asyncHandler(
-    async (req: Request, res: Response) => {
-      const { uid } = req.params;
-      const found = await this.userService.getUser(uid);
-      if (!found) throw httpError(404);
-      res.json(found);
-    },
-  );
+/**
+ * @api {get} /user/all Get all users
+ * @apiQuery {Number} [offset=0] Starting item number
+ * @apiQuery {Number} [limit=20] Number of items returned, max 20
+ *
+ * @apiGroup Users
+ * @apiName getAllUsers
+ * @apiVersion 1.0.0
+ * @apiPermission Admin
+ *
+ * @apiSuccess {Object[]} users
+ * @apiSuccess {String} users.uid
+ * @apiSuccess {String} [users.name]
+ * @apiSuccess {String} [users.email]
+ * @apiSuccessExample {json} Success response:
+ * HTTPS 200 OK
+ * [
+ *   {
+ *     "uid": "aaaaaaaaa",
+ *     "name": "aaaaaaaaa",
+ *     "email": "aa@aa.aa"
+ *   }
+ * ]
+ *
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ * @apiUse ForbiddenError
+ */
+userRouter.get('/all', isRoleAdmin, (req, res) => {});
 
-  public createUser = asyncHandler(
-    async (req: Request, res: Response) => {
-      const user = req['user'] as UserRecord;
-      const { displayName, email, uid } = user;
-      const newUser = new User(uid, displayName ?? '', email ?? '');
-      const created = await this.userService.createUser(newUser);
-      res.json(created);
-    },
-  );
+/**
+ * @api {get} /user Get current user
+ *
+ * @apiGroup Users
+ * @apiName getCurrentUser
+ * @apiVersion 1.0.0
+ *
+ * @apiSuccess {User} user
+ * @apiSuccess {String} user.uid
+ * @apiSuccess {String} user.name
+ * @apiSuccess {String} user.email
+ * @apiSuccessExample {json} Success response:
+ * HTTPS 200 OK
+ * {
+ *   "uid": "aaaaaa"
+ *   "name": "aaaaaaa"
+ *   "email": "aa@aa.aa"
+ * }
+ *
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ */
+userRouter.get('/', (req, res) => {});
 
-  public deleteUser = asyncHandler(
-    async (req: Request, res: Response) => {
-      const { uid } = req['user'] as UserRecord;
-      const found = await this.userService.getUser(uid);
-      if (!found) throw httpError(404);
-      await this.userService.deleteUser(uid);
-      res.json(found);
-    },
-  );
+/**
+ * @api {get} /user/:uid Get one user by its uid
+ * @apiParam {String} uid User ID
+ *
+ * @apiGroup Users
+ * @apiName getUserByName
+ * @apiVersion 1.0.0
+ * @apiPermission Admin
+ *
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ * @apiUse ForbiddenError
+ */
+userRouter.get('/:uid', isRoleAdmin, (req, res) => {});
 
-  public deleteUserById = asyncHandler(
-    async (req: Request, res: Response) => {
-      const { uid } = req.params;
-      const found = await this.userService.getUser(uid);
-      if (!found) throw httpError(404);
-      await this.userService.deleteUser(uid);
-      res.status(204).json(found);
-    },
-  );
+/**
+ * @api {put} /user/ Update current user
+ * @apiBody {String} name
+ * @apiBody {String} email
+ *
+ * @apiGroup Users
+ * @apiName updateCurrentUser
+ * @apiVersion 1.0.0
+ *
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ * @apiUse NotFoundError
+ */
+userRouter.put('/', isAuthenticated, (req, res) => {});
 
-  public updateUser = asyncHandler(
-    async (req: Request, res: Response) => {
-      const { uid } = req['user'] as UserRecord;
-      const { name, email } = req.body;
-      const found = await this.userService.getUser(uid);
-      if (!found) throw httpError(404);
-      const updated = await this.userService.updateUser(uid, {
-        name,
-        email,
-      });
-      res.json(updated);
-    },
-  );
-
-  public updateUserById = asyncHandler(
-    async (req: Request, res: Response) => {
-      const { uid } = req.params;
-      const { name, email } = req.body;
-      const found = await this.userService.getUser(uid);
-      if (!found) throw httpError(404);
-      const updated = await this.userService.updateUser(uid, {
-        name,
-        email,
-      });
-      res.json(updated);
-    },
-  );
-}
+/**
+ * @api {put} /user/:uid Update one user by id
+ * @apiBody {String} name
+ * @apiBody {String} email
+ *
+ * @apiGroup Users
+ * @apiName updateOneUser
+ * @apiVersion 1.0.0
+ *
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ * @apiUse ForbiddenError
+ * @apiUse NotFoundError
+ */
+userRouter.put('/:uid', isRoleAdmin, (req, res) => {});

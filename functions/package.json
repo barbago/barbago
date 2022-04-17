@@ -4,13 +4,13 @@
   "description": "Barbago's backend REST API written with Express and TypeScript",
   "main": "lib/index.js",
   "scripts": {
-    "start": "npm run shell",
+    "start": "npm run dev",
     "build": "npm run clean && tsc",
     "build:watch": "tsc --watch --preserveWatchOutput",
     "clean": "rm -rf ./lib ./docs",
     "dev": "run-p build:watch docs:watch serve",
-    "docs": "apidoc -f \".*.routes.ts$\" -i src -o docs",
-    "docs:watch": "nodemon --watch **/*.routes.ts --exec \"npm run docs\" src/index.ts ",
+    "docs": "apidoc -f \".*.(controller|router).ts$\" -i src -o docs",
+    "docs:watch": "nodemon --watch **/*.router.ts --watch **/*.controller.ts --exec \"npm run docs\" src/index.ts ",
     "test": "jest",
     "test:watch": "jest --watch",
     "serve": "firebase emulators:start --only functions,hosting",
@@ -46,14 +46,11 @@
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
     "firebase-admin": "^10.0.1",
-    "firebase-functions": "^3.19.0",
+    "firebase-functions": "^3.20.1",
     "helmet": "^5.0.0",
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
-    "mysql2": "^2.3.3",
-    "reflect-metadata": "^0.1.13",
-    "typedi": "^0.10.0",
-    "typeorm": "^0.2.41"
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "@jest-mock/express": "^1.4.5",

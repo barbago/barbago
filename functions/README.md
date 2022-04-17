@@ -61,3 +61,6 @@ ORDER BY distance
 LIMIT 0 , 20;
 
 ```
+
+https://www.freecodecamp.org/news/how-to-write-a-production-ready-node-and-express-app-f214f0b17d8c/
+https://losikov.medium.com/backend-api-server-development-with-node-js-from-scratch-to-production-fe3d3b860003
