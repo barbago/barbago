@@ -1,6 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RootTabScreenProps, SettingsStackParamList } from './types';
+import {
+  RootTabScreenProps,
+  SettingsStackParamList,
+} from '../../navigation/types';
 import {
   AccountInfoPage,
   ContactPage,
@@ -8,8 +11,8 @@ import {
   PaymentInfoPage,
   PreferencesPage,
   SettingsPage,
-} from '../screens';
-import { useAuth } from '../hooks';
+} from '..';
+import { useAuth } from '../../hooks';
 
 const Stack = createNativeStackNavigator<SettingsStackParamList>();
 

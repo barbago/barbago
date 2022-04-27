@@ -15,7 +15,16 @@ export const linking: LinkingOptions<RootStackParamList> = {
     initialRouteName: 'Root',
     screens: {
       Welcome: 'welcome',
-      Barber: 'barber/:id',
+      Barber: {
+        path: 'barber/:id',
+        initialRouteName: 'Info',
+        screens: {
+          Info: 'info',
+          Services: 'services',
+          Reviews: 'reviews',
+          Images: 'images',
+        },
+      },
       Root: {
         screens: {
           Home: 'home',

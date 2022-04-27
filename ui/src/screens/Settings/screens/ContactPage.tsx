@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { Linking } from 'react-native';
 import { useForm, FieldValues } from 'react-hook-form';
 import { Button, Card, List, Menu } from 'react-native-paper';
-import { Screen, ValidTextInput } from '../../components';
-import { useAuth } from '../../hooks';
+import { Screen, ValidTextInput } from '../../../components';
+import { useAuth } from '../../../hooks';
+import { SettingsStackScreenProps } from '../../../navigation';
 
-export const ContactPage = () => {
+export const ContactPage = ({
+  navigation,
+}: SettingsStackScreenProps<'Contact Us'>) => {
   const { user } = useAuth();
   const { control, handleSubmit } = useForm();
 

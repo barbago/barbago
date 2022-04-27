@@ -39,6 +39,7 @@ export function RootNavigator() {
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group> */}
       {/* Think I might add a LoginPage here */}
+      {/* https://reactnavigation.org/docs/nesting-navigators/#best-practices-when-nesting */}
     </Stack.Navigator>
   );
 }

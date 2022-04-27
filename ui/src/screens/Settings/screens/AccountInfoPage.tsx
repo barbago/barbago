@@ -5,10 +5,11 @@ import {
   AvatarPicker,
   Screen,
   ValidTextInput,
-} from '../../components';
-import { useAuth } from '../../hooks';
+} from '../../../components';
+import { useAuth } from '../../../hooks';
+import { SettingsStackScreenProps } from '../../../navigation';
 
-export const AccountInfoPage = () => {
+export const AccountInfoPage = ({ navigation }: SettingsStackScreenProps<'Account'>) => {
   const { user } = useAuth();
   const { control, formState, handleSubmit } = useForm();
 

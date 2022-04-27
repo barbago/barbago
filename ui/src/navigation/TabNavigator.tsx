@@ -1,18 +1,15 @@
 import {
   MaterialCommunityIcons,
-  MaterialIcons,
 } from '@expo/vector-icons';
 import {
-  BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { RouteProp } from '@react-navigation/native';
 import React from 'react';
 
 import { RootTabParamList } from './types';
 import { HomePage, MessagePage, SearchPage } from '../screens';
 import { useAuth } from '../hooks';
-import { SettingsNavigator } from './SettingsNavigator';
+import { SettingsNavigator } from '../screens/Settings/SettingsNavigator';
 import { RootStackScreenProps } from './types';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();

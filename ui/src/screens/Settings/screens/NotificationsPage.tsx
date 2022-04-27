@@ -5,9 +5,12 @@ import {
   List,
   Switch,
 } from 'react-native-paper';
-import { Screen } from '../../components';
+import { Screen } from '../../../components';
+import { SettingsStackScreenProps } from '../../../navigation';
 
-export const NotificationsPage = () => {
+export const NotificationsPage = ({
+  navigation,
+}: SettingsStackScreenProps<'Notifications'>) => {
   const [allowNotifs, setAllowNotifs] = useState(true);
 
   return (
