@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { RootStackScreenProps } from '../../navigation';
-import { View as CustomView, Text } from '../../components';
+import { Screen, Text } from '../../components';
 import { VendorTabs } from './VendorTabNavigator';
 
 export const BarberPage = ({
@@ -15,9 +15,9 @@ export const BarberPage = ({
   }, []);
 
   return (
-    <CustomView>
-      <Text>This is the Barber Page! Neat stuff coming soon!</Text>
+    <>
+      <Text>Hello there!</Text>
       <VendorTabs />
-    </CustomView>
+    </>
   );
 };

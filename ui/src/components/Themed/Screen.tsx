@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, ViewStyle } from 'react-native';
 import {
   NativeSafeAreaViewProps as SafeAreaProps,
   SafeAreaView,
@@ -29,8 +29,10 @@ export function Screen({
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
     'background',
-  );
-  const defaultStyle = {
+  ) as string;
+
+  const defaultStyle: ViewStyle = {
+    flex: 1,
     width: '100%',
     height: '100%',
     backgroundColor,

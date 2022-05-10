@@ -1,14 +1,13 @@
 import React from 'react';
-import { View, Text } from '../../../components';
+import { Screen, Text } from '../../../components';
 import { VendorTabScreenProps } from '../../../navigation';
 
 export const BarberReviewPage = ({
   navigation,
 }: VendorTabScreenProps<'Reviews'>) => {
-
   return (
-    <View>
+    <Screen>
       <Text>BarberReviewPage</Text>
-    </View>
+    </Screen>
   );
 };
