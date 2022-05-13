@@ -22,7 +22,6 @@ export const linking: LinkingOptions<RootStackParamList> = {
           Info: 'info',
           Services: 'services',
           Reviews: 'reviews',
-          Images: 'images',
         },
       },
       Root: {

@@ -1,7 +1,6 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { VendorTabParamList } from '../../navigation';
 import {
-  BarberImagePage,
   BarberInfoPage,
   BarberReviewPage,
   BarberServicePage,
@@ -15,7 +14,6 @@ export function VendorTabs() {
       <Tab.Screen name="Info" component={BarberInfoPage} />
       <Tab.Screen name="Services" component={BarberServicePage} />
       <Tab.Screen name="Reviews" component={BarberReviewPage} />
-      <Tab.Screen name="Images" component={BarberImagePage} />
     </Tab.Navigator>
   );
 }

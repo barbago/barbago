@@ -62,7 +62,6 @@ export type VendorTabParamList = {
   Info: undefined;
   Services: undefined;
   Reviews: undefined;
-  Images: undefined;
 };
 
 // Todo: figure out why MaterialTopTabScreenProps TypeScript autocomplete not working
