@@ -16,7 +16,7 @@ export const ProfileCarousel = memo(
           style={{ width: '100%', height: '100%' }}
         />
       ),
-      [],
+      [urls],
     );
 
     return (
