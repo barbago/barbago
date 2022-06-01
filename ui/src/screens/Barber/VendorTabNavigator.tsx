@@ -10,7 +10,7 @@ const Tab = createMaterialTopTabNavigator<VendorTabParamList>();
 
 export function VendorTabs() {
   return (
-    <Tab.Navigator initialRouteName="Info" >
+    <Tab.Navigator initialRouteName="Info">
       <Tab.Screen name="Info" component={BarberInfoPage} />
       <Tab.Screen name="Services" component={BarberServicePage} />
       <Tab.Screen name="Reviews" component={BarberReviewPage} />
