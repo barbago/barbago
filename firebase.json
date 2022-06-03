@@ -40,7 +40,7 @@
           "destination": "/index.html"
         }
       ],
-      "cleanUrls": "true",
+      "cleanUrls": true,
       "ignore": ["**/.*", "**/node_modules/**"],
       "trailingSlash": false
     },
