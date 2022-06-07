@@ -13,8 +13,7 @@ export function VendorTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Info"
-      style={{ height: windowHeight - 112 }}
-      // style={{ flex: 1 }}
+      style={{ height: windowHeight }}
     >
       <Tab.Screen name="Info" component={BarberInfoPage} />
       <Tab.Screen name="Services" component={BarberServicePage} />
