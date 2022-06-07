@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { ScrollView } from 'react-native';
 
 import { RootStackScreenProps } from '../../navigation';
 import { ProfileCarousel } from './components';
@@ -25,9 +26,9 @@ export const BarberPage = ({
   }, []);
 
   return (
-    <>
+    <ScrollView stickyHeaderIndices={[0, 1]}>
       <ProfileCarousel urls={urls} />
       <VendorTabs />
-    </>
+    </ScrollView>
   );
 };

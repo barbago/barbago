@@ -19,6 +19,7 @@ export const HomePage = ({
         onPress={() =>
           navigation.push('Barber', {
             id: 'quetzalcoatl',
+            screen: 'Info',
           })
         }
       >
