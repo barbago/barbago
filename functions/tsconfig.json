@@ -9,6 +9,7 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "skipLibCheck": true, // https://stackoverflow.com/questions/57774441/typescript-compilation-errors-when-updating-firebase-function-dependencies
     // source maps
     "sourceMap": true,
     // strict checking and linting

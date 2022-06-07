@@ -23,7 +23,7 @@
     "url": "git+https://github.com/barbago/barbago-api.git"
   },
   "engines": {
-    "node": "14"
+    "node": "16"
   },
   "author": "Julian Hecker",
   "bugs": {
@@ -46,7 +46,7 @@
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
     "firebase-admin": "^10.0.1",
-    "firebase-functions": "^3.20.1",
+    "firebase-functions": "^3.21.2",
     "helmet": "^5.0.0",
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",

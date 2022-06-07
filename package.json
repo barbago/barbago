@@ -22,7 +22,7 @@
     "url": "git+https://github.com/barbago/barbago.git"
   },
   "engines": {
-    "node": "14"
+    "node": "16"
   },
   "bugs": {
     "url": "https://github.com/barbago/barbago/issues"
