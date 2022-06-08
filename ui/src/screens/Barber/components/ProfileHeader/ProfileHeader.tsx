@@ -18,8 +18,8 @@ export const ProfileHeader = () => {
   return (
     <View>
       <ProfileCarousel urls={urls} />
-      <ProfileButtons />
       <ProfileCaption />
+      <ProfileButtons />
     </View>
   );
 };
