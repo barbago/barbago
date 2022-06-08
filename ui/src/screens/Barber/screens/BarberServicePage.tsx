@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Screen, Text } from '../../../components';
+import { Text } from '../../../components';
 import { VendorTabScreenProps } from '../../../navigation';
+
 import { TabScreen } from '../components';
 
 export const BarberServicePage = ({
