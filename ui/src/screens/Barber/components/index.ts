@@ -1,2 +1,2 @@
-export * from './ProfileCarousel';
+export * from './ProfileHeader';
 export * from './TabScreen';
