@@ -23,3 +23,5 @@ export const ProfileHeader = () => {
     </View>
   );
 };
+
+// todo: query the barber and make sure everything gets access

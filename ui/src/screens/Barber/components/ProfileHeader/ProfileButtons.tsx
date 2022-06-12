@@ -43,12 +43,8 @@ export const ProfileButtons = ({
         onPress={() =>
           Share.share(
             {
-              message: 'Heck yeah',
-              title: 'sharing is caring',
-              url: 'https://barbago.app',
-            },
-            {
-              tintColor: 'green',
+              message: 'Check out this barber I found on Barbago!',
+              url: 'https://barbago.app/barber/quetzcoatl',
             },
           )
         }
