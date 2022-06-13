@@ -1,43 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {
+  getCurrentPositionAsync,
+  requestForegroundPermissionsAsync,
+} from 'expo-location';
+
 import { Screen } from '../../components';
 import { RootTabScreenProps } from '../../navigation/types';
-import { BarberResult } from '../../types';
+import { vendorApi } from '../../store';
 import { Map } from './Map';
 import { ResultModal } from './ResultModal';
-
-const barbers: BarberResult[] = [
-  {
-    name: 'Giorgio',
-    location: 'Merrick',
-    cover: '',
-  },
-  {
-    name: 'AAAa',
-    location: 'AAAA',
-    rating: '5.0 🌟',
-    ratings: 10,
-  },
-  {
-    name: 'AAAa',
-    location: 'AAAA',
-    rating: '5.0 🌟',
-    ratings: 10,
-  },
-  {
-    name: 'AAAa',
-    location: 'AAAA',
-    rating: '5.0 🌟',
-    ratings: 10,
-  },
-];
 
 export const SearchPage = ({
   navigation,
 }: RootTabScreenProps<'Search'>) => {
+  const { data: vendors } = vendorApi.useVendorSearchQuery({});
+
+  useEffect(() => {
+    (async () => {
+      // extract to some top level on the app
+      let { status } = await requestForegroundPermissionsAsync();
+      let { coords } = await getCurrentPositionAsync();
+      console.log(coords);
+      alert(`${coords.latitude}, ${coords.longitude}`);
+    })();
+  }, []);
+
   return (
     <Screen edges={['top']} scrolling={false}>
       <Map />
-      <ResultModal barbers={barbers} />
+      <ResultModal vendors={vendors ?? []} />
     </Screen>
   );
 };
