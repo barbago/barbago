@@ -6,14 +6,14 @@ import React, { useRef } from 'react';
 import { Modalize } from 'react-native-modalize';
 import { Button, List } from 'react-native-paper';
 import { Modal } from '../../components';
-import { BarberResult } from '../../types';
+import { VendorResponse } from '../../types';
 import { Result } from './Result';
 
 interface ResultModalProps {
-  barbers: BarberResult[];
+  vendors: VendorResponse[];
 }
 
-export const ResultModal = ({ barbers }: ResultModalProps) => {
+export const ResultModal = ({ vendors }: ResultModalProps) => {
   const modalizeRef = useRef<Modalize>(null);
 
   const { showActionSheetWithOptions } = useActionSheet();
@@ -39,8 +39,8 @@ export const ResultModal = ({ barbers }: ResultModalProps) => {
           title=""
           left={() => (
             <Button mode="text" compact disabled>
-              {barbers?.length
-                ? `${barbers.length} Results`
+              {vendors?.length
+                ? `${vendors.length} Results`
                 : `No Results`}
             </Button>
           )}
@@ -62,8 +62,8 @@ export const ResultModal = ({ barbers }: ResultModalProps) => {
         />
       }
     >
-      {barbers?.map((barber, i) => (
-        <Result key={i} barber={barber} />
+      {vendors?.map((vendor, i) => (
+        <Result key={i} vendor={vendor} />
       ))}
     </Modal>
   );

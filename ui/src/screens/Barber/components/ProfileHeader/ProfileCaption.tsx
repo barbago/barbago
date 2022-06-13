@@ -3,7 +3,11 @@ import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '../../../../components';
 
-export const ProfileCaption = () => {
+export interface ProfileCaptionProps {
+  title: string;
+}
+
+export const ProfileCaption = ({ title }: ProfileCaptionProps) => {
   return (
     <View style={styles.container} pointerEvents="none">
       <LinearGradient
@@ -11,7 +15,7 @@ export const ProfileCaption = () => {
         style={styles.gradient}
       />
 
-      <Text style={styles.title}>Michael's Vintage Barber Shop</Text>
+      <Text style={styles.title}>{title}</Text>
     </View>
   );
 };

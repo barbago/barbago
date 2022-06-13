@@ -14,17 +14,10 @@ export const BarberPage = ({
   route,
   navigation,
 }: RootStackScreenProps<'Barber'>) => {
-  const { data: barber } = vendorApi.useFetchVendorByIdQuery('1');
+  const { data: barber, isLoading } =
+    vendorApi.useFetchVendorByIdQuery(route.params.id);
 
-  const urls = useMemo(
-    () => [
-      'https://source.unsplash.com/featured?chair,barber',
-      'https://source.unsplash.com/featured?haircut,barber',
-      'https://source.unsplash.com/featured?shave,haircut',
-      'https://source.unsplash.com/featured?shave',
-    ],
-    [barber], // eventually set barber here idk
-  );
+  const urls = useMemo(() => barber?.images, [barber]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -35,9 +28,13 @@ export const BarberPage = ({
   return (
     <ScrollView stickyHeaderIndices={[1]}>
       <View>
-        <ProfileCarousel urls={urls} />
-        <ProfileCaption />
-        <ProfileButtons />
+        {!isLoading && (
+          <>
+            <ProfileCarousel urls={urls!} />
+            <ProfileCaption title={barber?.name!} />
+            <ProfileButtons />
+          </>
+        )}
       </View>
       <VendorTabs />
     </ScrollView>

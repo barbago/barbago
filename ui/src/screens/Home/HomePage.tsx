@@ -15,16 +15,6 @@ export const HomePage = ({
       <GoogleAuth />
       <NoAuth />
       <SignOut />
-      <Button
-        onPress={() =>
-          navigation.push('Barber', {
-            id: 'quetzalcoatl',
-            screen: 'Info',
-          })
-        }
-      >
-        Barber
-      </Button>
       <Button onPress={() => trigger()}>ACTIVATE QUERY</Button>
     </Screen>
   );
