@@ -11,23 +11,23 @@ export const BarberPage = ({
   route,
   navigation,
 }: RootStackScreenProps<'Barber'>) => {
-  const { data: barber, isError } = vendorApi.useFetchVendorByIdQuery(
+  const { data: vendor, isError } = vendorApi.useFetchVendorByIdQuery(
     route.params.id,
   );
 
   useEffect(() => {
     navigation.setOptions({
-      title: barber?.name ?? 'Loading Vendor...',
+      title: vendor?.name ?? 'Loading Vendor...',
     });
-  }, [barber]);
+  }, [vendor]);
 
   useEffect(() => {
     isError && navigation.replace('NotFound');
   }, [isError]);
 
   return (
-    <VendorContext.Provider value={barber}>
-      {barber && (
+    <VendorContext.Provider value={{ vendor }}>
+      {vendor && (
         <ScrollView stickyHeaderIndices={[1]}>
           <ProfileHeader />
           <VendorTabs />

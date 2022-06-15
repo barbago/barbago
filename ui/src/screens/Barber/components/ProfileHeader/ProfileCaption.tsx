@@ -5,7 +5,7 @@ import { Text } from '../../../../components';
 import { VendorContext } from '../../context';
 
 export const ProfileCaption = () => {
-  const barber = useContext(VendorContext);
+  const { vendor: barber } = useContext(VendorContext);
 
   return (
     <View style={styles.container} pointerEvents="none">

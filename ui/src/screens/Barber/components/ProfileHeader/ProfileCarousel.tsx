@@ -6,7 +6,7 @@ import { VendorContext } from '../../context';
 
 // using memo prevents rerender on tab change
 export const ProfileCarousel = memo(() => {
-  const barber = useContext(VendorContext);
+  const { vendor: barber } = useContext(VendorContext);
 
   const urls = useMemo(() => barber?.images, [barber]);
 
