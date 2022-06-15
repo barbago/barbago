@@ -4,7 +4,6 @@ import { Screen, Text } from '../../components/Themed';
 
 import { RootStackScreenProps } from '../../navigation/types';
 
-// todo: center the text
 export function NotFoundScreen({
   navigation,
 }: RootStackScreenProps<'NotFound'>) {
