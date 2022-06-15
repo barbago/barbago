@@ -15,7 +15,8 @@
     "build:ui": "npm run build --prefix ui",
     "build:functions": "npm run build --prefix functions",
     "deploy:ui": "firebase deploy --only hosting",
-    "deploy:functions": "firebase deploy --only functions"
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:mobile": "npm run publish --prefix ui"
   },
   "repository": {
     "type": "git",

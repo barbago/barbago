@@ -4,6 +4,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "expo start --web --https",
+    "publish": "expo publish",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
