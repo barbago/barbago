@@ -63,10 +63,14 @@ export const vendorApi = api.injectEndpoints({
       query: () => ({ url: `${path}` }),
     }),
     fetchVendorById: builder.query<VendorResponse, string>({
-      queryFn: (uid) => ({
-        data:
-          exampleVendors.find((vendor) => vendor.uid === uid) ?? {},
-      }),
+      queryFn: (uid) => {
+        const vendor = exampleVendors.find(
+          (vendor) => vendor.uid === uid,
+        );
+        return vendor
+          ? { data: vendor }
+          : { error: { status: 404, data: undefined } };
+      },
     }),
     fetchVendors: builder.query<VendorResponse[], void>({
       query: () => ({

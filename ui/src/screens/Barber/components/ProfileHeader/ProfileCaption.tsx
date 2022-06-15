@@ -1,13 +1,12 @@
 import { View, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '../../../../components';
+import { VendorContext } from '../../context';
 
-export interface ProfileCaptionProps {
-  title: string;
-}
+export const ProfileCaption = () => {
+  const barber = useContext(VendorContext);
 
-export const ProfileCaption = ({ title }: ProfileCaptionProps) => {
   return (
     <View style={styles.container} pointerEvents="none">
       <LinearGradient
@@ -15,7 +14,7 @@ export const ProfileCaption = ({ title }: ProfileCaptionProps) => {
         style={styles.gradient}
       />
 
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{barber?.name}</Text>
     </View>
   );
 };

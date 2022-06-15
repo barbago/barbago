@@ -1,6 +1,7 @@
+import React, { useContext } from 'react';
 import { View, Share, StyleSheet } from 'react-native';
-import React from 'react';
 import { FAB } from 'react-native-paper';
+import { VendorContext } from '../../context';
 
 export interface ProfileButtonsProps {
   horizontal?: boolean;
@@ -11,6 +12,8 @@ export const ProfileButtons = ({
   horizontal = false,
   gap = 8,
 }: ProfileButtonsProps) => {
+  const barber = useContext(VendorContext);
+
   const styles = StyleSheet.create({
     container: {
       flexDirection: horizontal ? 'row' : 'column-reverse',
@@ -41,12 +44,10 @@ export const ProfileButtons = ({
         icon="share"
         small
         onPress={() =>
-          Share.share(
-            {
-              message: 'Check out this barber I found on Barbago!',
-              url: 'https://barbago.app/barber/quetzcoatl',
-            },
-          )
+          Share.share({
+            message: `Check out ${barber?.name} on Barbago!`,
+            url: `https://barbago.app/barber/${barber?.uid}`,
+          })
         }
         style={styles.button}
       />
