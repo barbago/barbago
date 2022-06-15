@@ -9,7 +9,7 @@ export const PreferencesPage = ({
   const [darkMode, setDarkMode] = useState(false);
 
   return (
-    <Screen>
+    <Screen scrolling>
       <List.Section title="Display">
         <List.Item
           title="Dark Mode"

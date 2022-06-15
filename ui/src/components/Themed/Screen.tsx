@@ -23,9 +23,10 @@ export function Screen({
   lightColor,
   darkColor,
   children,
-  scrolling = true,
+  scrolling = false,
   ...rest
 }: ScreenProps) {
+  console.log(style);
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
     'background',

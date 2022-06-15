@@ -3,9 +3,8 @@ import { Screen, Text } from '../../components';
 
 export const WelcomePage = () => {
   return (
-    <Screen>
+    <Screen scrolling>
       <Text>Welcome Page</Text>
     </Screen>
   );
 };
-

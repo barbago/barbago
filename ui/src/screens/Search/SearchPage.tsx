@@ -26,7 +26,7 @@ export const SearchPage = ({
   }, []);
 
   return (
-    <Screen edges={['top']} scrolling={false}>
+    <Screen edges={['top']}>
       <Map />
       <ResultModal vendors={vendors ?? []} />
     </Screen>

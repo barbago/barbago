@@ -10,7 +10,7 @@ export const HomePage = ({
 }: RootTabScreenProps<'Home'>) => {
   const [trigger, data] = userApi.useLazyFetchUserQuery();
   return (
-    <Screen>
+    <Screen scrolling>
       <Text>Home Page</Text>
       <GoogleAuth />
       <NoAuth />

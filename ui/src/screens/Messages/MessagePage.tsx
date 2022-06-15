@@ -9,7 +9,7 @@ export const MessagePage: React.FC<
 > = ({ navigation, children }) => {
   const { user } = useAuth();
   return (
-    <Screen>
+    <Screen scrolling>
       <List.Item
         title="Giovanni Georgio"
         description="Hey so we're still on for next week right?"

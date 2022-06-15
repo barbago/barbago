@@ -1,43 +1,29 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, View } from '../../components/Themed';
+import { Button } from 'react-native-paper';
+import { Screen, Text } from '../../components/Themed';
 
 import { RootStackScreenProps } from '../../navigation/types';
 
+// todo: center the text
 export function NotFoundScreen({
   navigation,
 }: RootStackScreenProps<'NotFound'>) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>This screen doesn't exist.</Text>
-      <TouchableOpacity
-        onPress={() => navigation.replace('Root')}
-        style={styles.link}
-      >
-        <Text style={styles.linkText}>Go to home screen!</Text>
-      </TouchableOpacity>
-    </View>
+    <Screen
+      style={{
+        justifyContent: 'center',
+        padding: 20,
+      }}
+    >
+      <Text style={{ marginHorizontal: 'auto', marginBottom: 20 }}>
+        Oops, There was an error! Try again later.
+      </Text>
+      <Button onPress={() => navigation.replace('Root')}>
+        Go to Home
+      </Button>
+      {navigation.canGoBack() && (
+        <Button onPress={() => navigation.goBack()}>Go Back</Button>
+      )}
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-  linkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-});
-

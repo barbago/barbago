@@ -18,7 +18,7 @@ export const AccountInfoPage = ({ navigation }: SettingsStackScreenProps<'Accoun
   };
 
   return (
-    <Screen>
+    <Screen scrolling>
       <Card>
         <Card.Title
           title="Public Information"

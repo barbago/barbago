@@ -14,7 +14,7 @@ export const NotificationsPage = ({
   const [allowNotifs, setAllowNotifs] = useState(true);
 
   return (
-    <Screen>
+    <Screen scrolling>
       <DataTable>
         <DataTable.Header>
           <DataTable.Title style={{ flex: 2 }}>

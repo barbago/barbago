@@ -19,7 +19,7 @@ export const ContactPage = ({
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <Screen>
+    <Screen scrolling>
       <Card>
         <List.Item
           title="help@barbago.app"

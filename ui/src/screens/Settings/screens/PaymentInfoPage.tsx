@@ -6,7 +6,7 @@ export const PaymentInfoPage = ({
   navigation,
 }: SettingsStackScreenProps<'Payment Details'>) => {
   return (
-    <Screen>
+    <Screen scrolling>
       <Text>Payment Info</Text>
     </Screen>
   );
