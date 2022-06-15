@@ -26,7 +26,6 @@ export function Screen({
   scrolling = false,
   ...rest
 }: ScreenProps) {
-  console.log(style);
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
     'background',

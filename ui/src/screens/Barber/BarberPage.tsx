@@ -19,7 +19,6 @@ export const BarberPage = ({
     navigation.setOptions({
       title: barber?.name ?? 'Loading Vendor...',
     });
-    console.log(barber);
   }, [barber]);
 
   useEffect(() => {
