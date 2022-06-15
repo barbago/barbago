@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Share, StyleSheet } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { FAB, Menu } from 'react-native-paper';
 import { VendorContext } from '../../context';
 
 export interface ProfileButtonsProps {
@@ -12,7 +12,13 @@ export const ProfileButtons = ({
   horizontal = false,
   gap = 8,
 }: ProfileButtonsProps) => {
-  const barber = useContext(VendorContext);
+  const { vendor: barber } = useContext(VendorContext);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const openMenu = () => setMenuOpen(true);
+  const closeMenu = () => setMenuOpen(false);
+
+  const [favorite, setFavorite] = useState(false);
 
   const styles = StyleSheet.create({
     container: {
@@ -34,9 +40,10 @@ export const ProfileButtons = ({
     <View style={styles.container}>
       <FAB
         icon="star"
-        color={'orange'}
+        color={favorite ? 'orange' : undefined}
         small
-        onPress={() => alert('PRESSEd')}
+        // todo: decide how to save favorites
+        onPress={() => setFavorite(!favorite)}
         style={styles.button}
       />
 
@@ -51,12 +58,25 @@ export const ProfileButtons = ({
         }
         style={styles.button}
       />
-      <FAB
-        icon="dots-vertical"
-        small
-        onPress={() => alert('PRESSEd')}
-        style={styles.button}
-      />
+      <Menu
+        anchor={
+          <FAB
+            small
+            icon="dots-vertical"
+            style={styles.button}
+            onPress={openMenu}
+          />
+        }
+        visible={menuOpen}
+        onDismiss={closeMenu}
+      >
+        <Menu.Item
+          icon="alert"
+          title="Report Profile"
+          // todo: open a separate reporting flow
+          onPress={() => alert(`Reported ${barber?.name}'s profile`)}
+        />
+      </Menu>
     </View>
   );
 };
