@@ -2,18 +2,17 @@ import {
   ActionSheetOptions,
   useActionSheet,
 } from '@expo/react-native-action-sheet';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Modalize } from 'react-native-modalize';
 import { Button, List } from 'react-native-paper';
+
 import { Modal } from '../../components';
-import { VendorResponse } from '../../types';
+import { SearchContext } from './context';
 import { Result } from './Result';
 
-interface ResultModalProps {
-  vendors: VendorResponse[];
-}
+export const ResultModal = () => {
+  const { vendors } = useContext(SearchContext);
 
-export const ResultModal = ({ vendors }: ResultModalProps) => {
   const modalizeRef = useRef<Modalize>(null);
 
   const { showActionSheetWithOptions } = useActionSheet();
