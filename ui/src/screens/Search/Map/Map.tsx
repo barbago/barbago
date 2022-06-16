@@ -1,16 +1,23 @@
-import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
-import MapView, { EdgePadding, Region } from 'react-native-maps';
+import React, { useContext, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import MapView, {
+  EdgePadding,
+  Marker,
+  Region,
+} from 'react-native-maps';
 import { windowHeight, windowWidth } from '../../../config';
 import { useColorScheme } from '../../../hooks';
 import { isIOS } from '../../../utils';
+import { SearchContext } from '../context';
 
 export const Map = () => {
+  const [map, setMap] = useState<MapView | null>(null);
+  const { vendors } = useContext(SearchContext);
   const theme = useColorScheme();
 
   const initialRegion: Region = {
-    latitude: 41,
-    longitude: -73.83,
+    latitude: 35.7796,
+    longitude: -78.6382,
     latitudeDelta: 1,
     longitudeDelta: 1,
   };
@@ -29,18 +36,38 @@ export const Map = () => {
 
   return (
     <MapView
+      mapType="mutedStandard"
       initialRegion={initialRegion}
       mapPadding={mapPadding}
       style={styles.map}
       customMapStyle={customMapStyle}
-    ></MapView>
+      ref={(map) => setMap(map)}
+    >
+      {vendors?.map(
+        (vendor, index) =>
+          vendor.latitude &&
+          vendor.longitude && (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: vendor.latitude,
+                longitude: vendor.longitude,
+              }}
+              title={vendor.name}
+              description={vendor.location}
+              onPress={(_) => console.log(vendor)}
+              onCalloutPress={(_) => alert('Opening vendor!')}
+            />
+          ),
+      )}
+    </MapView>
   );
 };
 
 const styles = StyleSheet.create({
   map: {
     width: windowWidth,
-    height: windowHeight
+    height: windowHeight,
   },
 });
 
