@@ -4,13 +4,16 @@ import {
   TileLayer,
   Marker,
   AttributionControl,
+  Popup,
 } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import './Map.web.css';
 
 import { SearchContext } from '../context';
 import { useColorScheme } from '../../../hooks';
 import { VendorResponse } from '../../../types';
+import { Pressable } from 'react-native';
 
 const attribution =
   'Map tiles by <a href="https://carto.com/basemaps/" rel="noreferrer noopener">Carto</a>, under CC BY 3.0.';
@@ -23,15 +26,35 @@ const icon = L.icon({
 });
 
 const eventHandlers: L.LeafletEventHandlerFnMap = {
-  // when you click a marker,
+  // todo: when you click a marker,
   // open the modal just enough
   // and scroll to that barber
   // or put them at the top
+  // also open a popup which can
+  // go directly to the page
   click: (e) => {
     const vendor = e.target.options['data-vendor'] as VendorResponse;
     console.log(vendor);
   },
 };
+
+const VendorPopup = ({ vendor }: { vendor: VendorResponse }) => (
+  <Popup className="vendor-popup">
+    <b>{vendor.name}</b>
+    <br />
+    <small>{vendor.location}</small>
+    <Pressable
+      onPress={() => alert('Opening Vendor!')}
+      style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      }}
+    />
+  </Popup>
+);
 
 export const Map = () => {
   const { vendors } = useContext(SearchContext);
@@ -51,6 +74,7 @@ export const Map = () => {
       dragging={true}
       maxBoundsViscosity={1}
       style={{ height: '100%', width: '100%' }}
+      attributionControl={false}
     >
       <AttributionControl position="topright" prefix={false} />
       <TileLayer url={url} attribution={attribution} />
@@ -64,7 +88,9 @@ export const Map = () => {
               eventHandlers={eventHandlers}
               icon={icon}
               key={index}
-            />
+            >
+              <VendorPopup vendor={vendor} />
+            </Marker>
           )
         );
       })}

@@ -1,0 +1,18 @@
+/* https://codesandbox.io/s/how-to-style-the-react-leaflet-popup-forked-jkcynu*/
+
+.vendor-popup .leaflet-popup-content-wrapper {
+  border-radius: 0;
+}
+
+.vendor-popup .leaflet-popup-close-button {
+  display: none;
+}
+
+.vendor-popup .leaflet-popup-content {
+  margin: 5px 10px;
+}
+
+.vendor-popup {
+  font-size: 15px;
+  line-height: 1;
+}
