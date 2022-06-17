@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import MapView, {
-  EdgePadding,
-  Marker,
-  Region,
-} from 'react-native-maps';
+import { EdgePadding, Marker, Region } from 'react-native-maps';
+import MapView from 'react-native-map-clustering';
+
 import { windowHeight, windowWidth } from '../../../config';
 import { useColorScheme } from '../../../hooks';
 import { isIOS } from '../../../utils';
@@ -18,14 +16,14 @@ export const Map = () => {
   const initialRegion: Region = {
     latitude: 35.7796,
     longitude: -78.6382,
-    latitudeDelta: 1,
-    longitudeDelta: 1,
+    latitudeDelta: 16,
+    longitudeDelta: 16,
   };
 
   const mapPadding: EdgePadding = {
     top: 0,
     right: 0,
-    bottom: isIOS() ? 175 : 125,
+    bottom: isIOS() ? 175 : 0,
     left: 0,
   };
 
@@ -42,6 +40,7 @@ export const Map = () => {
       style={styles.map}
       customMapStyle={customMapStyle}
       ref={(map) => setMap(map)}
+      clusterColor="#0077ff"
     >
       {vendors?.map(
         (vendor, index) =>

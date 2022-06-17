@@ -16,3 +16,26 @@
   font-size: 15px;
   line-height: 1;
 }
+
+/* https://stackoverflow.com/questions/49538465/changing-leaflet-markercluster-icon-color-inheriting-the-rest-of-the-default-cs */
+.marker-cluster {
+  margin-left: -25px !important;
+  margin-top: -25px !important;
+  width: 50px !important;
+  height: 50px !important;
+  background-color: #0077ff99;
+  border-radius: 50%;
+}
+
+.marker-cluster > div {
+  margin-top: 6px;
+  margin-left: 6px;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 16px;
+  background-color: #0077ff;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+}

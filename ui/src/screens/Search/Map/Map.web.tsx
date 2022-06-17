@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Pressable } from 'react-native';
 import {
   MapContainer,
   TileLayer,
@@ -8,12 +9,13 @@ import {
 } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import './Map.web.css';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
+import 'react-leaflet-markercluster/dist/styles.min.css';
 
 import { SearchContext } from '../context';
 import { useColorScheme } from '../../../hooks';
 import { VendorResponse } from '../../../types';
-import { Pressable } from 'react-native';
+import './Map.web.css';
 
 const attribution =
   'Map tiles by <a href="https://carto.com/basemaps/" rel="noreferrer noopener">Carto</a>, under CC BY 3.0.';
@@ -25,7 +27,13 @@ const icon = L.icon({
   popupAnchor: [0, -40],
 });
 
+// const iconCreateFunction = (cluster: L.MarkerCluster): L.Icon<L.IconOptions> | L.DivIcon => {
+
+// }
+
 const eventHandlers: L.LeafletEventHandlerFnMap = {
+  // when hovering on a marker,
+  // open the popup and maybe modal
   // todo: when you click a marker,
   // open the modal just enough
   // and scroll to that barber
@@ -68,32 +76,35 @@ export const Map = () => {
   return (
     <MapContainer
       center={[35.7796, -78.6382]}
-      zoom={10}
+      zoom={6}
       minZoom={4}
       scrollWheelZoom={true}
       dragging={true}
       maxBoundsViscosity={1}
       style={{ height: '100%', width: '100%' }}
       attributionControl={false}
+      eventHandlers={eventHandlers}
     >
       <AttributionControl position="topright" prefix={false} />
       <TileLayer url={url} attribution={attribution} />
-      {vendors?.map((vendor, index) => {
-        return (
-          vendor.latitude &&
-          vendor.longitude && (
-            <Marker
-              data-vendor={vendor}
-              position={[vendor.latitude, vendor.longitude]}
-              eventHandlers={eventHandlers}
-              icon={icon}
-              key={index}
-            >
-              <VendorPopup vendor={vendor} />
-            </Marker>
-          )
-        );
-      })}
+      <MarkerClusterGroup showCoverageOnHover={false}>
+        {vendors?.map((vendor, index) => {
+          return (
+            vendor.latitude &&
+            vendor.longitude && (
+              <Marker
+                data-vendor={vendor}
+                position={[vendor.latitude, vendor.longitude]}
+                eventHandlers={eventHandlers}
+                icon={icon}
+                key={index}
+              >
+                <VendorPopup vendor={vendor} />
+              </Marker>
+            )
+          );
+        })}
+      </MarkerClusterGroup>
     </MapContainer>
   );
 };
