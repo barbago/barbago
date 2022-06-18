@@ -30,36 +30,37 @@ export const ResultModal = () => {
     index !== undefined && alert('clicked ' + options.options[index]);
   };
 
+  const HeaderComponent = (
+    <List.Item
+      title=""
+      left={() => (
+        <Button mode="text" compact disabled>
+          {vendors?.length
+            ? `${vendors.length} Results`
+            : `No Results`}
+        </Button>
+      )}
+      right={() => (
+        <Button
+          icon="swap-vertical"
+          mode="text"
+          compact
+          onPress={() =>
+            showActionSheetWithOptions(options, actionSheetCallback)
+          }
+        >
+          Sort
+        </Button>
+      )}
+    />
+  );
+
   return (
     <Modal
+      // to fit exactly one result, set alwaysOpen={317}
+      // to keep using map, set withOverlay={false}
       ref={modalizeRef}
-      HeaderComponent={
-        <List.Item
-          title=""
-          left={() => (
-            <Button mode="text" compact disabled>
-              {vendors?.length
-                ? `${vendors.length} Results`
-                : `No Results`}
-            </Button>
-          )}
-          right={() => (
-            <Button
-              icon="swap-vertical"
-              mode="text"
-              compact
-              onPress={() =>
-                showActionSheetWithOptions(
-                  options,
-                  actionSheetCallback,
-                )
-              }
-            >
-              Sort
-            </Button>
-          )}
-        />
-      }
+      HeaderComponent={HeaderComponent}
     >
       {vendors?.map((vendor, i) => (
         <Result key={i} vendor={vendor} />
