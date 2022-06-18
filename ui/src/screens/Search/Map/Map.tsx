@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { EdgePadding, Marker, Region } from 'react-native-maps';
+import {
+  EdgePadding,
+  Marker,
+  Region,
+} from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
 
 import { windowHeight, windowWidth } from '../../../config';
 import { useColorScheme } from '../../../hooks';
 import { isIOS } from '../../../utils';
 import { SearchContext } from '../context';
+import { BlueMarker } from './BlueMarker';
 
 export const Map = () => {
   const [map, setMap] = useState<MapView | null>(null);
@@ -56,7 +61,9 @@ export const Map = () => {
               description={vendor.location}
               onPress={(_) => console.log(vendor)}
               onCalloutPress={(_) => alert('Opening vendor!')}
-            />
+            >
+              <BlueMarker />
+            </Marker>
           ),
       )}
     </MapView>
