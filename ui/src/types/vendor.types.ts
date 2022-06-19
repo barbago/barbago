@@ -1,5 +1,5 @@
 export interface VendorResponse {
-  uid?: string;
+  uid: string;
   name?: string;
   location?: string;
   latitude?: number;
