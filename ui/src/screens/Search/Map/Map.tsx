@@ -1,21 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import {
-  EdgePadding,
-  Marker,
-  Region,
-} from 'react-native-maps';
+import { EdgePadding, Marker, Region } from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
 
 import { windowHeight, windowWidth } from '../../../config';
 import { useColorScheme } from '../../../hooks';
 import { isIOS } from '../../../utils';
-import { SearchContext } from '../context';
+import { useSearch } from '../SearchPage';
 import { BlueMarker } from './BlueMarker';
 
 export const Map = () => {
   const [map, setMap] = useState<MapView | null>(null);
-  const { vendors } = useContext(SearchContext);
+  const { vendors, openVendor, setSelected } = useSearch();
   const theme = useColorScheme();
 
   const initialRegion: Region = {
@@ -46,6 +42,10 @@ export const Map = () => {
       customMapStyle={customMapStyle}
       ref={(map) => setMap(map)}
       clusterColor="#0077ff"
+      onPress={(e) => {
+        // e.preventDefault()
+        setSelected();
+      }}
     >
       {vendors?.map(
         (vendor, index) =>
@@ -59,8 +59,11 @@ export const Map = () => {
               }}
               title={vendor.name}
               description={vendor.location}
-              onPress={(_) => console.log(vendor)}
-              onCalloutPress={(_) => alert('Opening vendor!')}
+              onPress={(e) => {
+                e.stopPropagation();
+                setSelected(vendor);
+              }}
+              onCalloutPress={(_) => openVendor(vendor)}
             >
               <BlueMarker />
             </Marker>

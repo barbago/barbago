@@ -1,25 +1,24 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Avatar, Card, Text, Caption } from 'react-native-paper';
+
 import { VendorResponse } from '../../types';
+import { useSearch } from './SearchPage';
 
 interface ResultProps {
   vendor: VendorResponse;
 }
 
-export const Result = ({
-  vendor: {
-    uid,
+export const Result = ({ vendor }: ResultProps) => {
+  const {
     name,
     location,
     cover = '',
     avatar = '',
     rating = 'n/a',
     ratings = 0,
-  },
-}: ResultProps) => {
-  // todo: find out correct typing
-  const { push } = useNavigation<any>();
+  } = vendor;
+
+  const { openVendor } = useSearch();
 
   const left = avatar
     ? () => (
@@ -42,7 +41,7 @@ export const Result = ({
       : undefined;
 
   return (
-    <Card onPress={() => push('Barber', { id: uid, screen: 'Info' })}>
+    <Card onPress={() => openVendor(vendor)}>
       <Card.Cover source={{ uri: cover }} />
       <Card.Title
         title={name}

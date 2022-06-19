@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Pressable } from 'react-native';
 import {
   MapContainer,
@@ -12,7 +12,7 @@ import 'leaflet/dist/leaflet.css';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 
-import { SearchContext } from '../context';
+import { useSearch } from '../SearchPage';
 import { useColorScheme } from '../../../hooks';
 import { VendorResponse } from '../../../types';
 import './Map.web.css';
@@ -27,51 +27,43 @@ const icon = L.icon({
   popupAnchor: [0, -40],
 });
 
-// const iconCreateFunction = (cluster: L.MarkerCluster): L.Icon<L.IconOptions> | L.DivIcon => {
-
-// }
-
-const eventHandlers: L.LeafletEventHandlerFnMap = {
-  // when hovering on a marker,
-  // open the popup and maybe modal
-  // todo: when you click a marker,
-  // open the modal just enough
-  // and scroll to that barber
-  // or put them at the top
-  // also open a popup which can
-  // go directly to the page
-  click: (e) => {
-    const vendor = e.target.options['data-vendor'] as VendorResponse;
-    console.log(vendor);
-  },
-};
-
-const VendorPopup = ({ vendor }: { vendor: VendorResponse }) => (
-  <Popup className="vendor-popup">
-    <b>{vendor.name}</b>
-    <br />
-    <small>{vendor.location}</small>
-    <Pressable
-      onPress={() => alert('Opening Vendor!')}
-      style={{
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-      }}
-    />
-  </Popup>
-);
-
 export const Map = () => {
-  const { vendors } = useContext(SearchContext);
+  const { vendors, setSelected, openVendor } = useSearch();
   const theme = useColorScheme();
 
   let url =
     theme === 'dark'
       ? 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
       : 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+
+  const eventHandlers: L.LeafletEventHandlerFnMap = {
+    click: ({ target, originalEvent }) => {
+      originalEvent.preventDefault();
+      const vendor = target.options['data-vendor'] as VendorResponse;
+      setSelected(vendor);
+    },
+    mouseover: ({ target }) => {
+      target.openPopup();
+    },
+  };
+
+  const VendorPopup = ({ vendor }: { vendor: VendorResponse }) => (
+    <Popup className="vendor-popup">
+      <b>{vendor.name}</b>
+      <br />
+      <small>{vendor.location}</small>
+      <Pressable
+        onPress={() => setSelected(vendor)}
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        }}
+      />
+    </Popup>
+  );
 
   return (
     <MapContainer
@@ -83,7 +75,6 @@ export const Map = () => {
       maxBoundsViscosity={1}
       style={{ height: '100%', width: '100%' }}
       attributionControl={false}
-      eventHandlers={eventHandlers}
     >
       <AttributionControl position="topright" prefix={false} />
       <TileLayer url={url} attribution={attribution} />
