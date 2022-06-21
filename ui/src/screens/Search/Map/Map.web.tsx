@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import {
   MapContainer,
@@ -28,8 +28,9 @@ const icon = L.icon({
 });
 
 export const Map = () => {
-  const { vendors, setSelected, openVendor } = useSearch();
   const theme = useColorScheme();
+  const [map, setMap] = useState<L.Map>();
+  const { vendors, setSelected, openVendor } = useSearch();
 
   let url =
     theme === 'dark'
@@ -38,12 +39,10 @@ export const Map = () => {
 
   const eventHandlers: L.LeafletEventHandlerFnMap = {
     click: ({ target, originalEvent }) => {
-      originalEvent.preventDefault();
+      setTimeout(() => target.openPopup());
       const vendor = target.options['data-vendor'] as VendorResponse;
       setSelected(vendor);
-    },
-    mouseover: ({ target }) => {
-      target.openPopup();
+      originalEvent.preventDefault();
     },
   };
 
@@ -65,6 +64,15 @@ export const Map = () => {
     </Popup>
   );
 
+  useEffect(() => {
+    map?.addEventListener('click', (_) => {
+      setSelected();
+    });
+    return () => {
+      map?.removeEventListener('click');
+    };
+  }, [map]);
+
   return (
     <MapContainer
       center={[35.7796, -78.6382]}
@@ -75,6 +83,8 @@ export const Map = () => {
       maxBoundsViscosity={1}
       style={{ height: '100%', width: '100%' }}
       attributionControl={false}
+      closePopupOnClick={false}
+      whenCreated={setMap}
     >
       <AttributionControl position="topright" prefix={false} />
       <TileLayer url={url} attribution={attribution} />
