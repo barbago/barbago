@@ -3,12 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
 import { useAuth } from '../hooks';
-import {
-  HomePage,
-  MessagePage,
-  SearchPage,
-  SettingsNavigator,
-} from '../screens';
+import { HomePage, MessagePage, SearchPage } from '../screens';
+import { SettingsNavigator } from '../screens/Settings';
 import { RootStackScreenProps, RootTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
