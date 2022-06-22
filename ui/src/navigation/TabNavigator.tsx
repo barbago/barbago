@@ -1,16 +1,15 @@
-import {
-  MaterialCommunityIcons,
-} from '@expo/vector-icons';
-import {
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { RootTabParamList } from './types';
-import { HomePage, MessagePage, SearchPage } from '../screens';
 import { useAuth } from '../hooks';
-import { SettingsNavigator } from '../screens/Settings/SettingsNavigator';
-import { RootStackScreenProps } from './types';
+import {
+  HomePage,
+  MessagePage,
+  SearchPage,
+  SettingsNavigator,
+} from '../screens';
+import { RootStackScreenProps, RootTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
