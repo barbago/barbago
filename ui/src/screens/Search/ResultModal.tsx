@@ -3,13 +3,16 @@ import {
   useActionSheet,
 } from '@expo/react-native-action-sheet';
 import React, { useContext, useEffect, useRef } from 'react';
-import { Modalize } from 'react-native-modalize';
+import { Modalize, ModalizeProps } from 'react-native-modalize';
 import { ScrollView } from 'react-native';
 import { Button, List } from 'react-native-paper';
 
 import { Modal } from '../../components';
 import { SearchContext } from './SearchPage';
 import { Result } from './Result';
+
+const resultHeight = 267;
+const headerHeight = 50;
 
 export const ResultModal = () => {
   const { vendors, selected, setSort } = useContext(SearchContext);
@@ -22,8 +25,10 @@ export const ResultModal = () => {
       const selectedIndex =
         vendors?.findIndex((vendor) => vendor.uid === selected.uid) ??
         0;
-      const pos = selectedIndex * 267;
+      const pos = selectedIndex * resultHeight;
       contentRef.current?.scrollTo({ y: pos });
+    } else {
+      modalizeRef.current?.close('alwaysOpen');
     }
   }, [selected]);
 
@@ -67,26 +72,20 @@ export const ResultModal = () => {
     />
   );
 
-  if (selected)
-    return (
-      <Modal
-        ref={modalizeRef}
-        HeaderComponent={HeaderComponent}
-        alwaysOpen={317}
-        withOverlay={false}
-        modalHeight={317}
-      >
-        {vendors?.map((vendor, i) => (
-          <Result key={i} vendor={vendor} />
-        ))}
-      </Modal>
-    );
+  const selectedProps: ModalizeProps = !!selected
+    ? {
+        withOverlay: false,
+        alwaysOpen: headerHeight + resultHeight,
+        modalHeight: headerHeight + resultHeight,
+      }
+    : {};
 
   return (
     <Modal
       ref={modalizeRef}
       contentRef={contentRef}
       HeaderComponent={HeaderComponent}
+      {...selectedProps}
     >
       {vendors?.map((vendor, i) => (
         <Result key={i} vendor={vendor} />
