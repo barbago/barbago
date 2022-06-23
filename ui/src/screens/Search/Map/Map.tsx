@@ -1,18 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { EdgePadding, Marker, Region } from 'react-native-maps';
-import MapView from 'react-native-map-clustering';
+import MapView, {
+  EdgePadding,
+  Marker,
+  Region,
+} from 'react-native-maps';
+import ClusterMapView from 'react-native-map-clustering';
 
 import { windowHeight, windowWidth } from '../../../config';
 import { useColorScheme } from '../../../hooks';
 import { isIOS } from '../../../utils';
-import { useSearch } from '../SearchPage';
+import { useSearch } from '../services';
 import { BlueMarker } from './BlueMarker';
+import { VendorResponse } from '../../../types';
 
 export const Map = () => {
-  const [map, setMap] = useState<MapView | null>(null);
-  const { vendors, openVendor, setSelected } = useSearch();
+  const { vendors, selected, openVendor, setSelected } = useSearch();
   const theme = useColorScheme();
+  const mapRef = useRef<MapView>(null);
+  const markerRefs = useRef<(Marker | null)[]>([]);
 
   const initialRegion: Region = {
     latitude: 35.7796,
@@ -21,11 +27,19 @@ export const Map = () => {
     longitudeDelta: 16,
   };
 
-  const mapPadding: EdgePadding = {
-    top: 0,
-    right: 0,
-    bottom: isIOS() ? 175 : 0,
-    left: 0,
+  const edgePadding: EdgePadding = {
+    top: 10,
+    right: 10,
+    // why does android have such different numbers than iOS?
+    bottom: selected ? (isIOS() ? 440 : 1075) : isIOS() ? 175 : 340,
+    left: 10,
+  };
+
+  const testPadding: EdgePadding = {
+    top: 50,
+    right: 50,
+    bottom: selected ? 440 : 200,
+    left: 50,
   };
 
   const customMapStyle =
@@ -33,17 +47,42 @@ export const Map = () => {
       ? require('./map-style-dark.json')
       : require('./map-style-light.json');
 
+  const fitVendors = (vendors?: VendorResponse[]): void =>
+    vendors &&
+    mapRef.current?.fitToCoordinates(
+      vendors.map((vendor) => ({
+        latitude: vendor.latitude!,
+        longitude: vendor.longitude!,
+      })),
+      { edgePadding: testPadding },
+    );
+
+  useEffect(() => {
+    // https://stackoverflow.com/questions/54633690/how-can-i-use-multiple-refs-for-an-array-of-elements-with-hooks
+    markerRefs.current = markerRefs?.current.slice(0, vendors?.length);
+    fitVendors(vendors);
+  }, [vendors]);
+
+  useEffect(() => {
+    !selected && setTimeout(() => fitVendors(vendors), 100);
+  }, [selected]);
+
   return (
-    <MapView
+    <ClusterMapView
       mapType="mutedStandard"
       initialRegion={initialRegion}
-      mapPadding={mapPadding}
+      moveOnMarkerPress={false}
+      showsUserLocation={true}
+      toolbarEnabled={false}
+      pitchEnabled={false}
+      rotateEnabled={false}
+      showsPointsOfInterest={false}
+      mapPadding={edgePadding}
       style={styles.map}
       customMapStyle={customMapStyle}
-      ref={(map) => setMap(map)}
+      ref={mapRef}
       clusterColor="#0077ff"
-      onPress={(e) => {
-        // e.preventDefault()
+      onPress={(_) => {
         setSelected();
       }}
     >
@@ -53,6 +92,7 @@ export const Map = () => {
           vendor.longitude && (
             <Marker
               key={index}
+              ref={(el) => (markerRefs.current[index] = el)}
               coordinate={{
                 latitude: vendor.latitude,
                 longitude: vendor.longitude,
@@ -62,6 +102,7 @@ export const Map = () => {
               onPress={(e) => {
                 e.stopPropagation();
                 setSelected(vendor);
+                markerRefs.current[index]?.showCallout();
               }}
               onCalloutPress={(_) => openVendor(vendor)}
             >
@@ -69,7 +110,7 @@ export const Map = () => {
             </Marker>
           ),
       )}
-    </MapView>
+    </ClusterMapView>
   );
 };
 

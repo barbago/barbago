@@ -12,7 +12,7 @@ import 'leaflet/dist/leaflet.css';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 
-import { useSearch } from '../SearchPage';
+import { useSearch } from '../services';
 import { useColorScheme } from '../../../hooks';
 import { VendorResponse } from '../../../types';
 import './Map.web.css';
@@ -30,7 +30,7 @@ const icon = L.icon({
 export const Map = () => {
   const theme = useColorScheme();
   const [map, setMap] = useState<L.Map>();
-  const { vendors, setSelected, openVendor } = useSearch();
+  const { vendors, selected, setSelected, openVendor } = useSearch();
 
   let url =
     theme === 'dark'
@@ -52,7 +52,7 @@ export const Map = () => {
       <br />
       <small>{vendor.location}</small>
       <Pressable
-        onPress={() => setSelected(vendor)}
+        onPress={() => openVendor(vendor)}
         style={{
           position: 'absolute',
           top: 0,
@@ -64,6 +64,15 @@ export const Map = () => {
     </Popup>
   );
 
+  const fitVendors = (options?: L.FitBoundsOptions) => {
+    const coords = vendors
+      ?.filter((vendor) => vendor.latitude && vendor.longitude)
+      .map((vendor) => [vendor.latitude!, vendor.longitude!]);
+    const bounds =
+      coords && L.latLngBounds(coords.map((c) => [c[0], c[1]]));
+    bounds && map?.flyToBounds(bounds, options);
+  };
+
   useEffect(() => {
     map?.addEventListener('click', (_) => {
       setSelected();
@@ -72,6 +81,16 @@ export const Map = () => {
       map?.removeEventListener('click');
     };
   }, [map]);
+
+  useEffect(() => {
+    fitVendors();
+  }, [vendors]);
+
+  useEffect(() => {
+    selected
+      ? fitVendors({ paddingBottomRight: [0, 317] })
+      : fitVendors();
+  }, [selected]);
 
   return (
     <MapContainer

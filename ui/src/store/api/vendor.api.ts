@@ -26,9 +26,9 @@ const exampleVendors: VendorResponse[] = [
   {
     uid: '2',
     name: "Russel's Modern Barber Shop",
-    location: 'Chapel Hill, NC',
-    latitude: 35.9132,
-    longitude: -79.0558,
+    location: 'Raleigh, NC',
+    latitude: 35.79,
+    longitude: -78.67,
     cover: 'https://source.unsplash.com/featured?barber',
     images: ['https://source.unsplash.com/featured?barber'],
   },
@@ -88,13 +88,11 @@ export const vendorApi = api.injectEndpoints({
         url: `${path}/all`,
       }),
     }),
-    vendorSearch: builder.query<VendorResponse[], VendorSearchParams>(
-      {
-        queryFn: (_) => ({
-          data: exampleVendors,
-        }),
-      },
-    ),
+    vendorSearch: builder.query<VendorResponse[], VendorSearchParams>({
+      queryFn: (_) => ({
+        data: exampleVendors,
+      }),
+    }),
     updateVendor: builder.mutation<VendorResponse, any>({
       query: (body) => ({ url: path, method: 'put', body }),
     }),
