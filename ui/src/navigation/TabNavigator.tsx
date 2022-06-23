@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
 import { useAuth } from '../hooks';
-import { HomePage, MessagePage, SearchPage } from '../screens';
+import { HomePage, MessagePage, Search } from '../screens';
 import { SettingsNavigator } from '../screens/Settings';
 import { RootStackScreenProps, RootTabParamList } from './types';
 
@@ -34,7 +34,7 @@ export function TabNavigator({
       />
       <Tab.Screen
         name="Search"
-        component={SearchPage}
+        component={Search}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (

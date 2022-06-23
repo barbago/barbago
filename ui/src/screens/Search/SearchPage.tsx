@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  FC,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect } from 'react';
 import {
   getCurrentPositionAsync,
   LocationAccuracy,
@@ -12,54 +6,12 @@ import {
 } from 'expo-location';
 
 import { Screen } from '../../components';
-import { RootTabScreenProps } from '../../navigation/types';
-import { vendorApi } from '../../store';
-import { VendorResponse } from '../../types';
 import { Map } from './Map';
 import { ResultModal } from './ResultModal';
+import { useSearch } from './services';
 
-
-export function SearchService() {
-
-
-
-  
-}
-
-
-export interface SearchState {
-  vendors?: VendorResponse[];
-  openVendor: (vendor: VendorResponse) => void;
-  setSelected: (vendor?: VendorResponse) => void;
-  selected?: VendorResponse;
-  setSort: (sortBy?: string) => void;
-  sort?: string;
-}
-
-export const SearchContext = createContext<SearchState>(undefined!);
-
-export const SearchProvider: FC = ({ children }) => (
-  <SearchContext.Provider value={undefined!}>
-    {children}
-  </SearchContext.Provider>
-);
-
-export const useSearch = () => useContext(SearchContext);
-
-export const SearchPage = ({
-  navigation,
-}: RootTabScreenProps<'Search'>) => {
-  const { data: vendors } = vendorApi.useVendorSearchQuery({});
-
-  const [selected, setSelected] = useState<VendorResponse>();
-  const [sort, setSort] = useState<string>();
-
-  const setFilter = () => {};
-
-  const openVendor = (vendor: VendorResponse) => {
-    // refactor vendor model, edit required fields
-    navigation.push('Barber', { id: vendor.uid, screen: 'Info' });
-  };
+export const SearchPage = () => {
+  const { query, vendors } = useSearch();
 
   useEffect(() => {
     (async () => {
@@ -72,24 +24,20 @@ export const SearchPage = ({
       });
       console.log(coords);
       // alert(`${coords.latitude}, ${coords.longitude}`);
+      setTimeout(
+        () =>
+          query({
+            coordinates: '',
+          }),
+        1000,
+      );
     })();
   }, []);
 
-  const searchService = {
-    vendors,
-    openVendor,
-    selected,
-    setSelected,
-    setSort,
-    sort,
-  };
-
   return (
-    <SearchContext.Provider value={searchService}>
-      <Screen edges={['top']}>
-        <Map />
-        <ResultModal />
-      </Screen>
-    </SearchContext.Provider>
+    <Screen edges={['top']}>
+      <Map />
+      <ResultModal />
+    </Screen>
   );
 };

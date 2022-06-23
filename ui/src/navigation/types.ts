@@ -30,6 +30,7 @@ export type RootStackScreenProps<
 
 export type RootTabParamList = {
   Home: undefined;
+  // Attach filter, sort, coords, etc params here
   Search: undefined;
   Messages: undefined;
   SettingsStack: NavigatorScreenParams<SettingsStackParamList>;

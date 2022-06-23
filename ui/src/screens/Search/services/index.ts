@@ -1,1 +1,1 @@
-export * from './SearchService';
+export * from './SearchContext';

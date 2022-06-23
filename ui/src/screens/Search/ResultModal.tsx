@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native';
 import { Button, List } from 'react-native-paper';
 
 import { Modal } from '../../components';
-import { SearchContext } from './SearchPage';
+import { SearchContext } from './services';
 import { Result } from './Result';
 
 const resultHeight = 267;
@@ -52,9 +52,7 @@ export const ResultModal = () => {
       title=""
       left={() => (
         <Button mode="text" compact disabled>
-          {vendors?.length
-            ? `${vendors.length} Results`
-            : `No Results`}
+          {vendors?.length ? `${vendors.length} Results` : `No Results`}
         </Button>
       )}
       right={() => (
