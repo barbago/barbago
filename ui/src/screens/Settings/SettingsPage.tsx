@@ -1,9 +1,8 @@
 import { openBrowserAsync } from 'expo-web-browser';
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 
-import { Screen } from '../../components';
+import { AuthCard, Screen, SignInOutButton } from '../../components';
 import { SettingsStackScreenProps } from '../../navigation';
 import { settingsConfig } from './settings-config';
 
@@ -11,7 +10,8 @@ export const SettingsPage = ({
   navigation,
 }: SettingsStackScreenProps<'Settings'>) => {
   return (
-    <Screen edges={['top']} scrolling>
+    <Screen edges={['top']} scrolling style={{ paddingVertical: 16 }}>
+      <AuthCard />
       {settingsConfig.map(({ title, items }, index) => (
         <List.Section title={title} key={index}>
           {items.map(
@@ -38,6 +38,7 @@ export const SettingsPage = ({
           )}
         </List.Section>
       ))}
+      <SignInOutButton />
     </Screen>
   );
 };
