@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, ViewStyle } from 'react-native';
+import { ScrollView, ScrollViewProps, ViewStyle } from 'react-native';
 import {
   NativeSafeAreaViewProps as SafeAreaProps,
   SafeAreaView,
@@ -9,6 +9,7 @@ import { useThemeColor } from '../../hooks';
 
 type ScrollProps = {
   scrolling?: boolean;
+  scrollViewProps?: ScrollViewProps;
 };
 
 type ThemeProps = {
@@ -24,6 +25,7 @@ export function Screen({
   darkColor,
   children,
   scrolling = false,
+  scrollViewProps,
   ...rest
 }: ScreenProps) {
   const backgroundColor = useThemeColor(
@@ -45,7 +47,7 @@ export function Screen({
       {...rest}
     >
       {scrolling ? (
-        <ScrollView>{children}</ScrollView>
+        <ScrollView {...scrollViewProps}>{children}</ScrollView>
       ) : (
         <>{children}</>
       )}

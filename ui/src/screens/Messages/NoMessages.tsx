@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text } from '../../components';
+import { Box, Text } from '../../components';
 
 export const NoMessages = () => {
   return (
-    <View>
+    <Box>
       <Text>You have no messages!</Text>
-    </View>
+    </Box>
   );
 };

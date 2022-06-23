@@ -1,10 +1,10 @@
 import React from 'react';
-import { View } from '../../../components';
+import { Box } from '../../../components';
 import { windowHeight } from '../../../config';
 
 export const TabScreen: React.FC = ({ children }) => {
   return (
-    <View
+    <Box
       // height: 100% doesn't work here for some reason
       // 112 is the height of the navbar + tabbar
       style={{ minHeight: windowHeight - 112 }}
@@ -13,6 +13,6 @@ export const TabScreen: React.FC = ({ children }) => {
       // another fix would be for the vendorTabs component to have the same height as its tallest child
     >
       {children}
-    </View>
+    </Box>
   );
 };

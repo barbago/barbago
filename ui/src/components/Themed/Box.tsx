@@ -8,9 +8,9 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-export type ViewProps = ThemeProps & DefaultView['props'];
+export type BoxProps = ThemeProps & DefaultView['props'];
 
-export function View(props: ViewProps) {
+export function Box(props: BoxProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
