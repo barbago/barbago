@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Checkbox,
-  DataTable,
-  List,
-  Switch,
-} from 'react-native-paper';
+import { Checkbox, DataTable, List, Switch } from 'react-native-paper';
 import { Screen } from '../../../components';
 import { SettingsStackScreenProps } from '../../../navigation';
 
@@ -39,9 +34,7 @@ export const NotificationsPage = ({
           </DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
-          <DataTable.Cell style={{ flex: 2 }}>
-            Messages
-          </DataTable.Cell>
+          <DataTable.Cell style={{ flex: 2 }}>Messages</DataTable.Cell>
           <DataTable.Cell>
             <Checkbox status="checked" />
           </DataTable.Cell>
@@ -53,9 +46,7 @@ export const NotificationsPage = ({
           </DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
-          <DataTable.Cell style={{ flex: 2 }}>
-            Requests
-          </DataTable.Cell>
+          <DataTable.Cell style={{ flex: 2 }}>Requests</DataTable.Cell>
           <DataTable.Cell>
             <Checkbox status="checked" />
           </DataTable.Cell>

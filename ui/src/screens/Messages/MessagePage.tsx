@@ -4,9 +4,10 @@ import { Screen } from '../../components';
 import { RootTabScreenProps } from '../../navigation/types';
 import { useAuth } from '../../hooks';
 
-export const MessagePage: React.FC<
-  RootTabScreenProps<'Messages'>
-> = ({ navigation, children }) => {
+export const MessagePage: React.FC<RootTabScreenProps<'Messages'>> = ({
+  navigation,
+  children,
+}) => {
   const { user } = useAuth();
   return (
     <Screen scrolling>

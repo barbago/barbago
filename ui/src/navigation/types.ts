@@ -36,12 +36,11 @@ export type RootTabParamList = {
   SettingsStack: NavigatorScreenParams<SettingsStackParamList>;
 };
 
-export type RootTabScreenProps<
-  Screen extends keyof RootTabParamList,
-> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
->;
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<RootTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
 
 export type SettingsStackParamList = {
   Settings: undefined;

@@ -13,9 +13,7 @@ export const PreferencesPage = ({
       <List.Section title="Display">
         <List.Item
           title="Dark Mode"
-          left={(props) => (
-            <List.Icon icon="brightness-6" {...props} />
-          )}
+          left={(props) => <List.Icon icon="brightness-6" {...props} />}
           right={(props) => (
             <Switch
               value={darkMode}
@@ -29,9 +27,7 @@ export const PreferencesPage = ({
         <List.Item
           title="View blocked users"
           description="Work in Progress"
-          left={(props) => (
-            <List.Icon icon="account-off" {...props} />
-          )}
+          left={(props) => <List.Icon icon="account-off" {...props} />}
           right={(props) => (
             <List.Icon icon="chevron-right" {...props} />
           )}

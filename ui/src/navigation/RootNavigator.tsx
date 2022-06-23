@@ -2,11 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 
 import { RootStackParamList } from './types';
-import {
-  BarberPage,
-  NotFoundScreen,
-  WelcomeSwiper,
-} from '../screens';
+import { BarberPage, NotFoundScreen, WelcomeSwiper } from '../screens';
 import { TabNavigator } from './TabNavigator';
 import { useAuth } from '../hooks';
 

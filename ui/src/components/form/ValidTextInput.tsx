@@ -15,8 +15,7 @@ type ControllerProps = {
   defaultValue?: string;
 };
 
-type ValidInputProps = ControllerProps &
-  Omit<TextInputProps, 'theme'>;
+type ValidInputProps = ControllerProps & Omit<TextInputProps, 'theme'>;
 
 export const ValidTextInput = ({
   name,
@@ -40,10 +39,7 @@ export const ValidTextInput = ({
         onBlur={field.onBlur}
         {...inputProps}
       />
-      <HelperText
-        type="error"
-        visible={!!fieldState.error}
-      >
+      <HelperText type="error" visible={!!fieldState.error}>
         {fieldState.error?.message}
       </HelperText>
     </>

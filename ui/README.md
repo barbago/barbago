@@ -6,6 +6,5 @@
   - https://www.npmjs.com/package/react-error-boundary
   - https://www.npmjs.com/package/react-native-error-boundary
 
-
 Login screen, allow barbers to sign up
 Find barber, barber detail, checkout flow

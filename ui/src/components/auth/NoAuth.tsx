@@ -6,8 +6,6 @@ import { useAuth } from '../../hooks';
 export function NoAuth() {
   const { signInAnonymous } = useAuth();
   return (
-    <Button onPress={signInAnonymous}>
-      Continue without account
-    </Button>
+    <Button onPress={signInAnonymous}>Continue without account</Button>
   );
 }

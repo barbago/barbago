@@ -11,7 +11,7 @@ maybeCompleteAuthSession();
 export function GoogleAuth() {
   const { signInGoogle } = useAuth();
   const [request, response, promptAsync] = useIdTokenAuthRequest({
-    clientId: googleConfig.clientId
+    clientId: googleConfig.clientId,
   });
 
   useEffect(() => {

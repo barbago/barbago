@@ -24,9 +24,7 @@ export const ContactPage = ({
         <List.Item
           title="help@barbago.app"
           left={(props) => <List.Icon icon="email" {...props} />}
-          onPress={() =>
-            Linking.openURL('mailto:support@barbago.com')
-          }
+          onPress={() => Linking.openURL('mailto:support@barbago.com')}
         />
         <Menu
           visible={showMenu}

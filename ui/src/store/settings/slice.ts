@@ -61,14 +61,8 @@ export const settingsSlice = createSlice({
         state.notifsEnabled = !state.notifsEnabled;
       }),
       builder.addCase(doFetchSettings.pending, (state, action) => {}),
-      builder.addCase(
-        doFetchSettings.fulfilled,
-        (state, action) => {},
-      ),
-      builder.addCase(
-        doFetchSettings.rejected,
-        (state, action) => {},
-      );
+      builder.addCase(doFetchSettings.fulfilled, (state, action) => {}),
+      builder.addCase(doFetchSettings.rejected, (state, action) => {});
   },
 });
 

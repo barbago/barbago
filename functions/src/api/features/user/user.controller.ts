@@ -27,9 +27,8 @@ userRouter.post(
   asyncHandler(async (req, res) => {
     // todo: take given, then firebase, then default params
     // allow optional image_url, phone, settings
-    
+
     let { uid, displayName: name, email } = req['user'] as UserRecord;
-    
 
     if (!uid || !email || !name) throw httpError(400);
 

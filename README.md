@@ -24,7 +24,7 @@ All the code for the React Native project is located here. Deploys to <https://b
 
 This project uses Expo and Firebase for deployment.
 
-There are two deployment environments: `dev` and `prod`. 
+There are two deployment environments: `dev` and `prod`.
 
 ### Functions Deployment
 

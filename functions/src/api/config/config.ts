@@ -4,5 +4,5 @@ export const {
   DATABASE_NAME: name,
   DATABASE_USER: username,
   DATABASE_PASSWORD: password,
-  DATABASE_URL: database_url
+  DATABASE_URL: database_url,
 } = process.env;

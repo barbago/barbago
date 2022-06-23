@@ -12,9 +12,7 @@ export const AvatarPicker = () => {
     const permission = await requestMediaLibraryPermissionsAsync();
 
     if (!permission.granted) {
-      alert(
-        'Permission to camera roll is required to upload a photo!',
-      );
+      alert('Permission to camera roll is required to upload a photo!');
       return;
     }
     let result = await launchImageLibraryAsync({});

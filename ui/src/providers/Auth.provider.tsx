@@ -3,10 +3,7 @@ import {
   signInAsync,
 } from 'expo-apple-authentication';
 import AppLoading from 'expo-app-loading';
-import {
-  CryptoDigestAlgorithm,
-  digestStringAsync,
-} from 'expo-crypto';
+import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 import { FirebaseError } from 'firebase/app';
 import {
   AuthCredential,

@@ -16,14 +16,7 @@ export const SettingsPage = ({
         <List.Section title={title} key={index}>
           {items.map(
             (
-              {
-                title,
-                subtitle,
-                leftIcon,
-                rightIcon,
-                navigate,
-                link,
-              },
+              { title, subtitle, leftIcon, rightIcon, navigate, link },
               index,
             ) => (
               <List.Item
@@ -34,9 +27,7 @@ export const SettingsPage = ({
                   leftIcon && <List.Icon icon={leftIcon} {...props} />
                 }
                 right={(props) =>
-                  rightIcon && (
-                    <List.Icon icon={rightIcon} {...props} />
-                  )
+                  rightIcon && <List.Icon icon={rightIcon} {...props} />
                 }
                 onPress={() => {
                   if (navigate) navigation.push(navigate);

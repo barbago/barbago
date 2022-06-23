@@ -9,7 +9,9 @@ import {
 import { useAuth } from '../../../hooks';
 import { SettingsStackScreenProps } from '../../../navigation';
 
-export const AccountInfoPage = ({ navigation }: SettingsStackScreenProps<'Account'>) => {
+export const AccountInfoPage = ({
+  navigation,
+}: SettingsStackScreenProps<'Account'>) => {
   const { user } = useAuth();
   const { control, formState, handleSubmit } = useForm();
 

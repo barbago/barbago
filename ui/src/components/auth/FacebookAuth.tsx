@@ -12,7 +12,7 @@ export const FacebookAuth = () => {
   const { signInFacebook } = useAuth();
   const [request, response, promptAsync] = useAuthRequest({
     responseType: ResponseType.Token,
-    clientId: facebookConfig.clientId
+    clientId: facebookConfig.clientId,
   });
 
   useEffect(() => {
