@@ -27,18 +27,18 @@ export const Map = () => {
     longitudeDelta: 16,
   };
 
-  const edgePadding: EdgePadding = {
-    top: 10,
-    right: 10,
+  const mapPadding: EdgePadding = {
+    top: 0,
+    right: 0,
     // why does android have such different numbers than iOS?
     bottom: selected ? (isIOS() ? 440 : 1075) : isIOS() ? 175 : 340,
-    left: 10,
+    left: 0,
   };
 
-  const testPadding: EdgePadding = {
+  const edgePadding: EdgePadding = {
     top: 50,
     right: 50,
-    bottom: selected ? 440 : 200,
+    bottom: 50,
     left: 50,
   };
 
@@ -54,7 +54,7 @@ export const Map = () => {
         latitude: vendor.latitude!,
         longitude: vendor.longitude!,
       })),
-      { edgePadding: testPadding },
+      { edgePadding },
     );
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const Map = () => {
   }, [vendors]);
 
   useEffect(() => {
-    !selected && setTimeout(() => fitVendors(vendors), 100);
+    fitVendors(vendors);
   }, [selected]);
 
   return (
@@ -77,7 +77,7 @@ export const Map = () => {
       pitchEnabled={false}
       rotateEnabled={false}
       showsPointsOfInterest={false}
-      mapPadding={edgePadding}
+      mapPadding={mapPadding}
       style={styles.map}
       customMapStyle={customMapStyle}
       ref={mapRef}
