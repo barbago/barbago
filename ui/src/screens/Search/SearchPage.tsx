@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import {
   getCurrentPositionAsync,
   LocationAccuracy,
@@ -7,8 +8,9 @@ import {
 
 import { Screen } from '../../components';
 import { useSearch } from './services';
-import { FilterControl, Map, ResultModal } from './';
-import { View } from 'react-native';
+import { FilterControl } from './FilterControl';
+import { Map } from './Map';
+import { ResultModal } from './Results';
 
 export const SearchPage = () => {
   const { query, vendors, setCoords } = useSearch();
