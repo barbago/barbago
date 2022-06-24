@@ -1,3 +1,5 @@
+import { Coordinates } from './map.types';
+
 export interface VendorResponse {
   uid: string;
   name?: string;
@@ -12,7 +14,7 @@ export interface VendorResponse {
 }
 
 export interface VendorSearchParams {
-  coordinates?: string;
+  coordinates?: Coordinates;
   sorting?: string;
   filters?: { [key: string]: any };
   // should be keyof maxDistance, maxPrice, minPrice, minRating,
