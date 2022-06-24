@@ -20,6 +20,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
+      mapKeyAndroid: process.env.GOOGLE_MAPS_API_KEY,
+      geocodingKey: process.env.GOOGLE_GEOCODING_API_KEY,
     },
   },
 });

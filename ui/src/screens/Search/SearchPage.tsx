@@ -6,12 +6,12 @@ import {
 } from 'expo-location';
 
 import { Screen } from '../../components';
-import { Map } from './Map';
-import { ResultModal } from './ResultModal';
 import { useSearch } from './services';
+import { FilterControl, Map, ResultModal } from './';
+import { View } from 'react-native';
 
 export const SearchPage = () => {
-  const { query, vendors } = useSearch();
+  const { query, vendors, setCoords } = useSearch();
 
   useEffect(() => {
     (async () => {
@@ -22,22 +22,24 @@ export const SearchPage = () => {
         // almost immediately as soon as user allows it
         accuracy: LocationAccuracy.Balanced,
       });
-      console.log(coords);
-      // alert(`${coords.latitude}, ${coords.longitude}`);
+      coords && setCoords(coords);
       setTimeout(
         () =>
           query({
-            coordinates: '',
+            coordinates: coords,
           }),
-        1000,
+        5000,
       );
     })();
   }, []);
 
   return (
     <Screen edges={['top']}>
-      <Map />
-      <ResultModal />
+      <View style={{ flex: 1 }}>
+        <Map />
+        <FilterControl />
+        <ResultModal />
+      </View>
     </Screen>
   );
 };
