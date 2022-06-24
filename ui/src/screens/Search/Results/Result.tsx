@@ -1,8 +1,8 @@
 import React from 'react';
 import { Avatar, Card, Text, Caption } from 'react-native-paper';
 
-import { VendorResponse } from '../../types';
-import { useSearch } from './services';
+import { VendorResponse } from '../../../types';
+import { useSearch } from '../services';
 
 interface ResultProps {
   vendor: VendorResponse;

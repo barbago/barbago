@@ -7,8 +7,8 @@ import { Modalize, ModalizeProps } from 'react-native-modalize';
 import { ScrollView } from 'react-native';
 import { Button, List } from 'react-native-paper';
 
-import { Modal } from '../../components';
-import { SearchContext } from './services';
+import { Modal } from '../../../components';
+import { SearchContext } from '../services';
 import { Result } from './Result';
 
 const resultHeight = 267;
