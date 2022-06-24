@@ -2,7 +2,7 @@ import React, { createContext, FC, useContext, useState } from 'react';
 
 import { RootTabScreenProps } from '../../../navigation';
 import { vendorApi } from '../../../store';
-import { VendorResponse } from '../../../types';
+import { Coordinates, VendorResponse } from '../../../types';
 
 export interface SearchState {
   query: ReturnType<typeof vendorApi.useLazyVendorSearchQuery>[0];
@@ -11,6 +11,8 @@ export interface SearchState {
   selected?: VendorResponse;
   setSort: (sortBy?: string) => void;
   sort?: string;
+  setCoords: (coords: Coordinates) => void;
+  coords?: Coordinates;
   openVendor: (vendor: VendorResponse) => void;
 }
 
@@ -29,6 +31,7 @@ export const SearchService: FC<RootTabScreenProps<'Search'>> = ({
   const [selected, setSelected] = useState<VendorResponse>();
   const [sort, setSort] = useState<string>();
   const [filters, setFilters] = useState<any>();
+  const [coords, setCoords] = useState<Coordinates>();
 
   const openVendor = (vendor: VendorResponse) => {
     navigation.push('Barber', { id: vendor.uid, screen: 'Info' });
@@ -44,6 +47,8 @@ export const SearchService: FC<RootTabScreenProps<'Search'>> = ({
     setSort,
     filters,
     setFilters,
+    coords,
+    setCoords,
   };
 
   return (
