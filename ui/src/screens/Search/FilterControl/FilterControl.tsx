@@ -38,7 +38,8 @@ export const FilterControl = () => {
   useEffect(() => {
     if (coords) {
       setGoogleApiKey(googleConfig.geocodingKey);
-      // does not work on android if geolocation refused
+      // does not work on android if geolocation refused, use api instead
+      // https://developers.google.com/maps/documentation/javascript/geocoding
       reverseGeocodeAsync(coords)
         .then((res) => {
           setLocation(`${res[0].city}, ${res[0].region}` ?? ''),
