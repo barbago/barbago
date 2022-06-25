@@ -39,3 +39,7 @@
   color: white;
   font-weight: bold;
 }
+
+.leaflet-control-container > div {
+  margin-bottom: 50px;
+}

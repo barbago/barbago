@@ -15,7 +15,8 @@ import { BlueMarker } from './BlueMarker';
 import { VendorResponse } from '../../../types';
 
 export const Map = () => {
-  const { vendors, selected, openVendor, setSelected } = useSearch();
+  const { coords, selected, vendors, openVendor, setSelected } =
+    useSearch();
   const theme = useColorScheme();
   const mapRef = useRef<MapView>(null);
   const markerRefs = useRef<(Marker | null)[]>([]);
@@ -28,10 +29,9 @@ export const Map = () => {
   };
 
   const mapPadding: EdgePadding = {
-    top: 0,
+    top: 100,
     right: 0,
-    // why does android have such different numbers than iOS?
-    bottom: selected ? (isIOS() ? 440 : 1075) : isIOS() ? 175 : 340,
+    bottom: selected ? (isIOS() ? 440 : 390) : isIOS() ? 175 : 125,
     left: 0,
   };
 
@@ -60,12 +60,24 @@ export const Map = () => {
   useEffect(() => {
     // https://stackoverflow.com/questions/54633690/how-can-i-use-multiple-refs-for-an-array-of-elements-with-hooks
     markerRefs.current = markerRefs?.current.slice(0, vendors?.length);
-    fitVendors(vendors);
+    // fitVendors(vendors);
   }, [vendors]);
 
+  // useEffect(() => {
+  //   fitVendors(vendors);
+  // }, [selected]);
+
   useEffect(() => {
-    fitVendors(vendors);
-  }, [selected]);
+    if (mapRef.current && coords?.latitude && coords.longitude) {
+      const { latitude, longitude } = coords;
+      mapRef.current.animateToRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.5,
+        longitudeDelta: 0.5,
+      });
+    }
+  }, [mapRef, coords]);
 
   return (
     <ClusterMapView

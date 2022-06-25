@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import {
   MapContainer,
   TileLayer,
   Marker,
   AttributionControl,
   Popup,
+  ZoomControl,
 } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -30,7 +31,8 @@ const icon = L.icon({
 export const Map = () => {
   const theme = useColorScheme();
   const [map, setMap] = useState<L.Map>();
-  const { vendors, selected, setSelected, openVendor } = useSearch();
+  const { coords, vendors, selected, setSelected, openVendor } =
+    useSearch();
 
   let url =
     theme === 'dark'
@@ -53,18 +55,17 @@ export const Map = () => {
       <small>{vendor.location}</small>
       <Pressable
         onPress={() => openVendor(vendor)}
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-        }}
+        style={styles.popupTarget}
       />
     </Popup>
   );
 
-  const fitVendors = (options?: L.FitBoundsOptions) => {
+  const fitVendors = (
+    options: L.FitBoundsOptions = {
+      paddingTopLeft: [0, 150],
+      paddingBottomRight: [0, 100],
+    },
+  ) => {
     const coords = vendors
       ?.filter((vendor) => vendor.latitude && vendor.longitude)
       .map((vendor) => [vendor.latitude!, vendor.longitude!]);
@@ -82,15 +83,25 @@ export const Map = () => {
     };
   }, [map]);
 
-  useEffect(() => {
-    fitVendors();
-  }, [vendors]);
+  // useEffect(() => {
+  //   fitVendors();
+  // }, [vendors]);
+
+  // useEffect(() => {
+  //   selected
+  //     ? fitVendors({
+  //         paddingTopLeft: [0, 125],
+  //         paddingBottomRight: [0, 317],
+  //       })
+  //     : fitVendors();
+  // }, [selected]);
 
   useEffect(() => {
-    selected
-      ? fitVendors({ paddingBottomRight: [0, 317] })
-      : fitVendors();
-  }, [selected]);
+    if (map && coords?.latitude && coords.longitude) {
+      const { latitude: lat, longitude: lng } = coords;
+      map.flyTo({ lat, lng }, 11);
+    }
+  }, [map, coords]);
 
   return (
     <MapContainer
@@ -102,12 +113,18 @@ export const Map = () => {
       maxBoundsViscosity={1}
       style={{ height: '100%', width: '100%' }}
       attributionControl={false}
+      zoomControl={false}
       closePopupOnClick={false}
       whenCreated={setMap}
     >
-      <AttributionControl position="topright" prefix={false} />
+      <AttributionControl position="bottomright" prefix={false} />
+      <ZoomControl position="bottomleft" />
       <TileLayer url={url} attribution={attribution} />
-      <MarkerClusterGroup showCoverageOnHover={false}>
+      <MarkerClusterGroup
+        showCoverageOnHover={false}
+        /// @ts-ignore
+        onClick={(e: any) => console.log(e)}
+      >
         {vendors?.map((vendor, index) => {
           return (
             vendor.latitude &&
@@ -128,3 +145,13 @@ export const Map = () => {
     </MapContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  popupTarget: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+});
