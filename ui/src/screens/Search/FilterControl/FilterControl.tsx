@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Keyboard,
   NativeSyntheticEvent,
+  Pressable,
   StyleSheet,
   TextInputSubmitEditingEventData,
+  View,
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import {
   geocodeAsync,
   reverseGeocodeAsync,
@@ -18,6 +21,7 @@ import { Box } from '../../../components';
 export const FilterControl = () => {
   const { coords, setCoords } = useSearch();
   const [location, setLocation] = useState<string>('');
+  const [focused, setFocused] = useState<boolean>(false);
 
   const handleSubmit = async (
     e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
@@ -34,6 +38,7 @@ export const FilterControl = () => {
   useEffect(() => {
     if (coords) {
       setGoogleApiKey(googleConfig.geocodingKey);
+      // does not work on android if geolocation refused
       reverseGeocodeAsync(coords)
         .then((res) => {
           setLocation(`${res[0].city}, ${res[0].region}` ?? ''),
@@ -44,39 +49,66 @@ export const FilterControl = () => {
   }, [coords]);
 
   return (
-    <Box style={styles.container}>
-      <TextInput
-        dense
-        value={location}
-        onChange={(e) => setLocation(e.nativeEvent.text)}
-        onSubmitEditing={handleSubmit}
-        placeholder="Input any place"
-        underlineColor="transparent"
-        activeUnderlineColor="transparent"
-        autoComplete="street-address"
-        left={<TextInput.Icon name="map-marker" />}
-        style={styles.input}
-      />
-    </Box>
+    <View style={styles.container} pointerEvents="box-none">
+      <Box style={styles.box}>
+        <TextInput
+          dense
+          value={location}
+          onChange={(e) => setLocation(e.nativeEvent.text)}
+          onSubmitEditing={handleSubmit}
+          onBlur={() => setFocused(false)}
+          onFocus={() => setFocused(true)}
+          placeholder="Raleigh, NC"
+          selectionColor="red"
+          underlineColor="transparent"
+          activeUnderlineColor="transparent"
+          clearButtonMode="while-editing"
+          returnKeyType="search"
+          autoComplete="street-address"
+          textContentType="addressCity"
+          selectTextOnFocus
+          left={<TextInput.Icon name="map-marker" />}
+          style={styles.input}
+        />
+        <Button>Filters</Button>
+      </Box>
+      {focused && (
+        <Pressable
+          style={styles.overlay}
+          onPress={() => Keyboard.dismiss()}
+        />
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    marginHorizontal: 'auto',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 500,
+  },
+  box: {
+    margin: 10,
+    paddingVertical: 8,
+    paddingRight: 16,
+    zIndex: 501,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    left: 10,
-    marginHorizontal: 'auto',
-    paddingVertical: 8,
-    paddingRight: 16,
-    zIndex: 500,
   },
   input: {
     flex: 1,
     backgroundColor: 'transparent',
+  },
+  overlay: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#3337',
   },
 });
