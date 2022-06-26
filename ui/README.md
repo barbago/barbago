@@ -8,3 +8,13 @@
 
 Login screen, allow barbers to sign up
 Find barber, barber detail, checkout flow
+
+
+
+
+
+## Upgrade changes
+todo:
+- update expo-web-browser once a fix for removeEventListener deprecated warning is published
+  - https://github.com/expo/expo/pull/17645
+- replace AppLoading with splash
