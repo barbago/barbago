@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import { Screen } from '../../components';
 
 import { RootStackScreenProps } from '../../navigation';
 import { vendorApi } from '../../store';
 import { ProfileHeader } from './components';
 import { VendorContext } from './context';
-import { VendorTabs } from './VendorTabNavigator';
+import {
+  BarberInfoPage,
+  BarberReviewPage,
+  BarberServicePage,
+} from './screens';
 
 export const BarberPage = ({
   route,
@@ -28,10 +32,12 @@ export const BarberPage = ({
   return (
     <VendorContext.Provider value={{ vendor }}>
       {vendor && (
-        <ScrollView stickyHeaderIndices={[1]}>
+        <Screen scrolling>
           <ProfileHeader />
-          <VendorTabs />
-        </ScrollView>
+          <BarberInfoPage />
+          <BarberServicePage />
+          <BarberReviewPage />
+        </Screen>
       )}
     </VendorContext.Provider>
   );

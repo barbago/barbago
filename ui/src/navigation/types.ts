@@ -4,7 +4,6 @@
  */
 
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import {
   CompositeScreenProps,
   NavigatorScreenParams,
@@ -21,7 +20,7 @@ export type RootStackParamList = {
   Welcome?: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
-  Barber: NavigatorScreenParams<VendorTabParamList> & { id: string };
+  Barber: { id: string };
 };
 
 export type RootStackScreenProps<
@@ -57,14 +56,3 @@ export type SettingsStackScreenProps<
   NativeStackScreenProps<SettingsStackParamList, Screen>,
   BottomTabScreenProps<RootTabParamList>
 >;
-
-export type VendorTabParamList = {
-  Info: undefined;
-  Services: undefined;
-  Reviews: undefined;
-};
-
-// Todo: figure out why MaterialTopTabScreenProps TypeScript autocomplete not working
-export type VendorTabScreenProps<
-  Screen extends keyof VendorTabParamList,
-> = MaterialTopTabScreenProps<VendorTabParamList, Screen>;
