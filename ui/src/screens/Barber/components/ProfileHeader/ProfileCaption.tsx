@@ -1,7 +1,6 @@
-import { View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Text } from '../../../../components';
 import { VendorContext } from '../../context';
 
 export const ProfileCaption = () => {
@@ -38,5 +37,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     fontSize: 30,
     fontWeight: 'bold',
+    color: 'white',
   },
 });
