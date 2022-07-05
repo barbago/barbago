@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Share, StyleSheet } from 'react-native';
 import { FAB, Menu } from 'react-native-paper';
-import { VendorContext } from '../../context';
+import { useVendor } from '../../context';
 
 export interface ProfileButtonsProps {
   horizontal?: boolean;
@@ -12,7 +12,7 @@ export const ProfileButtons = ({
   horizontal = false,
   gap = 8,
 }: ProfileButtonsProps) => {
-  const { vendor: barber } = useContext(VendorContext);
+  const { vendor: barber } = useVendor();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const openMenu = () => setMenuOpen(true);

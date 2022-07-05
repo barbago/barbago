@@ -1,12 +1,12 @@
-import React, { memo, useCallback, useContext, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { Image, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { windowWidth } from '../../../../config';
-import { VendorContext } from '../../context';
+import { useVendor } from '../../context';
 
 // using memo prevents rerender on tab change
 export const ProfileCarousel = memo(() => {
-  const { vendor: barber } = useContext(VendorContext);
+  const { vendor: barber } = useVendor();
 
   const urls = useMemo(() => barber?.images, [barber]);
 

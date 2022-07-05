@@ -5,11 +5,7 @@ import { RootStackScreenProps } from '../../navigation';
 import { vendorApi } from '../../store';
 import { ProfileHeader } from './components';
 import { VendorContext } from './context';
-import {
-  BarberInfoPage,
-  BarberReviewPage,
-  BarberServicePage,
-} from './screens';
+import { ReviewSection } from './ReviewSection';
 
 export const BarberPage = ({
   route,
@@ -34,9 +30,8 @@ export const BarberPage = ({
       {vendor && (
         <Screen scrolling>
           <ProfileHeader />
-          <BarberInfoPage />
-          <BarberServicePage />
-          <BarberReviewPage />
+          {/* Other Sections Here */}
+          <ReviewSection />
         </Screen>
       )}
     </VendorContext.Provider>

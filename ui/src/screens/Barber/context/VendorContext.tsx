@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { VendorResponse } from '../../../types';
 
 export interface VendorState {
@@ -6,3 +6,5 @@ export interface VendorState {
 }
 
 export const VendorContext = createContext<VendorState>({});
+
+export const useVendor = () => useContext(VendorContext);

@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet } from 'react-native';
-import React, { useContext } from 'react';
+import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { VendorContext } from '../../context';
+import { useVendor } from '../../context';
 
 export const ProfileCaption = () => {
-  const { vendor: barber } = useContext(VendorContext);
+  const { vendor: barber } = useVendor();
 
   return (
     <View style={styles.container} pointerEvents="none">
