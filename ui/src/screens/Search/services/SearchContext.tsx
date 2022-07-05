@@ -6,6 +6,7 @@ import { Coordinates, VendorResponse } from '../../../types';
 
 export interface SearchState {
   query: ReturnType<typeof vendorApi.useLazyVendorSearchQuery>[0];
+  response: ReturnType<typeof vendorApi.useLazyVendorSearchQuery>[1];
   vendors?: VendorResponse[];
   setSelected: (vendor?: VendorResponse) => void;
   selected?: VendorResponse;
@@ -25,7 +26,7 @@ export const SearchService: FC<RootTabScreenProps<'Search'>> = ({
   navigation,
   route,
 }) => {
-  const [query, { data: vendors }] =
+  const [query, response] =
     vendorApi.useLazyVendorSearchQuery();
 
   const [selected, setSelected] = useState<VendorResponse>();
@@ -34,12 +35,13 @@ export const SearchService: FC<RootTabScreenProps<'Search'>> = ({
   const [coords, setCoords] = useState<Coordinates>();
 
   const openVendor = (vendor: VendorResponse) => {
-    navigation.push('Barber', { id: vendor.uid, screen: 'Info' });
+    navigation.push('Barber', { id: vendor.uid });
   };
 
   const searchService = {
     query,
-    vendors,
+    response,
+    vendors: response.data,
     openVendor,
     selected,
     setSelected,
