@@ -5,15 +5,16 @@ import { RootStackScreenProps } from '../../navigation';
 import { vendorApi } from '../../store';
 import { ProfileHeader } from './components';
 import { VendorContext } from './context';
-import { ReviewSection } from './ReviewSection';
+import { Reviews } from './Reviews';
 
 export const BarberPage = ({
   route,
   navigation,
 }: RootStackScreenProps<'Barber'>) => {
-  const { data: vendor, isError } = vendorApi.useFetchVendorByIdQuery(
-    route.params.id,
-  );
+  const vendorUid = route.params.id;
+
+  const { data: vendor, isError } =
+    vendorApi.useFetchVendorByIdQuery(vendorUid);
 
   useEffect(() => {
     navigation.setOptions({
@@ -26,12 +27,12 @@ export const BarberPage = ({
   }, [isError]);
 
   return (
-    <VendorContext.Provider value={{ vendor }}>
+    <VendorContext.Provider value={{ vendor, vendorUid }}>
       {vendor && (
         <Screen scrolling>
           <ProfileHeader />
           {/* Other Sections Here */}
-          <ReviewSection />
+          <Reviews />
         </Screen>
       )}
     </VendorContext.Provider>
