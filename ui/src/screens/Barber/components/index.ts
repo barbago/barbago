@@ -1,2 +1,2 @@
 export * from './ProfileHeader';
-export * from './Reviews';
+export * from './Review';

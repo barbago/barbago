@@ -27,9 +27,13 @@ export const Stars = ({
     <View style={[{ flexDirection: 'row', flexWrap: 'wrap' }, style]}>
       {[...Array(maxStars).keys()].map((i) =>
         i < Math.round(rating) ? (
-          <Text style={[starStyle, goldStarStyle]}>★</Text>
+          <Text key={i} style={[starStyle, goldStarStyle]}>
+            ★
+          </Text>
         ) : (
-          <Text style={[starStyle, greyStarStyle]}>★</Text>
+          <Text key={i} style={[starStyle, greyStarStyle]}>
+            ★
+          </Text>
         ),
       )}
     </View>
