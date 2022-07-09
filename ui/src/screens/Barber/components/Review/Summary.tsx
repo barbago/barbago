@@ -6,21 +6,21 @@ import { useReview } from '../../context';
 import { Stars } from './Stars';
 
 export const Summary = () => {
-  const { average } = useReview();
+  const { average, reviews } = useReview();
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.rating}>{average.toFixed(2)}</Text>
       <Stars rating={average} starStyle={styles.stars} />
+      <Text>{reviews.length} Reviews</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { alignSelf: 'flex-start', textAlign: 'center' },
   rating: {
     fontSize: 64,
-    // textAlign: 'center',
   },
   stars: {
     fontSize: 30,
