@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { Text } from '../../../../components';
 import { useThemeColor } from '../../../../hooks';
@@ -9,19 +9,25 @@ import { useReview } from '../../context';
 export const Pagination = () => {
   const { displayed, page, setPage, limit } = useReview();
 
-  const backgroundColor = useThemeColor({}, 'background');
   const color = useThemeColor({}, 'text');
 
   const styles = StyleSheet.create({
-    container: { flexDirection: 'row' },
-    buttons: { backgroundColor },
+    container: {
+      alignSelf: 'flex-start',
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: color,
+      borderWidth: 1,
+      borderRadius: 4,
+    },
+    buttons: { padding: 4 },
     icon: { fontSize: 20, color },
     page: {},
   });
 
   return (
     <View style={styles.container}>
-      <TouchableHighlight
+      <TouchableOpacity
         disabled={page < 1}
         onPress={() => {
           setPage(page - 1);
@@ -32,13 +38,13 @@ export const Pagination = () => {
           name="chevron-left"
           style={styles.icon}
         />
-      </TouchableHighlight>
+      </TouchableOpacity>
 
       <Text style={styles.page}>
         Page {page + 1} of {Math.ceil(displayed.length / limit)}
       </Text>
 
-      <TouchableHighlight
+      <TouchableOpacity
         disabled={page >= Math.floor((displayed.length - 1) / limit)}
         onPress={() => {
           setPage(page + 1);
@@ -49,7 +55,7 @@ export const Pagination = () => {
           name="chevron-right"
           style={styles.icon}
         />
-      </TouchableHighlight>
+      </TouchableOpacity>
     </View>
   );
 };

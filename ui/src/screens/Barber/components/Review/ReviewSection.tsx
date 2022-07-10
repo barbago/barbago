@@ -9,12 +9,13 @@ export const ReviewSection = () => {
   const { response, displayed, page, limit } = useReview();
 
   return (
-    <View style={{ padding: 16 }}>
+    <View style={{ padding: 8 }}>
       <Summary />
       {displayed.length < 1 ? (
         <Text>No matching reviews, sorry!</Text>
       ) : (
         <>
+          <Pagination />
           {displayed
             .slice(page * limit, page * limit + limit)
             .map((review, index) => (
