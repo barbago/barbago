@@ -22,7 +22,7 @@ export interface ReviewState {
   displayed: ReviewModel[];
   average: number;
   sort: keyof ReviewModel;
-  setSort: (sort: string) => void;
+  setSort: (sort: keyof ReviewModel) => void;
   filter: string;
   setFilter: (filter: string) => void;
 }
@@ -36,22 +36,28 @@ export const ReviewService: FC = ({ children }) => {
 
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
-  const [sort, setSort] = useState<any>();
+  const [sort, setSort] = useState<keyof ReviewModel>('date');
   const [filter, setFilter] = useState<string>('');
+  const [sortAsc, setSortAsc] = useState<boolean>(true);
 
   const response = reviewApi.useFetchReviewsByUidQuery(vendorUid);
 
   const reviews = response.data ?? [];
 
-  const displayed = useMemo(
-    () =>
-      reviews.filter((review) =>
+  const displayed = useMemo(() => {
+    const arr = reviews
+      .filter((review) =>
         Object.values(review).some((value) =>
           value.toString().toLowerCase().includes(filter.toLowerCase()),
         ),
-      ),
-    [reviews, filter],
-  );
+      )
+      .sort((a, b) =>
+        !!a[sort] && !!b[sort]
+          ? b[sort]!.toString().localeCompare(a[sort]!.toString())
+          : 0,
+      );
+    return !sortAsc ? arr : arr.reverse();
+  }, [reviews, filter, sort, sortAsc]);
 
   const average = useMemo(
     () =>

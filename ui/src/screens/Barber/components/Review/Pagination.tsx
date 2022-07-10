@@ -19,6 +19,7 @@ export const Pagination = () => {
       borderColor: color,
       borderWidth: 1,
       borderRadius: 4,
+      marginVertical: 8,
     },
     buttons: { padding: 4 },
     icon: { fontSize: 20, color },

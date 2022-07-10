@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 8,
   },
   summary: {
     alignSelf: 'flex-start',
@@ -74,13 +75,13 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   rating: {
-    fontSize: 48,
-    lineHeight: 48,
+    fontSize: 64,
+    lineHeight: 64,
   },
   stars: {
     marginHorizontal: 'auto',
-    fontSize: 20,
-    lineHeight: 20,
+    fontSize: 30,
+    lineHeight: 30,
   },
   count: {
     opacity: 0.75,
