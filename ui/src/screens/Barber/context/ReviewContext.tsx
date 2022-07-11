@@ -21,10 +21,15 @@ export interface ReviewState {
   reviews: ReviewModel[];
   displayed: ReviewModel[];
   average: number;
-  sort: keyof ReviewModel;
-  setSort: (sort: keyof ReviewModel) => void;
+  sort: ReviewSort;
+  setSort: (sort: ReviewSort) => void;
   filter: string;
   setFilter: (filter: string) => void;
+}
+
+interface ReviewSort {
+  key: keyof ReviewModel;
+  asc: boolean;
 }
 
 export const ReviewContext = createContext<ReviewState>(undefined!);
@@ -36,9 +41,11 @@ export const ReviewService: FC = ({ children }) => {
 
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
-  const [sort, setSort] = useState<keyof ReviewModel>('date');
   const [filter, setFilter] = useState<string>('');
-  const [sortAsc, setSortAsc] = useState<boolean>(true);
+  const [sort, setSort] = useState<ReviewSort>({
+    key: 'date',
+    asc: false,
+  });
 
   const response = reviewApi.useFetchReviewsByUidQuery(vendorUid);
 
@@ -51,13 +58,11 @@ export const ReviewService: FC = ({ children }) => {
           value.toString().toLowerCase().includes(filter.toLowerCase()),
         ),
       )
-      .sort((a, b) =>
-        !!a[sort] && !!b[sort]
-          ? b[sort]!.toString().localeCompare(a[sort]!.toString())
-          : 0,
+      .sort(({ [sort.key]: a }, { [sort.key]: b }) =>
+        !!a && !!b ? b!.toString().localeCompare(a.toString()) : 0,
       );
-    return !sortAsc ? arr : arr.reverse();
-  }, [reviews, filter, sort, sortAsc]);
+    return sort.asc ? arr.reverse() : arr;
+  }, [reviews, filter, sort]);
 
   const average = useMemo(
     () =>

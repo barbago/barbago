@@ -15,7 +15,6 @@ export const ReviewSection = () => {
         <Text>No matching reviews, sorry!</Text>
       ) : (
         <>
-          <Pagination />
           {displayed
             .slice(page * limit, page * limit + limit)
             .map((review, index) => (

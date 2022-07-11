@@ -16,7 +16,7 @@ export const Pagination = () => {
       alignSelf: 'flex-start',
       flexDirection: 'row',
       alignItems: 'center',
-      borderColor: color,
+      borderColor: `${color}4`,
       borderWidth: 1,
       borderRadius: 4,
       marginVertical: 8,
