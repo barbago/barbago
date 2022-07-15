@@ -2,7 +2,7 @@ import {
   ActionSheetOptions,
   useActionSheet,
 } from '@expo/react-native-action-sheet';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 
@@ -11,19 +11,20 @@ import { ReviewModel } from '../../../../types';
 import { useReview } from '../../context';
 import { Pagination } from './Pagination';
 import { Stars } from './Stars';
+import { WriteDialog } from './WriteDialog';
 
 export const Summary = () => {
-  const { average, reviews, filter, setFilter, setSort } = useReview();
-
   const { showActionSheetWithOptions } = useActionSheet();
+  const { average, reviews, filter, setFilter, setSort } = useReview();
+  const [writeOpen, setWriteOpen] = useState(false);
 
   const sortOptions: {
     label: string;
     key?: keyof ReviewModel;
     asc?: boolean;
   }[] = [
-    { label: 'Date (newest first)', key: 'date', asc: true },
-    { label: 'Date (oldest first)', key: 'date', asc: false },
+    { label: 'Date (newest first)', key: 'date', asc: false },
+    { label: 'Date (oldest first)', key: 'date', asc: true },
     { label: 'Rating (high first)', key: 'rating', asc: false },
     { label: 'Rating (low first)', key: 'rating', asc: true },
     { label: 'Cancel' },
@@ -47,10 +48,6 @@ export const Summary = () => {
     showActionSheetWithOptions(options, actionSheetCallback);
   };
 
-  const handleWrite = () => {
-    alert('Write Review');
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -67,7 +64,7 @@ export const Summary = () => {
         >
           <Button
             mode="contained"
-            onPress={handleWrite}
+            onPress={() => setWriteOpen(true)}
             icon="pencil"
             style={{ alignSelf: 'flex-end' }}
           >
@@ -90,6 +87,7 @@ export const Summary = () => {
           Sort Reviews
         </Button>
       </View>
+      <WriteDialog open={writeOpen} setOpen={setWriteOpen} />
     </View>
   );
 };
