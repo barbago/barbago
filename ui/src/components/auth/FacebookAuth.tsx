@@ -4,7 +4,7 @@ import { maybeCompleteAuthSession } from 'expo-web-browser';
 import React, { useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { facebookConfig } from '../../config';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 maybeCompleteAuthSession();
 

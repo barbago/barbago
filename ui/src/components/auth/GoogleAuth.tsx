@@ -3,7 +3,7 @@ import { Button } from 'react-native-paper';
 import { maybeCompleteAuthSession } from 'expo-web-browser';
 import { useIdTokenAuthRequest } from 'expo-auth-session/providers/google';
 import { googleConfig } from '../../config';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 maybeCompleteAuthSession();
 

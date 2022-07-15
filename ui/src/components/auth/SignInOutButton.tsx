@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 export interface SignInOutButtonProps {
   style?: ViewStyle;

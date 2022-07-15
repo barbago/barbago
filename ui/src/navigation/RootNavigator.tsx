@@ -4,7 +4,7 @@ import * as React from 'react';
 import { RootStackParamList } from './types';
 import { BarberPage, NotFoundScreen, WelcomeSwiper } from '../screens';
 import { TabNavigator } from './TabNavigator';
-import { useAuth } from '../hooks';
+import { useAuth } from '../providers';
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.

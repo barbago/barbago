@@ -12,7 +12,7 @@ import {
   PreferencesPage,
   SettingsPage,
 } from '..';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 const Stack = createNativeStackNavigator<SettingsStackParamList>();
 

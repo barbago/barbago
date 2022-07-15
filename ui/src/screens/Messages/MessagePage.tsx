@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, List, Text } from 'react-native-paper';
 import { Screen } from '../../components';
 import { RootTabScreenProps } from '../../navigation/types';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 export const MessagePage: React.FC<RootTabScreenProps<'Messages'>> = ({
   navigation,

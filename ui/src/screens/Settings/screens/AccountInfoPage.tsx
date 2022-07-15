@@ -6,7 +6,7 @@ import {
   Screen,
   ValidTextInput,
 } from '../../../components';
-import { useAuth } from '../../../hooks';
+import { useAuth } from '../../../providers';
 import { SettingsStackScreenProps } from '../../../navigation';
 
 export const AccountInfoPage = ({

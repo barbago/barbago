@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-native-paper';
 
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 export function NoAuth() {
   const { signInAnonymous } = useAuth();

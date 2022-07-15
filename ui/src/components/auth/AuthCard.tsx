@@ -4,7 +4,7 @@ import { Image, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { Box, Text } from '../Themed';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 export interface AuthCardProps {}
 

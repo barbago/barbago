@@ -6,7 +6,7 @@ import {
   AppleAuthenticationButtonStyle,
   AppleAuthenticationButtonType,
 } from 'expo-apple-authentication';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 export const AppleAuth = () => {
   const { signInApple } = useAuth();

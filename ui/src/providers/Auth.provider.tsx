@@ -16,7 +16,7 @@ import {
   signOut as firebaseSignout,
   User,
 } from 'firebase/auth';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { auth } from '../config';
 import { setToken, store } from '../store';
@@ -188,6 +188,14 @@ export const AuthProvider: React.FC = ({ children }) => {
       </AuthContext.Provider>
     );
 };
+
+export const useAuth = () => {
+  const authContext = useContext(AuthContext);
+  if (!authContext)
+    throw Error('Cannot useAuthService outside a provider');
+  return authContext;
+};
+
 
 /*
 TODO

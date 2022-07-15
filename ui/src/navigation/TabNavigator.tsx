@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { useAuth } from '../hooks';
+import { useAuth } from '../providers';
 import { HomePage, MessagePage, Search } from '../screens';
 import { SettingsNavigator } from '../screens/Settings';
 import { RootStackScreenProps, RootTabParamList } from './types';

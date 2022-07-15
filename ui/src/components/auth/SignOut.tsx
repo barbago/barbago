@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-native-paper';
-import { useAuth } from '../../hooks';
+import { useAuth } from '../../providers';
 
 export const SignOut = () => {
   const { user, signOut } = useAuth();

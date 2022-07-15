@@ -3,7 +3,7 @@ import { Linking } from 'react-native';
 import { useForm, FieldValues } from 'react-hook-form';
 import { Button, Card, List, Menu } from 'react-native-paper';
 import { Screen, ValidTextInput } from '../../../components';
-import { useAuth } from '../../../hooks';
+import { useAuth } from '../../../providers';
 import { SettingsStackScreenProps } from '../../../navigation';
 
 export const ContactPage = ({
