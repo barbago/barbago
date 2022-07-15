@@ -1,10 +1,11 @@
 import React from 'react';
-import { TextStyle, View, ViewStyle } from 'react-native';
+import { Pressable, TextStyle, View, ViewStyle } from 'react-native';
 
 import { Text } from '../../../../components';
 
 export interface StarsProps {
-  rating: number;
+  rating?: number;
+  setRating?: (rating: number) => void;
   maxStars?: number;
   style?: ViewStyle;
   starStyle?: TextStyle;
@@ -13,7 +14,8 @@ export interface StarsProps {
 }
 
 export const Stars = ({
-  rating,
+  rating = 0,
+  setRating,
   maxStars = 5,
   goldStarStyle = { color: 'gold' },
   greyStarStyle = { opacity: 0.5 },
@@ -24,18 +26,16 @@ export const Stars = ({
   // possibly render all 5 empty stars, and full stars on top
   // and a fraction of the last star
   return (
-    <View style={[{ flexDirection: 'row', flexWrap: 'wrap' }, style]}>
-      {[...Array(maxStars).keys()].map((i) =>
-        i < Math.round(rating) ? (
-          <Text key={i} style={[starStyle, goldStarStyle]}>
-            ★
-          </Text>
-        ) : (
-          <Text key={i} style={[starStyle, greyStarStyle]}>
-            ★
-          </Text>
-        ),
-      )}
+    <View style={[{ flexDirection: 'row' }, style]}>
+      {[...Array(maxStars).keys()].map((i) => (
+        <Pressable onPress={() => setRating?.(i + 1)} key={i}>
+          {i < Math.round(rating) ? (
+            <Text style={[starStyle, goldStarStyle]}>★</Text>
+          ) : (
+            <Text style={[starStyle, greyStarStyle]}>★</Text>
+          )}
+        </Pressable>
+      ))}
     </View>
   );
 };
