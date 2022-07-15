@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Screen } from '../../components';
 
 import { RootStackScreenProps } from '../../navigation';
+import { Toast } from '../../providers';
 import { vendorApi } from '../../store';
 import { ProfileHeader } from './components';
 import { VendorContext } from './context';
@@ -35,6 +36,7 @@ export const BarberPage = ({
           <Reviews />
         </Screen>
       )}
+      <Toast />
     </VendorContext.Provider>
   );
 };

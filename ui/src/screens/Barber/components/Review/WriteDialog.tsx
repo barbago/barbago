@@ -3,6 +3,7 @@ import { Alert, Keyboard, Platform, StyleSheet } from 'react-native';
 import { Button, Dialog, Portal, TextInput } from 'react-native-paper';
 
 import { useKeyboardChange } from '../../../../hooks';
+import { useToast } from '../../../../providers';
 import { useReview, useVendor } from '../../context';
 import { Stars } from './Stars';
 
@@ -16,7 +17,8 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
   const { createReview } = useReview();
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
-  const [bottom, setBottom] = React.useState(0);
+  const [bottom, setBottom] = useState(0);
+  const { open: openToast } = useToast();
 
   useKeyboardChange({
     onOpen: (e) => setBottom(e.endCoordinates.height / 2),
@@ -51,10 +53,15 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
   };
 
   const handleSubmit = () => {
-    createReview[0]({ uid: vendorUid, rating, review: text })
-      .then(console.log)
-      .catch((err) => console.log('failed'))
-      .finally(closeModal);
+    rating
+      ? createReview[0]({ uid: vendorUid, rating, review: text })
+          .unwrap()
+          .then((res) => openToast('Submitted review!'))
+          .catch((err) => openToast('Failed to submit review'))
+          .finally(closeModal)
+      : alert
+      ? alert('Please select a rating')
+      : Alert.alert('Please select a rating');
   };
 
   return (
@@ -119,7 +126,6 @@ const styles = StyleSheet.create({
   },
   actions: {
     marginTop: -16,
-    // padding: 16,
   },
   cancel: {
     marginRight: 8,
