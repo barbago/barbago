@@ -24,18 +24,20 @@ export const Review = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {avatar && (
+        {!!avatar && (
           <Image style={styles.avatar} source={{ uri: avatar }} />
         )}
         <View style={styles.author}>
           <Text>{name}</Text>
-          {location && <Text style={styles.secondary}>{location}</Text>}
+          {!!location && (
+            <Text style={styles.secondary}>{location}</Text>
+          )}
         </View>
         <ReviewMenu />
       </View>
       <View style={styles.rating}>
-        {rating && <Stars rating={rating} style={styles.stars} />}
-        {date && (
+        {!!rating && <Stars rating={rating} style={styles.stars} />}
+        {!!date && (
           <Text style={styles.secondary}>
             {relativeTimeFromDates(new Date(date ?? ''))}
           </Text>
