@@ -25,13 +25,7 @@ export const SearchPage = () => {
         accuracy: LocationAccuracy.Balanced,
       });
       coords && setCoords(coords);
-      setTimeout(
-        () =>
-          query({
-            coordinates: coords,
-          }),
-        5000,
-      );
+      query({ coordinates: coords });
     })();
   }, []);
 
