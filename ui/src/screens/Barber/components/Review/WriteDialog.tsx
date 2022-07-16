@@ -54,7 +54,7 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
 
   const handleSubmit = () => {
     rating
-      ? createReview[0]({ uid: vendorUid, rating, review: text })
+      ? createReview({ uid: vendorUid, rating, review: text })
           .unwrap()
           .then((res) => openToast('Submitted review!'))
           .catch((err) => openToast('Failed to submit review'))

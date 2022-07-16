@@ -17,7 +17,7 @@ export interface ReviewState {
   setPage: (page: number) => void;
   limit: number;
   setLimit: (limit: number) => void;
-  createReview: ReturnType<typeof reviewApi.useCreateReviewMutation>;
+  createReview: ReturnType<typeof reviewApi.useCreateReviewMutation>[0];
   response: ReturnType<typeof reviewApi.useFetchReviewsByUidQuery>;
   reviews: ReviewModel[];
   displayed: ReviewModel[];
@@ -40,7 +40,7 @@ export const useReview = () => useContext(ReviewContext);
 export const ReviewService: FC = ({ children }) => {
   const { vendorUid } = useVendor();
   const response = reviewApi.useFetchReviewsByUidQuery(vendorUid);
-  const createReview =
+  const [createReview] =
     reviewApi.useCreateReviewMutation();
 
   const [page, setPage] = useState(0);
