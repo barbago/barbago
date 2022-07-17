@@ -4,7 +4,7 @@
   "description": "Barbago's backend REST API written with Express and TypeScript",
   "main": "lib/index.js",
   "scripts": {
-    "start": "npm run dev",
+    "start": "npm run build && npm run docs && npm run serve",
     "build": "npm run clean && tsc",
     "build:watch": "tsc --watch --preserveWatchOutput",
     "clean": "rm -rf ./lib ./docs",
@@ -46,7 +46,7 @@
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
     "firebase-admin": "^10.0.1",
-    "firebase-functions": "^3.21.2",
+    "firebase-functions": "^3.22.0",
     "helmet": "^5.0.0",
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
