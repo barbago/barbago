@@ -47,8 +47,8 @@ userRouter.post(
  * @apiPermission Current User
  *
  * @apiUse BearerAuth
- * @apiError UnauthorizedError
- * @apiError NotFoundError
+ * @apiUse UnauthorizedError
+ * @apiUse NotFoundError
  */
 userRouter.delete(
   '/',
