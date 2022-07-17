@@ -1,10 +1,11 @@
 import { Router } from 'express';
 
-import { userRouter } from './features/user';
+import { userRouter, vendorRouter } from './features';
 
 export const router = Router();
 
 router.use('/user', userRouter);
+router.use('/vendor', vendorRouter);
 
 /**
  * @apiDefine BearerAuth
@@ -66,5 +67,18 @@ router.use('/user', userRouter);
  * {
  *   "status": 404,
  *   "message": "Not Found"
+ * }
+ */
+
+/**
+ * @apiDefine ConflictError
+ * @apiVersion 1.0.0
+ *
+ * @apiError Conflict There is already a resource at this endpoint
+ * @apiErrorExample Conflict response:
+ * Error 409: Conflict
+ * {
+ *   "status": 409,
+ *   "message": "Conflict"
  * }
  */
