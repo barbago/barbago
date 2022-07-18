@@ -13,7 +13,7 @@ import { Map } from './Map';
 import { ResultModal } from './Results';
 
 export const SearchPage = () => {
-  const { query, vendors, setCoords } = useSearch();
+  const { query, setCoords, coords } = useSearch();
 
   useEffect(() => {
     (async () => {
@@ -21,13 +21,18 @@ export const SearchPage = () => {
       let { status } = await requestForegroundPermissionsAsync();
       let { coords } = await getCurrentPositionAsync({
         // using balanced accuracy means the location is loaded
-        // almost immediately as soon as user allows it
         accuracy: LocationAccuracy.Balanced,
       });
       coords && setCoords(coords);
-      query({ coordinates: coords });
     })();
   }, []);
+
+  useEffect(() => {
+    if (coords) {
+      const { latitude, longitude } = coords;
+      query({ latitude, longitude, distance: 30000 });
+    }
+  }, [coords]);
 
   return (
     <Screen edges={['top']}>
