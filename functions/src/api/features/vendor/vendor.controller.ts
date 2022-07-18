@@ -110,30 +110,7 @@ vendorRouter.get(
 );
 
 /**
- * @api {get} /vendor/uid/:uid Get a vendor's profile by their UID
- * @apiParam {String} uid Firebase User ID
- *
- * @apiGroup Vendors
- * @apiName getVendorById
- * @apiVersion 1.0.0
- *
- * @apiUse NotFoundError
- */
-vendorRouter.get(
-  'uid/:uid',
-  asyncHandler(async (req, res) => {
-    const { uid } = req.params;
-
-    const vendor = await vendorService.getVendorByUid(uid);
-
-    if (!vendor) throw httpError(404);
-
-    res.json(vendor);
-  }),
-);
-
-/**
- * @api {get} /vendor/:link Get a vendor's profile by link
+ * @api {get} /vendor/link/:link Get a vendor's profile by link
  * @apiParam {String} link Customizable link to profile
  *
  * @apiGroup Vendors
@@ -144,13 +121,36 @@ vendorRouter.get(
  * @apiUse NotFoundError
  */
 vendorRouter.get(
-  '/:link',
+  '/link/:link',
   asyncHandler(async (req, res) => {
     const { link } = req.params;
 
     if (!link) throw httpError(400);
 
     const vendor = await vendorService.getVendorByLink(link);
+
+    if (!vendor) throw httpError(404);
+
+    res.json(vendor);
+  }),
+);
+
+/**
+ * @api {get} /vendor/:uid Get a vendor's profile by their UID
+ * @apiParam {String} uid Firebase User ID
+ *
+ * @apiGroup Vendors
+ * @apiName getVendorById
+ * @apiVersion 1.0.0
+ *
+ * @apiUse NotFoundError
+ */
+vendorRouter.get(
+  '/:uid',
+  asyncHandler(async (req, res) => {
+    const { uid } = req.params;
+
+    const vendor = await vendorService.getVendorByUid(uid);
 
     if (!vendor) throw httpError(404);
 
