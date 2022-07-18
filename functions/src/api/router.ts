@@ -1,11 +1,12 @@
 import { Router } from 'express';
 
-import { userRouter, vendorRouter } from './features';
+import { reviewRouter, userRouter, vendorRouter } from './features';
 
 export const router = Router();
 
 router.use('/user', userRouter);
 router.use('/vendor', vendorRouter);
+router.use('/vendor/:uid/review', reviewRouter);
 
 /**
  * @apiDefine BearerAuth
