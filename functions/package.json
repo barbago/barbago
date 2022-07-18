@@ -47,6 +47,7 @@
     "express-async-handler": "^1.2.0",
     "firebase-admin": "^10.0.1",
     "firebase-functions": "^3.22.0",
+    "geofire-common": "^6.0.0",
     "helmet": "^5.0.0",
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",

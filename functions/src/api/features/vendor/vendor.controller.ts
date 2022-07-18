@@ -11,6 +11,7 @@ export const vendorRouter = Router();
 /**
  * @api {post} /vendor/ Create a new vendor
  * @apiBody {String} location Location displayed on profile
+ * @apiBody {String} link Custom link to profile in app
  *
  * @apiGroup Vendors
  * @apiName createVendor
@@ -28,13 +29,27 @@ vendorRouter.post(
   isAuthenticated,
   asyncHandler(async (req, res) => {
     const { uid } = req['user'] as UserRecord;
-    const {} = req.body;
+    const { name, link, location, latitude, longitude } = req.body;
 
-    if (!uid) throw httpError(400);
+    // todo: switch this out for express-validator
+    if (!name) throw httpError(400, 'name is a required field');
+    if (!link) throw httpError(400, 'link is a required field');
+    if (!link.match(/^[\w-]+$/))
+      throw httpError(400, 'link must only contain chars and dashes');
 
-    if (await vendorService.getVendorByUid(uid)) throw httpError(409);
+    if (
+      (
+        await Promise.all([
+          vendorService.getVendorByUid(uid),
+          vendorService.getVendorByLink(link),
+        ])
+      ).some((res) => !!res)
+    )
+      throw httpError(409);
 
-    const vendor = await vendorService.createVendor(uid, req.body);
+    const params = { uid, name, link, location, latitude, longitude };
+
+    const vendor = await vendorService.createVendor(uid, params);
 
     res.json(vendor);
   }),
@@ -49,7 +64,6 @@ vendorRouter.post(
  * @apiPermission Current User
  *
  * @apiUse BearerAuth
- * @apiUse BadRequestError
  * @apiUse UnauthorizedError
  * @apiUse NotFoundError
  */
@@ -58,8 +72,6 @@ vendorRouter.delete(
   isAuthenticated,
   asyncHandler(async (req, res) => {
     const { uid } = req['user'] as UserRecord;
-
-    if (!uid) throw httpError(400);
 
     const vendor = await vendorService.getVendorByUid(uid);
 
@@ -80,7 +92,6 @@ vendorRouter.delete(
  * @apiPermission Current User
  *
  * @apiUse BearerAuth
- * @apiUse BadRequestError
  * @apiUse UnauthorizedError
  * @apiUse NotFoundError
  */
@@ -89,8 +100,6 @@ vendorRouter.get(
   isAuthenticated,
   asyncHandler(async (req, res) => {
     const { uid } = req['user'] as UserRecord;
-
-    if (!uid) throw httpError(400);
 
     const vendor = await vendorService.getVendorByUid(uid);
 
@@ -101,7 +110,7 @@ vendorRouter.get(
 );
 
 /**
- * @api {get} /vendor/:uid Get a vendor's profile by their UID
+ * @api {get} /vendor/uid/:uid Get a vendor's profile by their UID
  * @apiParam {String} uid Firebase User ID
  *
  * @apiGroup Vendors
@@ -111,11 +120,37 @@ vendorRouter.get(
  * @apiUse NotFoundError
  */
 vendorRouter.get(
-  '/:uid',
+  'uid/:uid',
   asyncHandler(async (req, res) => {
     const { uid } = req.params;
 
     const vendor = await vendorService.getVendorByUid(uid);
+
+    if (!vendor) throw httpError(404);
+
+    res.json(vendor);
+  }),
+);
+
+/**
+ * @api {get} /vendor/:link Get a vendor's profile by link
+ * @apiParam {String} link Customizable link to profile
+ *
+ * @apiGroup Vendors
+ * @apiName getVendorByLink
+ * @apiVersion 1.0.0
+ *
+ * @apiUse BadRequestError
+ * @apiUse NotFoundError
+ */
+vendorRouter.get(
+  '/:link',
+  asyncHandler(async (req, res) => {
+    const { link } = req.params;
+
+    if (!link) throw httpError(400);
+
+    const vendor = await vendorService.getVendorByLink(link);
 
     if (!vendor) throw httpError(404);
 
@@ -143,8 +178,6 @@ vendorRouter.put(
     const { name, location, latitude, longitude, cover, images } =
       req.body;
 
-    if (!uid) throw httpError(400);
-
     if (!(await vendorService.getVendorByUid(uid)))
       throw httpError(404);
 
@@ -155,19 +188,38 @@ vendorRouter.put(
 );
 
 /**
- * @api {get} /vendor/ Search for vendors
+ * @api {post} /vendor/search Search for vendors
+ * @apiBody {Number} latitude
+ * @apiBody {Number} longitude
+ * @apiBody {Number} [distance=30000] radius in meters from coords
  *
  * @apiGroup Vendors
  * @apiName searchVendor
  * @apiVersion 1.0.0
  *
  * @apiUse BearerAuth
+ * @apiUse BadRequestError
  */
 
 vendorRouter.post(
   '/search',
   asyncHandler(async (req, res) => {
-    const vendors = await vendorService.searchVendors(req.body);
+    const { latitude, longitude, distance = 30000 } = req.body;
+
+    if (!latitude || typeof latitude !== 'number')
+      throw httpError(400, 'latitude is required and must be a number');
+    if (!longitude || typeof longitude !== 'number')
+      throw httpError(400, 'longitude is required and must be a numbe');
+    if (typeof distance !== 'number')
+      throw httpError(400, 'distance must be a number');
+
+    const params = {
+      latitude,
+      longitude,
+      distance,
+    };
+
+    const vendors = await vendorService.searchVendors(params);
 
     res.json(vendors);
   }),
