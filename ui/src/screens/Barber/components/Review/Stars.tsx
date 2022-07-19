@@ -4,13 +4,21 @@ import { Pressable, TextStyle, View, ViewStyle } from 'react-native';
 import { Text } from '../../../../components';
 
 export interface StarsProps {
+  /** Number of stars to highlight. */
   rating?: number;
+  /** Optional method to change the number of stars */
   setRating?: (rating: number) => void;
+  /** If disabled, setRating will not be called */
   disabled?: boolean;
+  /** Max number of stars to display. Defaults to 5 */
   maxStars?: number;
+  /** Sets the style of the view containing the stars */
   style?: ViewStyle;
+  /** Set the style of all the stars */
   starStyle?: TextStyle;
+  /** Set the style of the active stars */
   goldStarStyle?: TextStyle;
+  /** Set the style of the inactive stars */
   greyStarStyle?: TextStyle;
 }
 

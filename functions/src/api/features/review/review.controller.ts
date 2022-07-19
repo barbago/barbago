@@ -104,7 +104,10 @@ reviewRouter.post(
     if (!(await getVendorByUid(vendorId)))
       throw httpError(404, 'Vendor does not exist!');
     if (await reviewService.getVendorReviewById(vendorId, authorId))
-      throw httpError(409, 'You have already created a review here!');
+      throw httpError(
+        409,
+        'You have already submitted a review for this vendor!',
+      );
 
     const params = {
       authorId,
