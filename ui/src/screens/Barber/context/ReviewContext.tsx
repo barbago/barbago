@@ -38,10 +38,9 @@ export const ReviewContext = createContext<ReviewState>(undefined!);
 export const useReview = () => useContext(ReviewContext);
 
 export const ReviewService: FC = ({ children }) => {
-  const { vendorUid } = useVendor();
+  const { vendorLink: vendorUid } = useVendor();
   const response = reviewApi.useFetchReviewsByUidQuery(vendorUid);
-  const [createReview] =
-    reviewApi.useCreateReviewMutation();
+  const [createReview] = reviewApi.useCreateReviewMutation();
 
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -50,7 +49,6 @@ export const ReviewService: FC = ({ children }) => {
     key: 'date',
     asc: false,
   });
-
 
   const reviews = response.data ?? [];
 

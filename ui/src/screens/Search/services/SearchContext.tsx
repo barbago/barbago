@@ -35,7 +35,8 @@ export const SearchService: FC<RootTabScreenProps<'Search'>> = ({
   const [coords, setCoords] = useState<Coordinates>();
 
   const openVendor = (vendor: VendorResponse) => {
-    navigation.push('Barber', { id: vendor.uid });
+    console.log(vendor);
+    navigation.push('Barber', { id: vendor.link });
   };
 
   const searchService = {

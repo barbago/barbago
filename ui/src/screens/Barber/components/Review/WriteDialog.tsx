@@ -13,7 +13,7 @@ export interface WriteDialogProps {
 }
 
 export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
-  const { vendor, vendorUid } = useVendor();
+  const { vendor, vendorLink: vendorUid } = useVendor();
   const { createReview } = useReview();
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);

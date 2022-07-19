@@ -3,7 +3,7 @@ import { VendorResponse } from '../../../types';
 
 export interface VendorState {
   vendor?: VendorResponse;
-  vendorUid: string;
+  vendorLink: string;
 }
 
 export const VendorContext = createContext<VendorState>(undefined!);

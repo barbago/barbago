@@ -12,10 +12,10 @@ export const BarberPage = ({
   route,
   navigation,
 }: RootStackScreenProps<'Barber'>) => {
-  const vendorUid = route.params.id;
+  const vendorLink = route.params.id;
 
   const { data: vendor, isError } =
-    vendorApi.useFetchVendorByIdQuery(vendorUid);
+    vendorApi.useFetchVendorByLinkQuery(vendorLink);
 
   useEffect(() => {
     navigation.setOptions({
@@ -28,7 +28,7 @@ export const BarberPage = ({
   }, [isError]);
 
   return (
-    <VendorContext.Provider value={{ vendor, vendorUid }}>
+    <VendorContext.Provider value={{ vendor, vendorLink }}>
       {vendor && (
         <Screen scrolling>
           <ProfileHeader />

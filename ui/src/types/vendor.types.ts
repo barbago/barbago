@@ -1,7 +1,6 @@
-import { Coordinates } from './map.types';
-
 export interface VendorResponse {
-  uid: string;
+  // uid: string;
+  link: string;
   name?: string;
   location?: string;
   latitude?: number;
@@ -14,8 +13,14 @@ export interface VendorResponse {
 }
 
 export interface VendorSearchParams {
-  coordinates?: Coordinates;
-  sorting?: string;
+  latitude: number;
+  longitude: number;
+  distance?: number;
+  sorting?: {
+    // todo: add more sort fields like "distance", "price"
+    field: keyof Pick<VendorResponse, 'rating'>;
+    asc: boolean;
+  };
   filters?: { [key: string]: any };
   // should be keyof maxDistance, maxPrice, minPrice, minRating,
 }
