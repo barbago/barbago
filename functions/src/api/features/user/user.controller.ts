@@ -9,7 +9,7 @@ import { isAuthenticated, isRoleAdmin } from '../../middlewares';
 export const userRouter = Router();
 
 /**
- * @api {post} /user/ Create a new user
+ * @api {post} /users/ Create a new user
  * @apiBody {String} name
  * @apiBody {String} email
  *
@@ -39,7 +39,7 @@ userRouter.post(
 );
 
 /**
- * @api {delete} /user/ Delete current user
+ * @api {delete} /users/ Delete current user
  *
  * @apiGroup Users
  * @apiName deleteCurrentUser
@@ -57,7 +57,7 @@ userRouter.delete(
 );
 
 /**
- * @api {delete} /user/:uid Delete one user by uid
+ * @api {delete} /users/:uid Delete one user by uid
  * @apiParam {String} uid Firebase UID
  *
  * @apiGroup Users
@@ -77,7 +77,7 @@ userRouter.delete(
 );
 
 /**
- * @api {get} /user/all Get all users
+ * @api {get} /users/all Get all users
  * @apiQuery {Number} [offset=0] Starting item number
  * @apiQuery {Number} [limit=20] Number of items returned, max 20
  *
@@ -111,7 +111,7 @@ userRouter.get(
 );
 
 /**
- * @api {get} /user Get current user
+ * @api {get} /users Get current user
  *
  * @apiGroup Users
  * @apiName getCurrentUser
@@ -138,7 +138,7 @@ userRouter.get(
 );
 
 /**
- * @api {get} /user/:uid Get one user by its uid
+ * @api {get} /users/:uid Get one user by its uid
  * @apiParam {String} uid User ID
  *
  * @apiGroup Users
@@ -157,7 +157,7 @@ userRouter.get(
 );
 
 /**
- * @api {put} /user/ Update current user
+ * @api {put} /users/ Update current user
  * @apiBody {String} name
  * @apiBody {String} email
  *
@@ -176,7 +176,7 @@ userRouter.put(
 );
 
 /**
- * @api {put} /user/:uid Update one user by id
+ * @api {put} /users/:uid Update one user by id
  * @apiBody {String} name
  * @apiBody {String} email
  *

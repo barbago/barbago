@@ -9,7 +9,7 @@ import * as vendorService from './vendor.service';
 export const vendorRouter = Router();
 
 /**
- * @api {post} /vendor/ Create a new vendor
+ * @api {post} /vendors/ Create a new vendor
  * @apiBody {String} location Location displayed on profile
  * @apiBody {String} link Custom link to profile in app
  *
@@ -56,7 +56,7 @@ vendorRouter.post(
 );
 
 /**
- * @api {delete} /vendor/ Delete current vendor profile
+ * @api {delete} /vendors/ Delete current vendor profile
  *
  * @apiGroup Vendors
  * @apiName deleteCurrentVendor
@@ -84,7 +84,7 @@ vendorRouter.delete(
 );
 
 /**
- * @api {get} /vendor/
+ * @api {get} /vendors/
  *
  * @apiGroup Vendors
  * @apiName getCurrentUser
@@ -110,7 +110,7 @@ vendorRouter.get(
 );
 
 /**
- * @api {get} /vendor/link/:link Get a vendor's profile by link
+ * @api {get} /vendors/link/:link Get a vendor's profile by link
  * @apiParam {String} link Customizable link to profile
  *
  * @apiGroup Vendors
@@ -136,7 +136,7 @@ vendorRouter.get(
 );
 
 /**
- * @api {get} /vendor/:uid Get a vendor's profile by their UID
+ * @api {get} /vendors/:uid Get a vendor's profile by their UID
  * @apiParam {String} uid Firebase User ID
  *
  * @apiGroup Vendors
@@ -159,7 +159,7 @@ vendorRouter.get(
 );
 
 /**
- * @api {put} /vendor/ Update a vendor profile
+ * @api {put} /vendors/ Update a vendor profile
  *
  * @apiGroup Vendors
  * @apiName updateCurrentVendor
@@ -188,7 +188,7 @@ vendorRouter.put(
 );
 
 /**
- * @api {post} /vendor/search Search for vendors
+ * @api {post} /vendors/search Search for vendors
  * @apiBody {Number} latitude
  * @apiBody {Number} longitude
  * @apiBody {Number} [distance=30000] radius in meters from coords

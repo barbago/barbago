@@ -4,9 +4,9 @@ import { reviewRouter, userRouter, vendorRouter } from './features';
 
 export const router = Router();
 
-router.use('/user', userRouter);
-router.use('/vendor', vendorRouter);
-router.use('/vendor/:uid/review', reviewRouter);
+router.use('/users', userRouter);
+router.use('/vendors', vendorRouter);
+router.use('/vendors/:uid/reviews', reviewRouter);
 
 /**
  * @apiDefine BearerAuth

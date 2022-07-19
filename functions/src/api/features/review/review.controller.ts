@@ -13,7 +13,7 @@ export const reviewRouter = Router({ mergeParams: true });
  */
 
 /**
- * @api {delete} /vendor/:uid/review Delete user's review under vendor
+ * @api {delete} /vendors/:uidreviews Delete user's review under vendor
  * @apiUse VendorId
  *
  * @apiGroup Reviews
@@ -44,7 +44,7 @@ reviewRouter.delete(
 );
 
 /**
- * @api {get} /vendor/:uid/review Get all of a vendor's reviews
+ * @api {get} /vendors/:uidreviews Get all of a vendor's reviews
  * @apiUse VendorId
  *
  * @apiGroup Reviews
@@ -65,7 +65,7 @@ reviewRouter.get(
 );
 
 /**
- * @api {post} /vendor/:uid/review Create a review for a vendor
+ * @api {post} /vendors/:uidreviews Create a review for a vendor
  * @apiUse VendorId
  * @apiBody {Number} rating a number from 1 to 5 representing stars
  * @apiBody {String} [review] string representing review content
