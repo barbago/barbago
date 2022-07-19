@@ -3,6 +3,8 @@ import { View, StyleSheet, Image, Pressable } from 'react-native';
 import { Menu } from 'react-native-paper';
 
 import { Text } from '../../../../components';
+import { useAuth } from '../../../../providers';
+import { reviewApi } from '../../../../store';
 import { ReviewModel } from '../../../../types';
 import { relativeTimeFromDates } from '../../../../utils';
 import { Stars } from './Stars';
@@ -11,39 +13,35 @@ export interface ReviewProps {
   review: ReviewModel;
 }
 
-export const Review = ({
-  review: {
-    name = 'Anonymous Reviewer',
-    location,
-    avatar = 'https://source.unsplash.com/featured?haircut,barber',
-    date,
-    rating,
-    review = 'This place is so underrated and not enough people are talking about it! Found this place randomly looking on Yelp and so happy I stumbled upon it',
-  },
-}: ReviewProps) => {
+export const Review = ({ review }: ReviewProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {!!avatar && (
-          <Image style={styles.avatar} source={{ uri: avatar }} />
+        {!!review.avatar && (
+          <Image
+            style={styles.avatar}
+            source={{ uri: review.avatar }}
+          />
         )}
         <View style={styles.author}>
-          <Text>{name}</Text>
-          {!!location && (
-            <Text style={styles.secondary}>{location}</Text>
+          <Text>{review.name}</Text>
+          {!!review.location && (
+            <Text style={styles.secondary}>{review.location}</Text>
           )}
         </View>
-        <ReviewMenu />
+        <ReviewMenu review={review} />
       </View>
       <View style={styles.rating}>
-        {!!rating && <Stars rating={rating} style={styles.stars} />}
-        {!!date && (
+        {!!review.rating && (
+          <Stars rating={review.rating} style={styles.stars} />
+        )}
+        {!!review.date && (
           <Text style={styles.secondary}>
-            {relativeTimeFromDates(new Date(date ?? ''))}
+            {relativeTimeFromDates(new Date(review.date ?? ''))}
           </Text>
         )}
       </View>
-      <Text style={styles.content}>{review}</Text>
+      <Text style={styles.content}>{review.text}</Text>
     </View>
   );
 };
@@ -87,8 +85,11 @@ const styles = StyleSheet.create({
   content: {},
 });
 
-const ReviewMenu = () => {
+const ReviewMenu = ({ review }: { review: ReviewModel }) => {
+  const { user } = useAuth();
   const [visible, setVisible] = useState(false);
+  const [deleteReview] = reviewApi.useDeleteReviewMutation();
+
   return (
     <Menu
       visible={visible}
@@ -106,6 +107,12 @@ const ReviewMenu = () => {
         title="Report Review"
         onPress={() => alert('reporting review!')}
       />
+      {user?.uid === review.authorId && (
+        <Menu.Item
+          title="Delete Review"
+          onPress={() => deleteReview(review.vendorId)}
+        />
+      )}
     </Menu>
   );
 };

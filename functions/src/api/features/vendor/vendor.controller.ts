@@ -159,7 +159,7 @@ vendorRouter.get(
 );
 
 /**
- * @api {put} /vendors/ Update a vendor profile
+ * @api {patch} /vendors/ Update a vendor profile
  *
  * @apiGroup Vendors
  * @apiName updateCurrentVendor
@@ -170,7 +170,7 @@ vendorRouter.get(
  * @apiUse UnauthorizedError
  * @apiUse NotFoundError
  */
-vendorRouter.put(
+vendorRouter.patch(
   '/',
   isAuthenticated,
   asyncHandler(async (req, res) => {

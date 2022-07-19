@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler';
 import { UserRecord } from 'firebase-functions/v1/auth';
 import httpError from 'http-errors';
 import { isAuthenticated } from '../../middlewares';
+import { getVendorByUid } from '../vendor/vendor.service';
 import * as reviewService from './review.service';
 
 export const reviewRouter = Router({ mergeParams: true });
@@ -13,7 +14,7 @@ export const reviewRouter = Router({ mergeParams: true });
  */
 
 /**
- * @api {delete} /vendors/:uidreviews Delete user's review under vendor
+ * @api {delete} /vendors/:uid/reviews Delete user's review under vendor
  * @apiUse VendorId
  *
  * @apiGroup Reviews
@@ -40,11 +41,13 @@ reviewRouter.delete(
     if (!review) throw httpError(404, 'review not found');
 
     await reviewService.deleteReview(vendorId, authorId);
+
+    res.json(review);
   }),
 );
 
 /**
- * @api {get} /vendors/:uidreviews Get all of a vendor's reviews
+ * @api {get} /vendors/:uid/reviews Get all of a vendor's reviews
  * @apiUse VendorId
  *
  * @apiGroup Reviews
@@ -65,7 +68,7 @@ reviewRouter.get(
 );
 
 /**
- * @api {post} /vendors/:uidreviews Create a review for a vendor
+ * @api {post} /vendors/:uid/reviews Create a review for a vendor
  * @apiUse VendorId
  * @apiBody {Number} rating a number from 1 to 5 representing stars
  * @apiBody {String} [review] string representing review content
@@ -78,6 +81,7 @@ reviewRouter.get(
  * @apiUse BearerAuth
  * @apiUse BadRequestError
  * @apiUse UnauthorizedError
+ * @apiUse NotFoundError
  * @apiUse ConflictError
  */
 reviewRouter.post(
@@ -85,7 +89,7 @@ reviewRouter.post(
   isAuthenticated,
   asyncHandler(async (req, res) => {
     const { uid: vendorId } = req.params;
-    const { rating, review } = req.body;
+    const { rating, text } = req.body;
     const {
       displayName: name,
       uid: authorId,
@@ -93,18 +97,22 @@ reviewRouter.post(
     } = req['user'] as UserRecord;
 
     if (!vendorId)
-      throw httpError(400, 'vendor id is a required field');
-    if (!rating) throw httpError(400, 'rating is a required field');
+      throw httpError(400, 'Vendor ID is a required field');
+    if (!rating) throw httpError(400, 'Rating is a required field');
     if (typeof rating !== 'number' || rating < 1 || rating > 5)
-      throw httpError(400, 'rating musst be a number from 1 to 5');
+      throw httpError(400, 'Rating must be a number from 1 to 5');
+    if (!(await getVendorByUid(vendorId)))
+      throw httpError(404, 'Vendor does not exist!');
     if (await reviewService.getVendorReviewById(vendorId, authorId))
-      throw httpError(409, 'you have already created a review here');
+      throw httpError(409, 'You have already created a review here!');
 
     const params = {
+      authorId,
+      vendorId,
       name,
       avatar,
       rating,
-      review,
+      text,
     };
 
     // todo: change how name and avatar are handled
