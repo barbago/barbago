@@ -27,7 +27,7 @@ export const reviewApi = api
       updateReview: builder.mutation<ReviewModel, ReviewModel>({
         query: (review) => ({
           url: `${vendorPath}/${review.vendorId}/${reviewPath}`,
-          method: 'put',
+          method: 'patch',
           body: review,
         }),
         invalidatesTags: ['Review'],
