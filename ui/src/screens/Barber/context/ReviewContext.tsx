@@ -38,8 +38,8 @@ export const ReviewContext = createContext<ReviewState>(undefined!);
 export const useReview = () => useContext(ReviewContext);
 
 export const ReviewService: FC = ({ children }) => {
-  const { vendorLink: vendorUid } = useVendor();
-  const response = reviewApi.useFetchReviewsByUidQuery(vendorUid);
+  const { vendor } = useVendor();
+  const response = reviewApi.useFetchReviewsByUidQuery(vendor!.uid);
   const [createReview] = reviewApi.useCreateReviewMutation();
 
   const [page, setPage] = useState(0);

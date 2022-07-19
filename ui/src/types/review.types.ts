@@ -1,9 +1,12 @@
 export interface ReviewModel {
-  uid: string;
+  vendorId: string;
+  authorId: string;
+  link: string;
   rating: number;
-  review?: string;
+  text?: string;
   name?: string;
   location?: string;
   avatar?: string;
   date?: string;
+  edited?: string;
 }

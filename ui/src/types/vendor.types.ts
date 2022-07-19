@@ -1,10 +1,10 @@
 export interface VendorResponse {
-  // uid: string;
+  uid: string;
   link: string;
-  name?: string;
-  location?: string;
-  latitude?: number;
-  longitude?: number;
+  name: string;
+  location: string;
+  latitude: number;
+  longitude: number;
   cover?: string;
   images?: string[];
   avatar?: string;

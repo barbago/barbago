@@ -13,7 +13,7 @@ export interface WriteDialogProps {
 }
 
 export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
-  const { vendor, vendorLink: vendorUid } = useVendor();
+  const { vendor } = useVendor();
   const { createReview } = useReview();
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
@@ -54,10 +54,12 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
 
   const handleSubmit = () => {
     rating
-      ? createReview({ uid: vendorUid, rating, review: text })
+      ? createReview({ vendorId: vendor!.uid, rating, text })
           .unwrap()
           .then((res) => openToast('Submitted review!'))
-          .catch((err) => openToast('Failed to submit review'))
+          .catch((err) =>
+            openToast(err.data.message ?? 'Failed to submit review'),
+          )
           .finally(closeModal)
       : alert
       ? alert('Please select a rating')
@@ -72,9 +74,7 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
         style={{ bottom }}
         onDismiss={closeModal}
       >
-        <Dialog.Title>
-          Write a review for {vendor?.name ?? 'this barber'}!
-        </Dialog.Title>
+        <Dialog.Title>Write a review for {vendor!.name}!</Dialog.Title>
         <Dialog.Content style={styles.content}>
           <Stars
             rating={rating}
