@@ -3,6 +3,7 @@ import {
   createContext,
   FC,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 import { Button, Snackbar } from 'react-native-paper';
@@ -65,6 +66,10 @@ export const useToast = () => {
 
 export const Toast = (props?: Partial<SnackbarProps>) => {
   const { isOpen, close, settings } = useToast();
+
+  useEffect(() => {
+    return () => close();
+  }, [])
 
   return (
     <Snackbar
