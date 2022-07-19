@@ -10,13 +10,18 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
-  onAuthStateChanged,
+  onIdTokenChanged,
   signInAnonymously,
   signInWithCredential,
   signOut as firebaseSignout,
   User,
 } from 'firebase/auth';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { auth } from '../config';
 import { setToken, store } from '../store';
@@ -166,17 +171,21 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      const tokenResult = await user?.getIdTokenResult();
+    const unsubscribe = onIdTokenChanged(
+      auth,
+      async (user) => {
+        const tokenResult = await user?.getIdTokenResult();
 
-      const roles = (tokenResult?.claims?.roles as Role[]) ?? [];
+        const roles = (tokenResult?.claims?.roles as Role[]) ?? [];
 
-      store.dispatch(setToken(tokenResult?.token ?? null));
+        store.dispatch(setToken(tokenResult?.token ?? null));
 
-      setUser(user);
-      setRoles(roles);
-      setIsLoading(false);
-    });
+        setUser(user);
+        setRoles(roles);
+        setIsLoading(false);
+      },
+      (err) => console.error(err),
+    );
     return unsubscribe;
   }, []);
 
@@ -195,7 +204,6 @@ export const useAuth = () => {
     throw Error('Cannot useAuthService outside a provider');
   return authContext;
 };
-
 
 /*
 TODO
