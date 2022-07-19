@@ -4,7 +4,8 @@ import { Button, Dialog, Portal, TextInput } from 'react-native-paper';
 
 import { useKeyboardChange } from '../../../../hooks';
 import { useToast } from '../../../../providers';
-import { useReview, useVendor } from '../../context';
+import { reviewApi } from '../../../../store';
+import { useVendor } from '../../context';
 import { Stars } from './Stars';
 
 export interface WriteDialogProps {
@@ -13,8 +14,9 @@ export interface WriteDialogProps {
 }
 
 export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
+  const [createReview, { isLoading }] =
+    reviewApi.useCreateReviewMutation();
   const { vendor } = useVendor();
-  const { createReview } = useReview();
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
   const [bottom, setBottom] = useState(0);
@@ -81,6 +83,7 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
             setRating={setRating}
             style={styles.stars}
             starStyle={styles.starStyle}
+            disabled={isLoading}
           />
           <TextInput
             autoComplete="none"
@@ -92,14 +95,19 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
             multiline={true}
             blurOnSubmit={true}
             onSubmitEditing={() => Keyboard.dismiss()}
+            disabled={isLoading}
           />
         </Dialog.Content>
         <Dialog.Actions style={styles.actions}>
           <Button onPress={confirmClose} style={styles.cancel}>
             Cancel
           </Button>
-          <Button onPress={handleSubmit} mode="contained">
-            Create Review
+          <Button
+            onPress={handleSubmit}
+            mode="contained"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Submitting...' : 'Submit Review!'}
           </Button>
         </Dialog.Actions>
       </Dialog>
@@ -121,7 +129,7 @@ const styles = StyleSheet.create({
     lineHeight: 70,
   },
   input: {
-    marginVertical: 16,
+    // marginVertical: 16,
     maxHeight: 150,
   },
   actions: {
