@@ -3,9 +3,12 @@ import 'dotenv/config';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: config.name ?? 'Barbago Mobile',
-  slug: config.slug ?? 'barbago-mobile',
+  name: config.name!,
+  slug: config.slug!,
   extra: {
+    api: {
+      url: process.env.API_URL,
+    },
     facebook: {
       clientId: process.env.FACEBOOK_CLIENT_ID,
     },
