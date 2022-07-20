@@ -6,7 +6,8 @@ import { Coordinates, VendorResponse } from '../../../types';
 
 export interface SearchState {
   query: ReturnType<typeof vendorApi.useLazyVendorSearchQuery>[0];
-  response: ReturnType<typeof vendorApi.useLazyVendorSearchQuery>[1];
+  // todo: figure out how to type this correctly
+  response: any;
   vendors?: VendorResponse[];
   setSelected: (vendor?: VendorResponse) => void;
   selected?: VendorResponse;

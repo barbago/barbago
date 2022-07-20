@@ -10,3 +10,6 @@ export const {
   api: apiConfig,
   api: { url: apiUrl },
 } = constants;
+
+// todo: maybe add dev and live api url env vars
+// export const apiUrl = __DEV__ ? apiConfig.devUrl : apiConfig.url

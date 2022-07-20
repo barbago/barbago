@@ -8,14 +8,19 @@ import { ScrollView } from 'react-native';
 import { Button, List } from 'react-native-paper';
 
 import { Modal } from '../../../components';
-import { SearchContext } from '../services';
+import { useSearch } from '../services';
 import { Result } from './Result';
 
 const resultHeight = 267;
 const headerHeight = 50;
 
 export const ResultModal = () => {
-  const { vendors, selected, setSort } = useContext(SearchContext);
+  const {
+    vendors,
+    selected,
+    setSort,
+    response: { isFetching, isError },
+  } = useSearch();
 
   const modalizeRef = useRef<Modalize>(null);
   const contentRef = useRef<ScrollView>(null);
@@ -52,7 +57,13 @@ export const ResultModal = () => {
       title=""
       left={() => (
         <Button mode="text" compact disabled>
-          {vendors?.length ? `${vendors.length} Results` : `No Results`}
+          {isError
+            ? 'Search Failed'
+            : isFetching
+            ? 'Searching...'
+            : vendors?.length
+            ? `${vendors.length} Result${vendors.length > 1 ? 's' : ''}`
+            : `No Results`}
         </Button>
       )}
       right={() => (
