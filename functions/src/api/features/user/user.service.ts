@@ -1,42 +1,22 @@
-import { PrismaClient, User } from '@prisma/client';
+import { getFirestore } from 'firebase-admin/firestore';
 
-const prisma = new PrismaClient();
+const db = getFirestore();
+export const userCollection = db.collection('users');
 
-export const createUser = async (
-  uid: string,
-  email: string,
-  name: string,
-) => {
-  const newUser = await prisma.user.upsert({
-    where: { uid: uid },
-    update: {},
-    create: {
-      uid: uid,
-      email: email,
-      name: name,
-    },
-  });
-  return newUser;
+export const createUser = async (uid: string, params: any) => {
+  await userCollection.doc(uid).create(params);
+  return params;
 };
 
-export const createClient = async (user: User) => {
-  const newClient = await prisma.client.upsert({
-    where: { uid: user.uid },
-    update: {},
-    create: {
-      uid: user.uid,
-    },
-  });
-  return newClient;
+export const getUserByUid = async (uid: string) => {
+  return (await userCollection.doc(uid).get()).data();
 };
 
-export const createVendor = async (user: User) => {
-  const newVendor = await prisma.vendor.upsert({
-    where: { uid: user.uid },
-    update: {},
-    create: {
-      uid: user.uid,
-    },
-  });
-  return newVendor;
+export const updateUser = async (uid: string, params: any) => {
+  await userCollection.doc(uid).update(params);
+  return params;
+};
+
+export const deleteUser = async (uid: string) => {
+  await userCollection.doc(uid).delete();
 };

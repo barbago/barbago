@@ -15,8 +15,75 @@ router.use('/vendors/:uid/reviews', reviewRouter);
  * @apiHeader {String} [Authorization="Bearer "] Bearer token from Firebase Auth
  * @apiHeaderExample {json} Authorization Example:
  * {
- *   "Authorization": "Bearer ey.token-from-firebase-auth"
+ *   "Authorization": "Bearer ey.firebaseIdToken"
  * }
+ */
+
+/**
+ * @apiDefine IsCurrentUser
+ * @apiVersion 1.0.0
+ * 
+ * @apiPermission Current User
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ */
+
+/**
+ * @apiDefine IsLoggedIn
+ * @apiVersion 1.0.0
+ * 
+ * @apiPermission Authenticated
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ */
+
+/**
+ * @apiDefine IsAdmin
+ * @apiVersion 1.0.0
+ * 
+ * @apiPermission Admin
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ * @apiUse ForbiddenError
+ */
+
+/**
+ * @apiDefine UserSuccess
+ *
+ * @apiSuccess {User} user
+ * @apiSuccess {String} user.uid        Firebase User ID
+ * @apiSuccess {String} [user.name]     User's full display name
+ * @apiSuccess {String} [user.email]    User email address
+ * @apiSuccess {String} [user.phone]    User phone number
+ * @apiSuccess {String} [user.photo]    Profile Picture URL
+ * @apiSuccessExample {json} Success response:
+ * HTTPS 200 OK
+ * {
+ *   "uid": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *   "name": "Barbago Barber",
+ *   "email": "help@barbago.app",
+ *   "phone": null,
+ *   "photo": "https://lh3.googleusercontent.com/a-/AFdZucoRfEhCxKx1sloO7rsDKcjh32gumSiKOIgrQxuy=s96-c",
+ * }
+ */
+
+/**
+ * @apiDefine UsersSuccess
+ * @apiSuccess {Object[]} users
+ * @apiSuccess {String} users.uid
+ * @apiSuccess {String} [users.name]
+ * @apiSuccess {String} [users.email]
+ * @apiSuccessExample {json} Success response:
+ * HTTPS 200 OK
+ * [
+ *   {
+ *     "uid": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *     "name": "Barbago Barber",
+ *     "email": "help@barbago.app",
+ *     "phone": null,
+ *     "photo": "https://lh3.googleusercontent.com/a-/AFdZucoRfEhCxKx1sloO7rsDKcjh32gumSiKOIgrQxuy=s96-c",
+ *   }
+ * ]
  */
 
 /**

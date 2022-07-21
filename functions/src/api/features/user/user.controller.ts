@@ -3,8 +3,8 @@ import asyncHandler from 'express-async-handler';
 import { UserRecord } from 'firebase-functions/v1/auth';
 import httpError from 'http-errors';
 
-import { userService } from '.';
 import { isAuthenticated, isRoleAdmin } from '../../middlewares';
+import * as userService from './user.service';
 
 export const userRouter = Router();
 
@@ -16,25 +16,28 @@ export const userRouter = Router();
  * @apiGroup Users
  * @apiName createUser
  * @apiVersion 1.0.0
- * @apiPermission Authenticated
  *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
+ * @apiUse UserSuccess
+ * @apiUse IsLoggedIn
+ * @apiUse ConflictError
  */
 userRouter.post(
   '/',
   isAuthenticated,
   asyncHandler(async (req, res) => {
-    // todo: take given, then firebase, then default params
-    // allow optional image_url, phone, settings
+    const { uid } = req['user'] as UserRecord;
+    const { name, email, phone, photo } = req.body;
 
-    let { uid, displayName: name, email } = req['user'] as UserRecord;
+    if (!name || !email) throw httpError(400);
 
-    if (!uid || !email || !name) throw httpError(400);
+    if (await userService.getUserByUid(uid))
+      throw httpError(409, 'User already exists');
 
-    const user = await userService.createUser(uid, email, name);
-    await userService.createClient(user);
-    res.json(user);
+    const params = { uid, name, email, phone, photo };
+
+    await userService.createUser(uid, params);
+
+    res.json(params);
   }),
 );
 
@@ -44,65 +47,63 @@ userRouter.post(
  * @apiGroup Users
  * @apiName deleteCurrentUser
  * @apiVersion 1.0.0
- * @apiPermission Current User
  *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
+ * @apiUse IsCurrentUser
+ * @apiUse UserSuccess
  * @apiUse NotFoundError
  */
 userRouter.delete(
   '/',
   isAuthenticated,
-  asyncHandler(async (req, res) => {}),
+  asyncHandler(async (req, res) => {
+    const { uid } = req['user'] as UserRecord;
+
+    const user = await userService.getUserByUid(uid);
+
+    if (!user) throw httpError(404, 'User not found');
+
+    await userService.deleteUser(uid);
+
+    res.json(user);
+  }),
 );
 
 /**
  * @api {delete} /users/:uid Delete one user by uid
- * @apiParam {String} uid Firebase UID
+ * @apiParam {String} uid Firebase User ID
  *
  * @apiGroup Users
  * @apiName deleteUserByUid
  * @apiVersion 1.0.0
- * @apiPermission Admin
  *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
- * @apiUse ForbiddenError
+ * @apiUse UserSuccess
+ * @apiUse IsAdmin
  * @apiUse NotFoundError
  */
 userRouter.delete(
   '/:uid',
   isRoleAdmin,
-  asyncHandler(async (req, res) => {}),
+  asyncHandler(async (req, res) => {
+    const { uid } = req.params;
+
+    const user = await userService.getUserByUid(uid);
+
+    if (!user) throw httpError(404, 'User not found');
+
+    await userService.deleteUser(uid);
+
+    res.json(user);
+  }),
 );
 
 /**
  * @api {get} /users/all Get all users
- * @apiQuery {Number} [offset=0] Starting item number
- * @apiQuery {Number} [limit=20] Number of items returned, max 20
- *
+ * 
  * @apiGroup Users
  * @apiName getAllUsers
  * @apiVersion 1.0.0
- * @apiPermission Admin
  *
- * @apiSuccess {Object[]} users
- * @apiSuccess {String} users.uid
- * @apiSuccess {String} [users.name]
- * @apiSuccess {String} [users.email]
- * @apiSuccessExample {json} Success response:
- * HTTPS 200 OK
- * [
- *   {
- *     "uid": "aaaaaaaaa",
- *     "name": "aaaaaaaaa",
- *     "email": "aa@aa.aa"
- *   }
- * ]
- *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
- * @apiUse ForbiddenError
+ * @apiUse IsAdmin
  */
 userRouter.get(
   '/all',
@@ -117,24 +118,22 @@ userRouter.get(
  * @apiName getCurrentUser
  * @apiVersion 1.0.0
  *
- * @apiSuccess {User} user
- * @apiSuccess {String} user.uid
- * @apiSuccess {String} user.name
- * @apiSuccess {String} user.email
- * @apiSuccessExample {json} Success response:
- * HTTPS 200 OK
- * {
- *   "uid": "aaaaaa"
- *   "name": "aaaaaaa"
- *   "email": "aa@aa.aa"
- * }
- *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
+ * @apiUse IsCurrentUser
+ * @apiUse UserSuccess
+ * @apiUse NotFoundError
  */
 userRouter.get(
   '/',
-  asyncHandler(async (req, res) => {}),
+  isAuthenticated,
+  asyncHandler(async (req, res) => {
+    const { uid } = req['user'] as UserRecord;
+
+    const user = await userService.getUserByUid(uid);
+
+    if (!user) throw httpError(404, 'User not found');
+
+    res.json(user);
+  }),
 );
 
 /**
@@ -144,16 +143,23 @@ userRouter.get(
  * @apiGroup Users
  * @apiName getUserByName
  * @apiVersion 1.0.0
- * @apiPermission Admin
  *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
- * @apiUse ForbiddenError
+ * @apiUse UserSuccess
+ * @apiUse IsAdmin
+ * @apiUse NotFoundError
  */
 userRouter.get(
   '/:uid',
   isRoleAdmin,
-  asyncHandler(async (req, res) => {}),
+  asyncHandler(async (req, res) => {
+    const { uid } = req.params;
+
+    const user = await userService.getUserByUid(uid);
+
+    if (!user) throw httpError(404, 'User not found');
+
+    res.json(user);
+  }),
 );
 
 /**
@@ -165,14 +171,26 @@ userRouter.get(
  * @apiName updateCurrentUser
  * @apiVersion 1.0.0
  *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
+ * @apiUse IsCurrentUser
+ * @apiUse UserSuccess
  * @apiUse NotFoundError
  */
 userRouter.put(
   '/',
   isAuthenticated,
-  asyncHandler(async (req, res) => {}),
+  asyncHandler(async (req, res) => {
+    const { uid } = req['user'] as UserRecord;
+    const { name, email, phone, photo } = req.body;
+
+    if (!(await userService.getUserByUid(uid)))
+      throw httpError(404, 'User not found');
+
+    const params = { uid, name, email, phone, photo };
+
+    const user = await userService.updateUser(uid, params);
+
+    res.json(user);
+  }),
 );
 
 /**
@@ -184,13 +202,24 @@ userRouter.put(
  * @apiName updateOneUser
  * @apiVersion 1.0.0
  *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
- * @apiUse ForbiddenError
+ * @apiUse UserSuccess
+ * @apiUse IsAdmin
  * @apiUse NotFoundError
  */
 userRouter.put(
   '/:uid',
   isRoleAdmin,
-  asyncHandler(async (req, res) => {}),
+  asyncHandler(async (req, res) => {
+    const { uid } = req.params;
+    const { name, email, phone, photo } = req.body;
+
+    if (!(await userService.getUserByUid(uid)))
+      throw httpError(404, 'User not found');
+
+    const params = { uid, name, email, phone, photo };
+
+    const user = await userService.updateUser(uid, params);
+
+    res.json(user);
+  }),
 );
