@@ -22,7 +22,7 @@ router.use('/vendors/:uid/reviews', reviewRouter);
 /**
  * @apiDefine IsCurrentUser
  * @apiVersion 1.0.0
- * 
+ *
  * @apiPermission Current User
  * @apiUse BearerAuth
  * @apiUse UnauthorizedError
@@ -31,7 +31,7 @@ router.use('/vendors/:uid/reviews', reviewRouter);
 /**
  * @apiDefine IsLoggedIn
  * @apiVersion 1.0.0
- * 
+ *
  * @apiPermission Authenticated
  * @apiUse BearerAuth
  * @apiUse UnauthorizedError
@@ -40,7 +40,7 @@ router.use('/vendors/:uid/reviews', reviewRouter);
 /**
  * @apiDefine IsAdmin
  * @apiVersion 1.0.0
- * 
+ *
  * @apiPermission Admin
  * @apiUse BearerAuth
  * @apiUse UnauthorizedError
@@ -69,10 +69,13 @@ router.use('/vendors/:uid/reviews', reviewRouter);
 
 /**
  * @apiDefine UsersSuccess
- * @apiSuccess {Object[]} users
- * @apiSuccess {String} users.uid
- * @apiSuccess {String} [users.name]
- * @apiSuccess {String} [users.email]
+ *
+ * @apiSuccess {User[]} users
+ * @apiSuccess {String} users.uid        Firebase User ID
+ * @apiSuccess {String} [users.name]     User's full display name
+ * @apiSuccess {String} [users.email]    User email address
+ * @apiSuccess {String} [users.phone]    User phone number
+ * @apiSuccess {String} [users.photo]    Profile Picture URL
  * @apiSuccessExample {json} Success response:
  * HTTPS 200 OK
  * [
@@ -82,6 +85,103 @@ router.use('/vendors/:uid/reviews', reviewRouter);
  *     "email": "help@barbago.app",
  *     "phone": null,
  *     "photo": "https://lh3.googleusercontent.com/a-/AFdZucoRfEhCxKx1sloO7rsDKcjh32gumSiKOIgrQxuy=s96-c",
+ *   }
+ * ]
+ */
+
+/**
+ * @apiDefine VendorSuccess
+ * 
+ * @apiSuccess {Vendor} vendor
+ * @apiSuccess {String} vendor.uid  Vendor's Firebase User ID
+ * @apiSuccess {String} vendor.name Vendor's profile name
+ * @apiSuccess {String} vendor.link Unique text link for navigation
+ * @apiSuccess {Number} vendor.latitude   Vendor profile's latitude
+ * @apiSuccess {Number} vendor.longitude  Vendor profile's longitude
+ * @apiSuccess {String} vendor.geohash    Used to query by distance
+ * @apiSuccess {String} [vendor.location] Human-friendly text string
+ * @apiSuccessExample {json} Success Response
+ * HTTPS 200 OK
+ * {
+ *   "rating": 5,
+ *   "name": "Barbago User",
+ *   "avatar": "https://lh3.googleusercontent.com/a-/AOh14GiI1O3i5ADBISlcfU5ueNTWkOmvKc9Y_YtkuQOUddo=s96-c",
+ *   "authorId": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *   "vendorId": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *   "text": "I am this barber and I rate myself 5 stars"
+ * }
+ */
+
+/**
+ * @apiDefine VendorsSuccess
+ *
+ * @apiSuccess {Vendor[]} vendors
+ * @apiSuccess {String} vendors.uid  Vendor's Firebase User ID
+ * @apiSuccess {String} vendors.name Vendor's profile name
+ * @apiSuccess {String} vendors.link Unique text link for navigation
+ * @apiSuccess {Number} vendors.latitude  Vendor profile's latitude
+ * @apiSuccess {Number} vendors.longitude Vendor profile's longitude
+ * @apiSuccess {String} vendors.geohash   Used to query by distance
+ * @apiSuccess {String} [vendor.location] Human-friendly text string
+ * @apiSuccessExample {json} Success Response
+ * HTTPS 200 OK
+ * [
+ *   {
+ *     "link": "hecking-barber-shop",
+ *     "uid": "nfa18QtOljWpoaSDs7or7isI6xg1",
+ *     "name": "Hecking Barber",
+ *     "geohash": "dq2htmyyp7",
+ *     "latitude": 35.9799,
+ *     "location": "Wake Forest, NC",
+ *     "longitude": -78.5097
+ *   }
+ * ]
+ */
+
+
+
+/**
+ * @apiDefine ReviewSuccess
+ *
+ * @apiSuccess {Review} review
+ * @apiSuccess {String} review.vendorId Firebase UID of the reviewed vendor
+ * @apiSuccess {String} review.authorId Firebase UID of the reviewer
+ * @apiSuccess {Number} review.rating Number of stars, integer 1-5
+ * @apiSuccess {String} review.name Display name of the reviewer
+ * @apiSuccess {String} [review.text] Review's text content
+ * @apiSuccess {String} [review.avatar] Reviewer's profile picture URL
+ * @apiSuccessExample {json} Success Response:
+ * HTTPS 200 OK
+ * {
+ *   "rating": 5,
+ *   "name": "Barbago User",
+ *   "avatar": "https://lh3.googleusercontent.com/a-/AOh14GiI1O3i5ADBISlcfU5ueNTWkOmvKc9Y_YtkuQOUddo=s96-c",
+ *   "authorId": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *   "vendorId": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *   "text": "I am this barber and I rate myself 5 stars"
+ * }
+ */
+
+/**
+ * @apiDefine ReviewsSuccess
+ *
+ * @apiSuccess {Review[]} reviews
+ * @apiSuccess {String} reviews.vendorId Firebase UID of the reviewed vendor
+ * @apiSuccess {String} reviews.authorId Firebase UID of the reviewer
+ * @apiSuccess {Number} reviews.rating Number of stars, integer 1-5
+ * @apiSuccess {String} reviews.name Display name of the reviewer
+ * @apiSuccess {String} [reviews.text] Review's text content
+ * @apiSuccess {String} [reviews.avatar] Reviewer's profile picture URL
+ * @apiSuccessExample {json} Success Response:
+ * HTTPS 200 OK
+ * [
+ *   {
+ *     "rating": 5,
+ *     "name": "Barbago User",
+ *     "avatar": "https://lh3.googleusercontent.com/a-/AOh14GiI1O3i5ADBISlcfU5ueNTWkOmvKc9Y_YtkuQOUddo=s96-c",
+ *     "authorId": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *     "vendorId": "hLvATvjgoKSybSXpjqBk2REj4Ak2",
+ *     "text": "I am this barber and I rate myself 5 stars"
  *   }
  * ]
  */

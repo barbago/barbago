@@ -104,6 +104,7 @@ userRouter.delete(
  * @apiVersion 1.0.0
  *
  * @apiUse IsAdmin
+ * @apiUse UsersSuccess
  */
 userRouter.get(
   '/all',

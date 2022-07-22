@@ -16,14 +16,12 @@ export const vendorRouter = Router();
  * @apiGroup Vendors
  * @apiName createVendor
  * @apiVersion 1.0.0
- * @apiPermission Authenticated
  *
- * @apiUse BearerAuth
+ * @apiUse IsLoggedIn
+ * @apiUse VendorSuccess
  * @apiUse BadRequestError
- * @apiUse UnauthorizedError
  * @apiUse ConflictError
  */
-
 vendorRouter.post(
   '/',
   isAuthenticated,
@@ -61,10 +59,9 @@ vendorRouter.post(
  * @apiGroup Vendors
  * @apiName deleteCurrentVendor
  * @apiVersion 1.0.0
- * @apiPermission Current User
  *
- * @apiUse BearerAuth
- * @apiUse UnauthorizedError
+ * @apiUse IsCurrentUser
+ * @apiUse VendorSuccess
  * @apiUse NotFoundError
  */
 vendorRouter.delete(
@@ -87,9 +84,8 @@ vendorRouter.delete(
  * @api {get} /vendors/
  *
  * @apiGroup Vendors
- * @apiName getCurrentUser
+ * @apiName getCurrentVendor
  * @apiVersion 1.0.0
- * @apiPermission Current User
  *
  * @apiUse BearerAuth
  * @apiUse UnauthorizedError
@@ -117,6 +113,7 @@ vendorRouter.get(
  * @apiName getVendorByLink
  * @apiVersion 1.0.0
  *
+ * @apiUse VendorSuccess
  * @apiUse BadRequestError
  * @apiUse NotFoundError
  */
@@ -143,6 +140,7 @@ vendorRouter.get(
  * @apiName getVendorById
  * @apiVersion 1.0.0
  *
+ * @apiUse VendorSuccess
  * @apiUse NotFoundError
  */
 vendorRouter.get(
@@ -165,9 +163,9 @@ vendorRouter.get(
  * @apiName updateCurrentVendor
  * @apiVersion 1.0.0
  *
- * @apiUse BearerAuth
+ * @apiUse IsCurrentUser
+ * @apiUse VendorSuccess
  * @apiUse BadRequestError
- * @apiUse UnauthorizedError
  * @apiUse NotFoundError
  */
 vendorRouter.patch(
@@ -197,7 +195,7 @@ vendorRouter.patch(
  * @apiName searchVendor
  * @apiVersion 1.0.0
  *
- * @apiUse BearerAuth
+ * @apiUse VendorsSuccess
  * @apiUse BadRequestError
  */
 
