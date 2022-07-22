@@ -8,6 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   extra: {
     api: {
       url: process.env.API_URL,
+      devUrl: process.env.API_DEV_URL
     },
     facebook: {
       clientId: process.env.FACEBOOK_CLIENT_ID,
