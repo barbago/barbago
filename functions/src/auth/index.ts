@@ -1,5 +1,5 @@
 import { auth } from 'firebase-functions';
-import { firestore } from 'firebase-admin';
+import { firestore as db } from 'firebase-admin';
 
 const usersPath = 'users';
 
@@ -16,7 +16,7 @@ export const userCreated = auth
     const fields = { uid, name, email, phone, photo };
 
     // todo: also create settings for user
-    return await firestore()
+    return await db()
       .collection(usersPath)
       .doc(user.uid)
       .create(fields);
@@ -25,8 +25,5 @@ export const userCreated = auth
 export const userDeleted = auth
   .user()
   .onDelete(async (user, _context) => {
-    return await firestore()
-      .collection(usersPath)
-      .doc(user.uid)
-      .delete();
+    return await db().collection(usersPath).doc(user.uid).delete();
   });
