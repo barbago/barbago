@@ -26,6 +26,8 @@ You can set variables one at a time or use a json file in the below format:
 
 ## Notes
 
+https://stackoverflow.com/questions/53071270/what-is-the-json-format-for-a-firestore-composite-index-including-an-array
+
 Will be hosted using Firebase. Simplest way to perform hosting, deployment, authentication, etc. Using authentication on a custom backend server just complicates everything. Firebase tokens expire after one hour, meaning you'd have to reauthenticate every. single. hour.
 
 You can also access a MySQL server from within Firebase, so the default usage of firestore is not a major limitation.
