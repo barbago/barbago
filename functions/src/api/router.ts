@@ -1,9 +1,10 @@
 import { Router } from 'express';
 
-import { reviewRouter, userRouter, vendorRouter } from './features';
+import { chatRouter, reviewRouter, userRouter, vendorRouter } from './features';
 
 export const router = Router();
 
+router.use('/chats', chatRouter);
 router.use('/users', userRouter);
 router.use('/vendors', vendorRouter);
 router.use('/vendors/:uid/reviews', reviewRouter);
@@ -20,6 +21,15 @@ router.use('/vendors/:uid/reviews', reviewRouter);
  */
 
 /**
+ * @apiDefine IsLoggedIn
+ * @apiVersion 1.0.0
+ *
+ * @apiPermission Authenticated
+ * @apiUse BearerAuth
+ * @apiUse UnauthorizedError
+ */
+
+/**
  * @apiDefine IsCurrentUser
  * @apiVersion 1.0.0
  *
@@ -29,12 +39,13 @@ router.use('/vendors/:uid/reviews', reviewRouter);
  */
 
 /**
- * @apiDefine IsLoggedIn
+ * @apiDefine IsMember
  * @apiVersion 1.0.0
- *
- * @apiPermission Authenticated
+ * 
+ * @apiPermission Member
  * @apiUse BearerAuth
  * @apiUse UnauthorizedError
+ * @apiUse ForbiddenError
  */
 
 /**
