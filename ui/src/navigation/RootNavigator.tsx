@@ -2,7 +2,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 
 import { RootStackParamList } from './types';
-import { BarberPage, NotFoundScreen, WelcomeSwiper } from '../screens';
+import {
+  BarberPage,
+  Chat,
+  NotFoundScreen,
+  WelcomeSwiper,
+} from '../screens';
 import { TabNavigator } from './TabNavigator';
 import { useAuth } from '../providers';
 
@@ -31,11 +36,9 @@ export function RootNavigator() {
         options={{ title: 'Oops!' }}
       />
       <Stack.Screen name="Barber" component={BarberPage} />
-      {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group> */}
-      {/* Think I might add a LoginPage here */}
-      {/* https://reactnavigation.org/docs/nesting-navigators/#best-practices-when-nesting */}
+      <Stack.Screen name="Chat" component={Chat} />
+      {/* https://reactnavigation.org/docs/nesting-navigators/#best-practices-when-nesting
+      https://reactnavigation.org/docs/preventing-going-back/ */}
     </Stack.Navigator>
   );
 }

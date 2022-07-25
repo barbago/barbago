@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
   Barber: { id: string };
+  Chat: { id: string };
 };
 
 export type RootStackScreenProps<
