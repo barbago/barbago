@@ -16,10 +16,20 @@ export const getChatsByUid = async (uid: string) => {
   ).docs.map((doc) => doc.data());
 };
 
-export const createChat = async () => {
-  await chatCollection.doc().create({
-    date: new Date().toISOString(),
-  });
+export const createChat = async (members: any[]) => {
+  const date = new Date().toISOString();
+  const id =
+    members.map(({ uid }) => uid).join('_') + '_' + date.split('T')[0];
+  const params = {
+    id,
+    date,
+    members: members.map(({ uid }) => uid),
+    memberNames: members.map(({ name }) => name ?? null),
+    memberPhotos: members.map(({ photo }) => photo ?? null),
+  };
+
+  await chatCollection.doc(id).create(params);
+  return params;
 };
 
 export const getMessagesFromChat = async (chatId: string) => {
@@ -33,8 +43,11 @@ export const createMessage = async (
   sender: string,
   text: string,
 ) => {
-  await chatCollection.doc(chatId).collection('messages').doc().create({
-    sender,
-    text,
-  });
+  const params = { sender, text, date: new Date().toISOString() };
+  await chatCollection
+    .doc(chatId)
+    .collection('messages')
+    .doc()
+    .create(params);
+  return params;
 };

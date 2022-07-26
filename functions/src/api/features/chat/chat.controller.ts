@@ -4,13 +4,20 @@ import { UserRecord } from 'firebase-functions/v1/auth';
 import httpError from 'http-errors';
 
 import { isAuthenticated } from '../../middlewares';
-import { userService } from '../user';
 import * as chatService from './chat.service';
+import * as userService from '../user/user.service';
 
 export const chatRouter = Router();
 
 /**
  * @api {post} /chats/:chatId/ Add message to a chat
+ * @apiBody {String} text Message text content
+ *
+ * @apiGroup Chats
+ * @apiName addMessageToChat
+ * @apiVersion 1.0.0
+ *
+ * @apiUse IsMember
  */
 chatRouter.post(
   '/:chatId',
@@ -29,14 +36,20 @@ chatRouter.post(
     if (!chat.members.includes(uid))
       throw httpError(403, 'You may not access this chat');
 
-    await chatService.createMessage(chatId, uid, text);
+    const message = await chatService.createMessage(chatId, uid, text);
 
-    res.json();
+    res.json(message);
   }),
 );
 
 /**
- * @api {get} /chats/:chatId
+ * @api {get} /chats/:chatId Get chat messages
+ *
+ * @apiGroup Chats
+ * @apiName getChatMessages
+ * @apiVersion 1.0.0
+ *
+ * @apiUse IsMember
  */
 chatRouter.get(
   '/:chatId',
@@ -47,7 +60,13 @@ chatRouter.get(
 );
 
 /**
- * @api {get} /chats Get current user's chats
+ * @api {get} /chats Get chats for current user
+ *
+ * @apiGroup Chats
+ * @apiName getCurrentUserChats
+ * @apiVersion 1.0.0
+ *
+ * @apiUse IsCurrentUser
  */
 chatRouter.get(
   '/',
@@ -63,24 +82,29 @@ chatRouter.get(
 
 /**
  * @api {post} /chats Create chat
+ * @apiBody {String} recipient Firebase User ID of the recipient
+ *
+ * @apiGroup Chats
+ * @apiName createChat
+ * @apiVersion 1.0.0
+ *
+ * @apiUse IsLoggedIn
  */
 chatRouter.post(
   '/',
   isAuthenticated,
   asyncHandler(async (req, res) => {
     const { uid } = req['user'] as UserRecord;
-    const { recipients } = req.body;
+    const { recipient } = req.body;
 
     const members = await Promise.all(
-      [uid, ...recipients].map(async (id) =>
-        userService.getUserByUid(id),
-      ),
+      [uid, recipient]
+        .sort()
+        .map(async (id) => userService.getUserByUid(id)),
     );
 
-    console.log(members);
+    const chat = await chatService.createChat(members);
 
-    await chatService.createChat();
-
-    res.json();
+    res.json(chat);
   }),
 );
