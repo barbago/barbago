@@ -17,7 +17,7 @@ export const MessagePage: React.FC<RootTabScreenProps<'Messages'>> = ({
 }) => {
   const { user } = useAuth();
   const { data: chats, isLoading } = messageApi.useGetChatsQuery(
-    user!.uid,
+    user?.uid ?? '',
   );
 
   const getChatName = (chat: ChatModel) => {
@@ -46,8 +46,3 @@ export const MessagePage: React.FC<RootTabScreenProps<'Messages'>> = ({
     </Screen>
   );
 };
-
-/**
- * What is the messaging API going to look like?
- *
- */

@@ -1,5 +1,6 @@
 import {
   collection,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -25,18 +26,30 @@ export interface MessageModel {
 
 export const chatPath = 'chats';
 
+const chatsQuery = (uid: string) =>
+  query(
+    collection(db, 'chats'),
+    orderBy('date', 'desc'),
+    where('members', 'array-contains', uid),
+  );
+
+const messageQuery = (chatId: string) =>
+  query(
+    collection(db, 'chats', chatId, 'messages'),
+    orderBy('date', 'desc'),
+  );
+
 export const messageApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getChats: builder.query<ChatModel[], string>({
-      query: (_uid) => `${chatPath}`,
+      queryFn: async (uid) => ({
+        data: (await getDocs(chatsQuery(uid))).docs.map(
+          (doc) => doc.data() as ChatModel,
+        ),
+      }),
       onCacheEntryAdded: async (uid, api) => {
         await api.cacheDataLoaded;
-        const q = query(
-          collection(db, 'chats'),
-          orderBy('date', 'desc'),
-          where('members', 'array-contains', uid),
-        );
-        const unsubscribe = onSnapshot(q, (snap) => {
+        const unsubscribe = onSnapshot(chatsQuery(uid), (snap) => {
           const chats: ChatModel[] = [];
           snap.docs.forEach((doc) => {
             chats.push(doc.data() as ChatModel);
@@ -50,14 +63,14 @@ export const messageApi = api.injectEndpoints({
       },
     }),
     getMessages: builder.query<MessageModel[], string>({
-      query: (chatId) => `${chatPath}/${chatId}`,
+      queryFn: async (chatId) => ({
+        data: (await getDocs(messageQuery(chatId))).docs.map(
+          (doc) => doc.data() as MessageModel,
+        ),
+      }),
       onCacheEntryAdded: async (chatId, api) => {
         await api.cacheDataLoaded;
-        const q = query(
-          collection(db, 'chats', chatId, 'messages'),
-          // orderBy('date', 'desc'),
-        );
-        const unsubscribe = onSnapshot(q, (snap) => {
+        const unsubscribe = onSnapshot(messageQuery(chatId), (snap) => {
           const messages: MessageModel[] = [];
           snap.docs.forEach((doc) =>
             messages.push(doc.data() as MessageModel),
