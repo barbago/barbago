@@ -20,8 +20,10 @@ export interface ChatModel {
 }
 
 export interface MessageModel {
+  id: string;
   text: string;
   sender: string;
+  date: string;
 }
 
 export const chatPath = 'chats';
