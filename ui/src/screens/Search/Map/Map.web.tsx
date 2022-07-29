@@ -117,8 +117,8 @@ export const Map = () => {
       closePopupOnClick={false}
       whenCreated={setMap}
     >
-      <AttributionControl position="bottomright" prefix={false} />
-      <ZoomControl position="bottomleft" />
+      <AttributionControl position="topright" prefix={false} />
+      <ZoomControl position="topleft" />
       <TileLayer url={url} attribution={attribution} />
       <MarkerClusterGroup
         showCoverageOnHover={false}

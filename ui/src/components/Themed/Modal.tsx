@@ -13,7 +13,12 @@ export const Modal = forwardRef<Modalize, ModalizeProps>(
         handlePosition="inside"
         modalTopOffset={200}
         alwaysOpen={50}
-        modalStyle={{ backgroundColor: modalBg }}
+        modalStyle={{
+          marginHorizontal: 'auto',
+          maxWidth: 700,
+          width: '100%',
+          backgroundColor: modalBg,
+        }}
         handleStyle={{ backgroundColor: handleBg }}
         {...rest}
       >

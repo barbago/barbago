@@ -41,5 +41,6 @@
 }
 
 .leaflet-control-container > div {
-  margin-bottom: 50px;
+  margin-top: 66px;
+  margin-right: 10px;
 }
