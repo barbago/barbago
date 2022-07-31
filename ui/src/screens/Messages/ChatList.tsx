@@ -2,10 +2,11 @@ import { User } from 'firebase/auth';
 import React from 'react';
 import { List, Text } from 'react-native-paper';
 import { RootTabScreenProps } from '../../navigation';
-import { ChatModel, messageApi } from '../../store';
+import { messageApi } from '../../store';
 import { relativeTimeFromDates } from '../../utils';
 import { ChatListLoader } from './ChatListLoader';
 import { NoMessages } from './NoMessages';
+import { getChatName } from './utils';
 
 const right = (date?: string) =>
   date
@@ -22,22 +23,14 @@ export const ChatList = ({ user, navigation }: ChatListProps) => {
     user.uid,
   );
 
-  const getChatName = (chat: ChatModel) => {
-    return (
-      chat.memberNames
-        ?.filter((_, i) => i !== chat.members.indexOf(user.uid))
-        .join(', ') || 'Just Me'
-    );
-  };
-
   return (
     <>
       {!isLoading ? (
-        chats?.length && chats.length > 1 ? (
+        chats?.length && chats.length > 0 ? (
           chats?.map((chat, i) => (
             <List.Item
               key={i}
-              title={getChatName(chat)}
+              title={getChatName(chat, user.uid)}
               description={chat.lastMessage}
               right={right(chat?.date)}
               onPress={() =>
