@@ -98,13 +98,14 @@ export const messageApi = api.injectEndpoints({
       //   body: { text },
       // }),
       queryFn: async ({ chatId, uid, text }) => {
-        const message = await addDoc(
+        const message = {
+          text,
+          date: new Date().toISOString(),
+          sender: uid,
+        };
+        await addDoc(
           collection(db, 'chats', chatId, 'messages'),
-          {
-            text,
-            date: new Date().toISOString(),
-            sender: uid,
-          },
+          message,
         );
         return { data: message };
       },
