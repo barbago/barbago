@@ -1,6 +1,8 @@
 import {
+  addDoc,
   collection,
   getDocs,
+  limit,
   onSnapshot,
   orderBy,
   query,
@@ -35,10 +37,11 @@ const chatsQuery = (uid: string) =>
     where('members', 'array-contains', uid),
   );
 
-const messageQuery = (chatId: string) =>
+const messageQuery = (chatId: string, page: number = 1) =>
   query(
     collection(db, 'chats', chatId, 'messages'),
     orderBy('date', 'desc'),
+    limit(25 * page),
   );
 
 export const messageApi = api.injectEndpoints({
@@ -78,11 +81,32 @@ export const messageApi = api.injectEndpoints({
             messages.push(doc.data() as MessageModel),
           );
           api.updateCachedData((draft) => {
+            console.log(messages);
             draft.splice(0, draft.length, ...messages);
           });
         });
         await api.cacheEntryRemoved;
         unsubscribe();
+      },
+    }),
+    sendMessage: builder.mutation<any, any>({
+      // // todo: use the server to handle new messages
+      // // while injecting sent values into cache
+      // query: ({ chatId, text }) => ({
+      //   url: `chats/${chatId}`,
+      //   method: 'post',
+      //   body: { text },
+      // }),
+      queryFn: async ({ chatId, uid, text }) => {
+        const message = await addDoc(
+          collection(db, 'chats', chatId, 'messages'),
+          {
+            text,
+            date: new Date().toISOString(),
+            sender: uid,
+          },
+        );
+        return { data: message };
       },
     }),
   }),
