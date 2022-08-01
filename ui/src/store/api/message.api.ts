@@ -18,6 +18,7 @@ export interface ChatModel {
   memberNames?: string[];
   memberLinks?: (string | null)[];
   memberPhotos?: string[];
+  messageCount?: number;
   lastMessage?: string;
 }
 
@@ -67,24 +68,29 @@ export const messageApi = api.injectEndpoints({
         unsubscribe();
       },
     }),
-    getMessages: builder.query<MessageModel[], string>({
-      queryFn: async (chatId) => ({
+    getMessages: builder.query<
+      MessageModel[],
+      { chatId: string; page?: number }
+    >({
+      queryFn: async ({ chatId }) => ({
         data: (await getDocs(messageQuery(chatId))).docs.map(
           (doc) => doc.data() as MessageModel,
         ),
       }),
-      onCacheEntryAdded: async (chatId, api) => {
+      onCacheEntryAdded: async ({ chatId, page }, api) => {
         await api.cacheDataLoaded;
-        const unsubscribe = onSnapshot(messageQuery(chatId), (snap) => {
-          const messages: MessageModel[] = [];
-          snap.docs.forEach((doc) =>
-            messages.push(doc.data() as MessageModel),
-          );
-          api.updateCachedData((draft) => {
-            console.log(messages);
-            draft.splice(0, draft.length, ...messages);
-          });
-        });
+        const unsubscribe = onSnapshot(
+          messageQuery(chatId, page),
+          (snap) => {
+            const messages: MessageModel[] = [];
+            snap.docs.forEach((doc) =>
+              messages.push(doc.data() as MessageModel),
+            );
+            api.updateCachedData((draft) => {
+              draft.splice(0, draft.length, ...messages);
+            });
+          },
+        );
         await api.cacheEntryRemoved;
         unsubscribe();
       },
