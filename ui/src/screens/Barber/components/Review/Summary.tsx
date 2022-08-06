@@ -8,14 +8,15 @@ import { Button, TextInput } from 'react-native-paper';
 
 import { Text } from '../../../../components';
 import { ReviewModel } from '../../../../types';
-import { useReview } from '../../context';
+import { useReview, useVendor } from '../../context';
 import { Pagination } from './Pagination';
 import { Stars } from './Stars';
 import { WriteDialog } from './WriteDialog';
 
 export const Summary = () => {
   const { showActionSheetWithOptions } = useActionSheet();
-  const { average, reviews, filter, setFilter, setSort } = useReview();
+  const { vendor } = useVendor()!;
+  const { reviews, filter, setFilter, setSort } = useReview();
   const [writeOpen, setWriteOpen] = useState(false);
 
   const sortOptions: {
@@ -29,6 +30,9 @@ export const Summary = () => {
     { label: 'Rating (low first)', key: 'rating', asc: true },
     { label: 'Cancel' },
   ];
+
+  const average =
+    (vendor?.ratingTotal ?? 0) / (vendor?.ratingCount ?? 0);
 
   const options: ActionSheetOptions = {
     options: sortOptions.map(({ label }) => label),
@@ -54,7 +58,9 @@ export const Summary = () => {
         <View style={styles.summary}>
           <Text style={styles.rating}>{average.toFixed(2)}</Text>
           <Stars rating={average} starStyle={styles.stars} />
-          <Text style={styles.count}>{reviews.length} Reviews</Text>
+          <Text style={styles.count}>
+            {vendor?.ratingCount} Reviews
+          </Text>
         </View>
         <View
           style={{

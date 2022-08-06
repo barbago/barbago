@@ -8,19 +8,19 @@ export interface VendorResponse {
   cover?: string;
   images?: string[];
   avatar?: string;
-  rating?: string;
-  ratings?: number;
+  ratingTotal?: number;
+  ratingCount?: number;
 }
 
 export interface VendorSearchParams {
   latitude: number;
   longitude: number;
   distance?: number;
-  sorting?: {
-    // todo: add more sort fields like "distance", "price"
-    field: keyof Pick<VendorResponse, 'rating'>;
-    asc: boolean;
-  };
+  // sorting?: {
+  //   // todo: add more sort fields like "distance", "price"
+  //   field: keyof Pick<VendorResponse, 'rating'>;
+  //   asc: boolean;
+  // };
   filters?: { [key: string]: any };
   // should be keyof maxDistance, maxPrice, minPrice, minRating,
 }

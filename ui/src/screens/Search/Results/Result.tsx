@@ -14,9 +14,10 @@ export const Result = ({ vendor }: ResultProps) => {
     location,
     cover = '',
     avatar = '',
-    rating = 'n/a',
-    ratings = 0,
+    ratingTotal = 0,
+    ratingCount = 0,
   } = vendor;
+  const average = ratingTotal / ratingCount || 0;
 
   const { openVendor } = useSearch();
 
@@ -30,15 +31,16 @@ export const Result = ({ vendor }: ResultProps) => {
       )
     : undefined;
 
-  const right =
-    rating && ratings
-      ? () => (
-          <>
-            <Text>{rating}⭐</Text>
-            <Caption>({ratings})</Caption>
-          </>
-        )
-      : undefined;
+  const right = () => (
+    <>
+      {!!average && (
+        <Text style={{ textAlign: 'right' }}>
+          {average.toFixed(2)}⭐
+        </Text>
+      )}
+      <Caption>({ratingCount || 'No'} reviews)</Caption>
+    </>
+  );
 
   return (
     <Card onPress={() => openVendor(vendor)}>

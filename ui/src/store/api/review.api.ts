@@ -5,40 +5,47 @@ import { vendorPath } from './vendor.api';
 export const reviewPath = 'reviews';
 
 // https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/
-export const reviewApi = api
-  .enhanceEndpoints({ addTagTypes: ['Review'] })
-  .injectEndpoints({
-    endpoints: (builder) => ({
-      createReview: builder.mutation<
-        ReviewModel,
-        Pick<ReviewModel, 'vendorId' | 'rating' | 'text'>
-      >({
-        query: (review) => ({
-          url: `${vendorPath}/${review.vendorId}/${reviewPath}`,
-          method: 'post',
-          body: review,
-        }),
-        invalidatesTags: ['Review'],
+export const reviewApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    createReview: builder.mutation<
+      ReviewModel,
+      Pick<ReviewModel, 'vendorId' | 'rating' | 'text'>
+    >({
+      query: (review) => ({
+        url: `${vendorPath}/${review.vendorId}/${reviewPath}`,
+        method: 'post',
+        body: review,
       }),
-      fetchReviewsByUid: builder.query<ReviewModel[], string>({
-        query: (uid) => ({ url: `${vendorPath}/${uid}/${reviewPath}` }),
-        providesTags: ['Review'],
-      }),
-      updateReview: builder.mutation<ReviewModel, ReviewModel>({
-        query: (review) => ({
-          url: `${vendorPath}/${review.vendorId}/${reviewPath}`,
-          method: 'patch',
-          body: review,
-        }),
-        invalidatesTags: ['Review'],
-      }),
-      deleteReview: builder.mutation<ReviewModel, string>({
-        query: (uid) => ({
-          url: `${vendorPath}/${uid}/${reviewPath}`,
-          method: 'delete',
-        }),
-        invalidatesTags: ['Review'],
-      }),
+      invalidatesTags: (_res, _err, { vendorId }) => [
+        'Review',
+        { type: 'Vendor', id: vendorId },
+      ],
     }),
-    overrideExisting: true,
-  });
+    fetchReviewsByUid: builder.query<ReviewModel[], string>({
+      query: (uid) => ({ url: `${vendorPath}/${uid}/${reviewPath}` }),
+      providesTags: ['Review'],
+    }),
+    updateReview: builder.mutation<ReviewModel, ReviewModel>({
+      query: (review) => ({
+        url: `${vendorPath}/${review.vendorId}/${reviewPath}`,
+        method: 'patch',
+        body: review,
+      }),
+      invalidatesTags: (_res, _err, { vendorId }) => [
+        'Review',
+        { type: 'Vendor', id: vendorId },
+      ],
+    }),
+    deleteReview: builder.mutation<ReviewModel, string>({
+      query: (uid) => ({
+        url: `${vendorPath}/${uid}/${reviewPath}`,
+        method: 'delete',
+      }),
+      invalidatesTags: (_res, _err, vendorId) => [
+        'Review',
+        { type: 'Vendor', id: vendorId },
+      ],
+    }),
+  }),
+  overrideExisting: true,
+});

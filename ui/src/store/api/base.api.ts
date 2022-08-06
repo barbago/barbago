@@ -18,4 +18,5 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery,
   endpoints: () => ({}),
+  tagTypes: ['Vendor', 'Review'],
 });
