@@ -45,6 +45,10 @@ const messageQuery = (chatId: string, page: number = 1) =>
     limit(25 * page),
   );
 
+// todo: move messages to real time database
+// it's very easy to reach the free quota in
+// firestore because there are lots of reads
+
 export const messageApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getChats: builder.query<ChatModel[], string>({
