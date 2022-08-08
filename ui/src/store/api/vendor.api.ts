@@ -8,7 +8,7 @@ export const vendorApi = api.injectEndpoints({
     createVendor: builder.mutation<VendorResponse, VendorResponse>({
       query: (barber) => ({
         url: vendorPath,
-        method: 'post',
+        method: 'POST',
         body: barber,
       }),
       invalidatesTags: ['Vendor'],
@@ -30,19 +30,19 @@ export const vendorApi = api.injectEndpoints({
     vendorSearch: builder.query<VendorResponse[], VendorSearchParams>({
       query: (params) => ({
         url: `${vendorPath}/search`,
-        method: 'post',
+        method: 'POST',
         body: params,
       }),
       providesTags: ['Vendor'],
     }),
     updateVendor: builder.mutation<VendorResponse, any>({
-      query: (body) => ({ url: vendorPath, method: 'put', body }),
+      query: (body) => ({ url: vendorPath, method: 'PATCH', body }),
       invalidatesTags: ['Vendor'],
     }),
     deleteVendor: builder.mutation<VendorResponse, void>({
-      query: () => ({ url: vendorPath, method: 'delete' }),
+      query: () => ({ url: vendorPath, method: 'DELETE' }),
       invalidatesTags: ['Vendor'],
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 });

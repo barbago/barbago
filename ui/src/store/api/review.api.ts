@@ -13,7 +13,7 @@ export const reviewApi = api.injectEndpoints({
     >({
       query: (review) => ({
         url: `${vendorPath}/${review.vendorId}/${reviewPath}`,
-        method: 'post',
+        method: 'POST',
         body: review,
       }),
       invalidatesTags: (_res, _err, { vendorId }) => [
@@ -28,7 +28,7 @@ export const reviewApi = api.injectEndpoints({
     updateReview: builder.mutation<ReviewModel, ReviewModel>({
       query: (review) => ({
         url: `${vendorPath}/${review.vendorId}/${reviewPath}`,
-        method: 'patch',
+        method: 'PATCH',
         body: review,
       }),
       invalidatesTags: (_res, _err, { vendorId }) => [
@@ -39,7 +39,7 @@ export const reviewApi = api.injectEndpoints({
     deleteReview: builder.mutation<ReviewModel, string>({
       query: (uid) => ({
         url: `${vendorPath}/${uid}/${reviewPath}`,
-        method: 'delete',
+        method: 'DELETE',
       }),
       invalidatesTags: (_res, _err, vendorId) => [
         'Review',

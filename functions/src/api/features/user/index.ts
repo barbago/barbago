@@ -1,2 +1,2 @@
-export { userRouter } from './user.controller';
-export * as userService from './user.service';
+export * from './user.controller';
+export * from './user.service';

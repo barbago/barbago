@@ -6,7 +6,7 @@ export interface UserResponse {
   email?: string;
   phone?: string;
   photo?: string;
-  pushTokens?: string[]
+  pushTokens?: string[];
 }
 
 const userPath = 'users';
@@ -15,10 +15,15 @@ export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<UserResponse, void>({
       query: () => ({ url: userPath }),
+      providesTags: (res) => [{ type: 'User', id: res?.uid }],
     }),
-    updateUser: builder.mutation<UserResponse, any>({
-      query: () => ({ url: userPath, method: 'patch', body: {} }),
+    updateUser: builder.mutation<
+      UserResponse,
+      Pick<UserResponse, 'name' | 'phone' | 'photo'>
+    >({
+      query: (data) => ({ url: userPath, method: 'PATCH', body: data }),
+      invalidatesTags: (res, _err) => [{ type: 'User', id: res?.uid }],
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 });

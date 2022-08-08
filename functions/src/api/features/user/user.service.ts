@@ -5,7 +5,7 @@ export const userCollection = db.collection('users');
 
 export const createUser = async (uid: string, params: any) => {
   await userCollection.doc(uid).create(params);
-  return params;
+  return { uid, ...params };
 };
 
 export const getUserByUid = async (uid: string) => {
@@ -14,7 +14,7 @@ export const getUserByUid = async (uid: string) => {
 
 export const updateUser = async (uid: string, params: any) => {
   await userCollection.doc(uid).update(params);
-  return params;
+  return { uid, ...params };
 };
 
 export const deleteUser = async (uid: string) => {

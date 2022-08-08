@@ -4,6 +4,7 @@ import { UserRecord } from 'firebase-functions/v1/auth';
 import httpError from 'http-errors';
 
 import { isAuthenticated, isRoleAdmin } from '../../middlewares';
+import { removeEmpty } from '../../utils';
 import * as userService from './user.service';
 
 export const userRouter = Router();
@@ -98,7 +99,7 @@ userRouter.delete(
 
 /**
  * @api {get} /users/all Get all users
- * 
+ *
  * @apiGroup Users
  * @apiName getAllUsers
  * @apiVersion 1.0.0
@@ -165,30 +166,34 @@ userRouter.get(
 
 /**
  * @api {put} /users/ Update current user
- * @apiBody {String} name
- * @apiBody {String} email
+ * @apiBody {String} [name]
+ * @apiBody {String} [email]
+ * @apiBody {String} [phone]
+ * @apiBody {String} [photo]
  *
  * @apiGroup Users
  * @apiName updateCurrentUser
  * @apiVersion 1.0.0
  *
- * @apiUse IsCurrentUser
  * @apiUse UserSuccess
+ * @apiUse IsCurrentUser
  * @apiUse NotFoundError
  */
-userRouter.put(
+userRouter.patch(
   '/',
   isAuthenticated,
   asyncHandler(async (req, res) => {
+    console.error('patching the user!');
+
     const { uid } = req['user'] as UserRecord;
     const { name, email, phone, photo } = req.body;
 
     if (!(await userService.getUserByUid(uid)))
       throw httpError(404, 'User not found');
 
-    const params = { uid, name, email, phone, photo };
+    const params = { name, email, phone, photo };
 
-    const user = await userService.updateUser(uid, params);
+    const user = await userService.updateUser(uid, removeEmpty(params));
 
     res.json(user);
   }),
