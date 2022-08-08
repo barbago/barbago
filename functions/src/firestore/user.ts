@@ -1,7 +1,7 @@
 import { firestore } from 'firebase-functions/v1';
 import { firestore as db } from 'firebase-admin';
 
-firestore
+export const userChanged = firestore
   .document('users/{uid}')
   .onWrite(async ({ after }, context) => {
     // if the document has just been created,
