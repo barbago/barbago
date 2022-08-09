@@ -23,7 +23,12 @@ const reducer = {
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    // https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state
+    // you can have non-serializable items in store,
+    // but it may break hydration and time-travel
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      api.middleware,
+    ),
 });
 
 setupListeners(store.dispatch);

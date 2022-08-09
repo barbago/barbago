@@ -1,15 +1,20 @@
 import { ResponseType } from 'expo-auth-session';
 import { useAuthRequest } from 'expo-auth-session/providers/facebook';
 import { maybeCompleteAuthSession } from 'expo-web-browser';
+import { FacebookAuthProvider } from 'firebase/auth';
 import React, { useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { facebookConfig } from '../../config';
-import { useAuth } from '../../providers';
+import { signIn, store } from '../../store';
 
 maybeCompleteAuthSession();
 
+const signInFacebook = async (access_token: string) => {
+  const credential = FacebookAuthProvider.credential(access_token);
+  store.dispatch(signIn(credential));
+};
+
 export const FacebookAuth = () => {
-  const { signInFacebook } = useAuth();
   const [request, response, promptAsync] = useAuthRequest({
     responseType: ResponseType.Token,
     clientId: facebookConfig.clientId,

@@ -5,11 +5,37 @@ import {
   AppleAuthenticationButton,
   AppleAuthenticationButtonStyle,
   AppleAuthenticationButtonType,
+  signInAsync,
+  AppleAuthenticationScope,
 } from 'expo-apple-authentication';
-import { useAuth } from '../../providers';
+import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
+import { OAuthProvider } from 'firebase/auth';
+import { signIn, store } from '../../store';
+
+const signInApple = async () => {
+  const nonce = Math.random().toString(36).substring(2, 10);
+  const hashedNonce = await digestStringAsync(
+    CryptoDigestAlgorithm.SHA256,
+    nonce,
+  );
+  const appleCredential = await signInAsync({
+    requestedScopes: [
+      AppleAuthenticationScope.FULL_NAME,
+      AppleAuthenticationScope.EMAIL,
+    ],
+    nonce: hashedNonce,
+  });
+  const { identityToken } = appleCredential;
+  const provider = new OAuthProvider('apple.com');
+  const oAuthCredential = provider.credential({
+    idToken: identityToken!,
+    rawNonce: nonce,
+  });
+  store.dispatch(signIn(oAuthCredential));
+};
+
 
 export const AppleAuth = () => {
-  const { signInApple } = useAuth();
   const [isAppleReady, setIsAppleReady] = useState(false);
 
   useEffect(() => {
