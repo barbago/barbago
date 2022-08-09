@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import { auth } from '../config';
 import { useCachedResources } from '../hooks';
-import { signedIn, signedOut, store } from '../store';
+import { authFailed, signedIn, signedOut, store } from '../store';
 
 export const StoreProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -12,14 +12,18 @@ export const StoreProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     setLoading(true);
-    return onIdTokenChanged(auth, (user) => {
-      if (user) {
-        store.dispatch(signedIn(user));
-      } else {
-        store.dispatch(signedOut());
-      }
-      setLoading(false);
-    });
+    return onIdTokenChanged(
+      auth,
+      (user) => {
+        if (user) {
+          store.dispatch(signedIn(user));
+        } else {
+          store.dispatch(signedOut());
+        }
+        setLoading(false);
+      },
+      (error) => store.dispatch(authFailed(error)),
+    );
   }, []);
 
   // todo: replace apploading and use splash screen
