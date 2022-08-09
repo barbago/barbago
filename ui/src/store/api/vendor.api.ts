@@ -24,7 +24,7 @@ export const vendorApi = api.injectEndpoints({
     fetchVendorByLink: builder.query<VendorResponse, string>({
       query: (link) => ({ url: `${vendorPath}/link/${link}` }),
       providesTags: (res, _err, _arg) => [
-        { type: 'Vendor', id: res!.uid },
+        { type: 'Vendor', id: res?.uid },
       ],
     }),
     vendorSearch: builder.query<VendorResponse[], VendorSearchParams>({
