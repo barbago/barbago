@@ -18,17 +18,19 @@ export const getChatsByUid = async (uid: string) => {
 
 export const createChat = async (members: any[]) => {
   const date = new Date().toISOString();
-  const id =
-    members.map(({ uid }) => uid).join('_') + '_' + date.split('T')[0];
+
+  const docRef = chatCollection.doc();
+
   const params = {
-    id,
+    id: docRef.id,
     date,
     members: members.map(({ uid }) => uid),
     memberNames: members.map(({ name }) => name ?? null),
     memberPhotos: members.map(({ photo }) => photo ?? null),
   };
 
-  await chatCollection.doc(id).create(params);
+  await docRef.create(params);
+
   return params;
 };
 
