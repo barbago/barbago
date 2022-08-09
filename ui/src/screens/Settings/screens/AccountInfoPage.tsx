@@ -1,23 +1,29 @@
 import React from 'react';
-import { Button, Card } from 'react-native-paper';
+import { Button, Card, Text } from 'react-native-paper';
 import { useForm, FieldValues } from 'react-hook-form';
 import {
   AvatarPicker,
   Screen,
   ValidTextInput,
 } from '../../../components';
-import { useAuth } from '../../../providers';
 import { SettingsStackScreenProps } from '../../../navigation';
+import { userApi } from '../../../store';
 
+// you can change firebase auth user profile information
+// https://firebase.google.com/docs/auth/web/manage-users
 export const AccountInfoPage = ({
   navigation,
 }: SettingsStackScreenProps<'Account'>) => {
-  const { user } = useAuth();
+  const { data: user, isLoading } = userApi.useGetUserQuery();
+  const [updateUser, { isLoading: isUpdateLoading }] =
+    userApi.useUpdateUserMutation();
   const { control, formState, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-    alert('SUCCESS, ' + JSON.stringify(data));
+    updateUser(data);
   };
+
+  if (isLoading) return <Text>Loading Account Data...</Text>;
 
   return (
     <Screen scrolling>
@@ -29,9 +35,9 @@ export const AccountInfoPage = ({
         <Card.Content>
           <ValidTextInput
             label="Full Name"
-            name="fullName"
+            name="name"
             control={control}
-            defaultValue={user?.displayName ?? ''}
+            defaultValue={user?.name ?? ''}
             autoCompleteType="name"
             rules={{
               required: 'Name must not be empty!',
@@ -61,14 +67,14 @@ export const AccountInfoPage = ({
           <ValidTextInput
             label="Phone Number"
             autoCompleteType="tel"
-            defaultValue={user?.phoneNumber ?? ''}
+            defaultValue={user?.phone ?? ''}
             name="phone"
             control={control}
             rules={{
               pattern: {
                 message: 'Phone number must have valid format!',
                 value:
-                  /^(?=[a-zA-Z!@#$%^&+=\d]+$)(?:(?=\D*\d)(?=(?:\d*\D){8,14})|(?=(?:\D*\d){8,14})(?=\d*\D))/,
+                  /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
               },
             }}
           />
@@ -77,10 +83,12 @@ export const AccountInfoPage = ({
         <Card.Actions>
           <Button
             mode="contained"
-            disabled={!formState.isDirty}
+            disabled={!formState.isDirty || isUpdateLoading}
             onPress={handleSubmit(onSubmit)}
           >
-            Update Information
+            {isUpdateLoading
+              ? 'Saving Changes...'
+              : 'Update Information'}
           </Button>
         </Card.Actions>
       </Card>
