@@ -10,6 +10,7 @@ import { ThunkAction } from 'redux-thunk';
 
 import { api } from './api';
 import { authReducer } from './auth';
+import { listenerMiddleware } from './listenerMiddleware';
 import { searchReducer } from './search';
 import { settingsReducer } from './settings';
 
@@ -26,9 +27,9 @@ export const store = configureStore({
     // https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state
     // you can have non-serializable items in store,
     // but it may break hydration and time-travel
-    getDefaultMiddleware({ serializableCheck: false }).concat(
-      api.middleware,
-    ),
+    getDefaultMiddleware({ serializableCheck: false })
+      .concat(api.middleware)
+      .prepend(listenerMiddleware.middleware),
 });
 
 setupListeners(store.dispatch);
