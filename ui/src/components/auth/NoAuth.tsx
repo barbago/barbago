@@ -1,11 +1,13 @@
+import { signInAnonymously } from 'firebase/auth';
 import React from 'react';
 import { Button } from 'react-native-paper';
 
-import { useAuth } from '../../providers';
+import { auth } from '../../config';
 
 export function NoAuth() {
-  const { signInAnonymous } = useAuth();
   return (
-    <Button onPress={signInAnonymous}>Continue without account</Button>
+    <Button onPress={() => signInAnonymously(auth)}>
+      Continue without account
+    </Button>
   );
 }
