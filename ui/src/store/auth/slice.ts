@@ -1,43 +1,27 @@
 import {
   createAsyncThunk,
   createSlice,
+  isAnyOf,
   PayloadAction,
 } from '@reduxjs/toolkit';
 import {
   AuthCredential,
   signInWithCredential,
-  signOut as fbSignOut,
   User,
 } from 'firebase/auth';
-import { auth } from '../../config';
-import { RootState } from '../store';
+import { arrayRemove, doc, updateDoc } from 'firebase/firestore';
+import { auth, db } from '../../config';
+import { userApi } from '../api';
+import { startAppListening } from '../listenerMiddleware';
 
 const reducerName = `auth`;
 
+// todo: refactor this back to auth provider
 export const signIn = createAsyncThunk(
   `${reducerName}/signIn`,
   async (credential: AuthCredential) => {
     const user = (await signInWithCredential(auth, credential))?.user;
     return user;
-    // indirectly dispatches because of onAuthStateChanged
-    // so no need to dispatch another action
-  },
-);
-
-export const signOut = createAsyncThunk(
-  `${reducerName}/signOut`,
-  async (_, { dispatch, getState }) => {
-    const state = getState() as RootState;
-    // todo: make a call to remove the
-    // device's pushtoken from user profile
-    await fbSignOut(auth);
-  },
-);
-
-export const authFailed = createAsyncThunk(
-  `${reducerName}/failed`,
-  async (err: any) => {
-    console.error('Authentication Failed!', err);
   },
 );
 
@@ -58,25 +42,43 @@ const authSlice = createSlice({
     setPushToken(state, action: PayloadAction<string | null>) {
       state.pushToken = action.payload;
     },
-    signedIn(state, action) {
+    signedIn(state, action: PayloadAction<User>) {
       state.user = action.payload;
     },
     signedOut(state) {
       state.user = null;
     },
   },
-  extraReducers: (builder) => {
-    // builder.addCase(signedIn.fulfilled, (state, action) => {
-    //   state.user = action.payload ?? null;
-    // });
-    // builder.addCase(signOut.fulfilled, (state) => {
-    //   state.pushToken = null;
-    //   state.user = null;
-    //   state.token = null;
-    // });
-  },
 });
 
 export const { reducer: authReducer } = authSlice;
 
-export const { setPushToken, signedIn, signedOut } = authSlice.actions;
+export const { signedIn, signedOut, setPushToken } = authSlice.actions;
+
+/** Effects */
+
+// clear user data on login or logout
+startAppListening({
+  matcher: isAnyOf(signedIn, signedOut),
+  effect: (_action, { dispatch }) => {
+    dispatch(userApi.util.resetApiState());
+  },
+});
+
+// remove push token on logout
+startAppListening({
+  actionCreator: signedOut,
+  effect: async (_action, { getOriginalState }) => {
+    const { user, pushToken } = getOriginalState().auth;
+    if (!user || !pushToken) return;
+    // FirebaseError: Missing or insufficient permissions
+    // we're signing out first, then triggering this effect
+    // unauthenticated users can't edit the doc users/uid
+    // solve by moving firebase signout here? big refactor?
+    // create a signout thunk again and run this first?
+    const res = await updateDoc(doc(db, 'users', user.uid), {
+      pushTokens: arrayRemove(pushToken),
+    });
+    console.log(res);
+  },
+});
