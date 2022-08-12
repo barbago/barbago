@@ -10,32 +10,33 @@ import {
 } from 'expo-apple-authentication';
 import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 import { OAuthProvider } from 'firebase/auth';
-import { signIn, store } from '../../store';
-
-const signInApple = async () => {
-  const nonce = Math.random().toString(36).substring(2, 10);
-  const hashedNonce = await digestStringAsync(
-    CryptoDigestAlgorithm.SHA256,
-    nonce,
-  );
-  const appleCredential = await signInAsync({
-    requestedScopes: [
-      AppleAuthenticationScope.FULL_NAME,
-      AppleAuthenticationScope.EMAIL,
-    ],
-    nonce: hashedNonce,
-  });
-  const { identityToken } = appleCredential;
-  const provider = new OAuthProvider('apple.com');
-  const oAuthCredential = provider.credential({
-    idToken: identityToken!,
-    rawNonce: nonce,
-  });
-  store.dispatch(signIn(oAuthCredential));
-};
-
+import { useAuth } from '../../providers';
 
 export const AppleAuth = () => {
+  const { signIn } = useAuth();
+
+  const signInApple = async () => {
+    const nonce = Math.random().toString(36).substring(2, 10);
+    const hashedNonce = await digestStringAsync(
+      CryptoDigestAlgorithm.SHA256,
+      nonce,
+    );
+    const appleCredential = await signInAsync({
+      requestedScopes: [
+        AppleAuthenticationScope.FULL_NAME,
+        AppleAuthenticationScope.EMAIL,
+      ],
+      nonce: hashedNonce,
+    });
+    const { identityToken } = appleCredential;
+    const provider = new OAuthProvider('apple.com');
+    const oAuthCredential = provider.credential({
+      idToken: identityToken!,
+      rawNonce: nonce,
+    });
+    await signIn(oAuthCredential);
+  };
+
   const [isAppleReady, setIsAppleReady] = useState(false);
 
   useEffect(() => {

@@ -1,19 +1,23 @@
 import {
   addNotificationReceivedListener,
   addNotificationResponseReceivedListener,
-  getExpoPushTokenAsync,
-  requestPermissionsAsync,
 } from 'expo-notifications';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
+import { LogBox } from 'react-native';
 
 import { useColorScheme } from './hooks';
 import { Navigation } from './navigation';
 import { ContextProvider } from './providers';
-import { isMobile } from './utils';
 
 export function App() {
   const colorScheme = useColorScheme();
+
+  LogBox.ignoreLogs([
+    /^Setting a timer for a long period of time/,
+    /^AsyncStorage has been extracted from react-native/,
+    /^source.uri should not be an empty string$/,
+  ]);
 
   useEffect(() => {
     const subscriptions = [
@@ -22,12 +26,6 @@ export function App() {
         console.log(res),
       ),
     ];
-    (async () => {
-      await requestPermissionsAsync();
-      const token = isMobile() && (await getExpoPushTokenAsync()).data;
-
-      token && console.log(token);
-    })();
 
     return subscriptions.forEach((subscription) =>
       subscription.remove(),

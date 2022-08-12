@@ -1,4 +1,5 @@
-import React from 'react';
+import { requestPermissionsAsync } from 'expo-notifications';
+import React, { useEffect } from 'react';
 
 import { Screen } from '../../components';
 import { RootTabScreenProps } from '../../navigation/types';
@@ -10,6 +11,10 @@ export const MessagePage = ({
   navigation,
 }: RootTabScreenProps<'Messages'>) => {
   const { user } = useAuth();
+
+  useEffect(() => {
+    (async () => await requestPermissionsAsync())();
+  }, []);
 
   return (
     <Screen scrolling>

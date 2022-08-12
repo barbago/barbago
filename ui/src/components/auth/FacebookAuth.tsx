@@ -5,16 +5,17 @@ import { FacebookAuthProvider } from 'firebase/auth';
 import React, { useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { facebookConfig } from '../../config';
-import { signIn, store } from '../../store';
+import { useAuth } from '../../providers';
 
 maybeCompleteAuthSession();
 
-const signInFacebook = async (access_token: string) => {
-  const credential = FacebookAuthProvider.credential(access_token);
-  store.dispatch(signIn(credential));
+const signInFacebook = (access_token: string) => {
+  return FacebookAuthProvider.credential(access_token);
 };
 
 export const FacebookAuth = () => {
+  const { signIn } = useAuth();
+
   const [request, response, promptAsync] = useAuthRequest({
     responseType: ResponseType.Token,
     clientId: facebookConfig.clientId,
@@ -23,7 +24,8 @@ export const FacebookAuth = () => {
   useEffect(() => {
     if (response?.type === 'success') {
       const { access_token } = response.params;
-      signInFacebook(access_token);
+      const credential = signInFacebook(access_token);
+      signIn(credential);
     }
   }, [response]);
 
