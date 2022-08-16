@@ -1,6 +1,6 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import { User } from 'firebase/auth';
-import { userApi } from '../api';
+import { api } from '../api';
 import { startAppListening } from '../listenerMiddleware';
 
 const reducerName = `auth`;
@@ -40,7 +40,7 @@ export const { signedIn, signedOut, setPushToken } = authSlice.actions;
 startAppListening({
   matcher: isAnyOf(signedIn, signedOut),
   effect: (_action, { dispatch }) => {
-    dispatch(userApi.util.resetApiState());
+    dispatch(api.util.resetApiState());
   },
 });
 
