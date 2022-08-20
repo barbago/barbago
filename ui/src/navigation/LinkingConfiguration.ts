@@ -6,6 +6,11 @@
 
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
+import {
+  addNotificationResponseReceivedListener,
+  getLastNotificationResponseAsync,
+  removeNotificationSubscription,
+} from 'expo-notifications';
 
 import { RootStackParamList } from './types';
 
@@ -37,5 +42,32 @@ export const linking: LinkingOptions<RootStackParamList> = {
       },
       NotFound: '*',
     },
+  },
+  async getInitialURL() {
+    let url = await Linking.getInitialURL();
+    if (url) return url;
+
+    const response = await getLastNotificationResponseAsync();
+    url = response?.notification.request.content.data.url as string;
+    if (typeof url === 'string') return url;
+  },
+  subscribe(listener) {
+    const onReceiveUrl = ({ url }: { url: string }) => listener(url);
+    Linking.addEventListener('url', onReceiveUrl);
+
+    const subscription = addNotificationResponseReceivedListener(
+      (response) => {
+        const path = response.notification.request.content.data.path;
+        if (path && typeof path === 'string') {
+          const url = Linking.createURL(path);
+          listener(url);
+        }
+      },
+    );
+
+    return () => {
+      Linking.removeEventListener('url', onReceiveUrl);
+      removeNotificationSubscription(subscription);
+    };
   },
 };

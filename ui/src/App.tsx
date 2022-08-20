@@ -1,12 +1,8 @@
-import {
-  addNotificationReceivedListener,
-  addNotificationResponseReceivedListener,
-} from 'expo-notifications';
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { LogBox } from 'react-native';
 
-import { useColorScheme } from './hooks';
+import { useColorScheme, usePushNotifications } from './hooks';
 import { Navigation } from './navigation';
 import { ContextProvider } from './providers';
 import { userApi } from './store';
@@ -18,19 +14,6 @@ export const App = () => {
     /^source.uri should not be an empty string$/,
   ]);
 
-  useEffect(() => {
-    const subscriptions = [
-      addNotificationReceivedListener((notif) => console.log(notif)),
-      addNotificationResponseReceivedListener((res) =>
-        console.log(res),
-      ),
-    ];
-
-    return subscriptions.forEach((subscription) =>
-      subscription.remove(),
-    );
-  }, []);
-
   return (
     <ContextProvider>
       <AppContainer />
@@ -41,6 +24,7 @@ export const App = () => {
 
 const AppContainer = () => {
   const colorScheme = useColorScheme();
+  usePushNotifications();
 
   userApi.useGetUserQuery();
 
