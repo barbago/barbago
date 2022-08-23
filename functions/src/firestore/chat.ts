@@ -42,6 +42,7 @@ export const messageCreated = firestore
         body: text,
         title: sender.name,
         sound: 'default',
+        data: { path: `messages/${chatId}` },
       }));
 
     console.log(messages);
