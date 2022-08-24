@@ -22,24 +22,24 @@ export const settingsConfig: SettingSection[] = [
         rightIcon: 'chevron-right',
         navigate: 'Account',
       },
-      {
-        title: 'Notifications',
-        leftIcon: 'bell-ring',
-        rightIcon: 'chevron-right',
-        navigate: 'Notifications',
-      },
+      // {
+      //   title: 'Notifications',
+      //   leftIcon: 'bell-ring',
+      //   rightIcon: 'chevron-right',
+      //   navigate: 'Notifications',
+      // },
       {
         title: 'Payment Details',
         leftIcon: 'currency-usd',
         rightIcon: 'chevron-right',
         navigate: 'Payment Details',
       },
-      {
-        title: 'App Preferences',
-        leftIcon: 'tune',
-        rightIcon: 'chevron-right',
-        navigate: 'Preferences',
-      },
+      // {
+      //   title: 'App Preferences',
+      //   leftIcon: 'tune',
+      //   rightIcon: 'chevron-right',
+      //   navigate: 'Preferences',
+      // },
     ],
   },
   {
@@ -71,23 +71,23 @@ export const settingsConfig: SettingSection[] = [
       },
     ],
   },
-  {
-    title: 'Earn with Barbago',
-    items: [
-      {
-        title: 'Refer a user',
-        subtitle: 'Get money for inviting people!',
-        leftIcon: 'account-multiple',
-        rightIcon: 'chevron-right',
-      },
-      {
-        title: 'Work with Barbago',
-        subtitle: 'List your services on the platform',
-        leftIcon: 'briefcase',
-        rightIcon: 'chevron-right',
-      },
-    ],
-  },
+  // {
+  //   title: 'Earn with Barbago',
+  //   items: [
+  //     {
+  //       title: 'Refer a user',
+  //       subtitle: 'Get money for inviting people!',
+  //       leftIcon: 'account-multiple',
+  //       rightIcon: 'chevron-right',
+  //     },
+  //     {
+  //       title: 'Work with Barbago',
+  //       subtitle: 'List your services on the platform',
+  //       leftIcon: 'briefcase',
+  //       rightIcon: 'chevron-right',
+  //     },
+  //   ],
+  // },
 ];
 
 // Icons: https://materialdesignicons.com/

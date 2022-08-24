@@ -3,29 +3,35 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { Box, Text } from '../Themed';
+import { Box, CustomLoader, Text } from '../Themed';
 import { useAuth } from '../../providers';
+import { userApi } from '../../store';
 
 export interface AuthCardProps {}
 
 export const AuthCard = ({}: AuthCardProps) => {
-  const { user, signOut } = useAuth();
+  const { data: profile, isLoading } = userApi.useGetUserQuery();
+  const { signOut, user } = useAuth();
   const navigation = useNavigation<any>();
 
   // https://reactnavigation.org/docs/nesting-navigators/
   // todo: route this to a login page
-  const onPress = user ? signOut : () => navigation.replace('NotFound');
+  const onPress = profile
+    ? signOut
+    : () => navigation.replace('NotFound');
   const title = user
-    ? `Welcome, ${user.displayName ?? 'User'}!`
+    ? `Welcome, ${profile?.name ?? 'User'}!`
     : 'You are not signed in!';
   const source = user
     ? {
         uri:
-          user.photoURL ??
+          profile?.photo ??
           'https://source.unsplash.com/featured?haircut',
       }
     : undefined;
-  const label = user ? 'Sign Out' : 'Log in or Sign up!';
+  const label = profile ? 'Sign Out' : 'Log in or Sign up!';
+
+  if (isLoading) return <CustomLoader />;
 
   return (
     <Box style={styles.card}>

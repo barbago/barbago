@@ -10,7 +10,11 @@ export const SettingsPage = ({
   navigation,
 }: SettingsStackScreenProps<'Settings'>) => {
   return (
-    <Screen edges={['top']} scrolling style={{ paddingVertical: 16 }}>
+    <Screen
+      edges={['top']}
+      scrolling
+      scrollViewProps={{ style: { paddingVertical: 16 } }}
+    >
       <AuthCard />
       {settingsConfig.map(({ title, items }, index) => (
         <List.Section title={title} key={index}>
