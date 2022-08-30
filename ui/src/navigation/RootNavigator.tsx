@@ -6,7 +6,7 @@ import {
   BarberPage,
   Chat,
   NotFoundScreen,
-  WelcomeSwiper,
+  WelcomePage,
 } from '../screens';
 import { TabNavigator } from './TabNavigator';
 import { useAuth } from '../providers';
@@ -23,7 +23,11 @@ export function RootNavigator() {
   return (
     <Stack.Navigator>
       {!user && (
-        <Stack.Screen name="Welcome" component={WelcomeSwiper} />
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomePage}
+          options={{ headerShown: false }}
+        />
       )}
       <Stack.Screen
         name="Root"

@@ -1,1 +1,1 @@
-export * from './WelcomeSwiper';
+export * from './WelcomePage';
