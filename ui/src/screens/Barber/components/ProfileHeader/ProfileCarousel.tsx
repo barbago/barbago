@@ -33,6 +33,7 @@ export const ProfileCarousel = memo(() => {
         autoPlay
         autoPlayInterval={5000}
         renderItem={renderItem}
+        windowSize={3}
       />
     </View>
   );
