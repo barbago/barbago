@@ -17,11 +17,12 @@ declare global {
 }
 
 export type RootStackParamList = {
+  Barber: { id: string };
+  Chat: { id: string };
+  Login: undefined;
   Welcome?: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
-  Barber: { id: string };
-  Chat: { id: string };
 };
 
 export type RootStackScreenProps<

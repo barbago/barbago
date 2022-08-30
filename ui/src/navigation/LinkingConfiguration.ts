@@ -19,9 +19,10 @@ export const linking: LinkingOptions<RootStackParamList> = {
   config: {
     initialRouteName: 'Root',
     screens: {
-      Welcome: 'welcome',
       Barber: 'barber/:id',
       Chat: 'messages/:id',
+      Login: 'login',
+      Welcome: 'welcome',
       Root: {
         screens: {
           Home: 'home',

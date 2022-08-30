@@ -1,6 +1,7 @@
 export * from './Account';
 export * from './Barber';
 export * from './Home';
+export * from './Login';
 export * from './Messages';
 export * from './NotFound';
 export * from './Search';
