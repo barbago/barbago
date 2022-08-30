@@ -30,12 +30,13 @@ export function GoogleAuth() {
 
   return (
     <Button
+      icon="google"
       disabled={!request}
       onPress={() => {
         promptAsync();
       }}
     >
-      Signup with Google
+      Sign in with Google
     </Button>
   );
 }

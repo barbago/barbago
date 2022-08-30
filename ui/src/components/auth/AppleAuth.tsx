@@ -43,21 +43,19 @@ export const AppleAuth = () => {
     isAvailableAsync().then(setIsAppleReady);
   }, []);
 
+  if (!isAppleReady) return null;
+
   return (
-    <>
-      {isAppleReady ? (
-        <AppleAuthenticationButton
-          buttonStyle={AppleAuthenticationButtonStyle.WHITE}
-          buttonType={AppleAuthenticationButtonType.SIGN_IN}
-          cornerRadius={0}
-          onPress={signInApple}
-          style={{
-            width: Dimensions.get('screen').width - 32,
-            height: 50,
-          }}
-        />
-      ) : null}
-    </>
+    <AppleAuthenticationButton
+      buttonStyle={AppleAuthenticationButtonStyle.WHITE}
+      buttonType={AppleAuthenticationButtonType.SIGN_IN}
+      cornerRadius={0}
+      onPress={signInApple}
+      style={{
+        width: Dimensions.get('screen').width - 32,
+        height: 50,
+      }}
+    />
   );
 };
 

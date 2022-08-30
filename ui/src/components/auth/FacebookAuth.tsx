@@ -31,12 +31,13 @@ export const FacebookAuth = () => {
 
   return (
     <Button
+      icon="facebook"
       disabled={!request}
       onPress={() => {
         promptAsync();
       }}
     >
-      Continue with Facebook
+      Sign in with Facebook
     </Button>
   );
 };
