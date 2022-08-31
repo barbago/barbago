@@ -1,12 +1,12 @@
-import React, { FC, forwardRef, Ref, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import {
   Image,
-  ImageSourcePropType,
   Pressable,
   StyleSheet,
+  useWindowDimensions,
   View,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Text, Title } from 'react-native-paper';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -20,33 +20,33 @@ import Carousel, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Screen } from '../../components';
-import { windowWidth } from '../../config';
 import { useThemeColor } from '../../hooks';
 import { RootStackScreenProps } from '../../navigation/types';
-
-const data: ImageSourcePropType[] = [
-  require('../../assets/images/undraw_barber.png'),
-  { uri: 'https://source.unsplash.com/featured?science' },
-  { uri: 'https://source.unsplash.com/featured?technology' },
-  { uri: 'https://source.unsplash.com/featured?engineering' },
-  { uri: 'https://source.unsplash.com/featured?arts' },
-  { uri: 'https://source.unsplash.com/featured?mathematics' },
-];
-
-interface SlideItem {
-  item: ImageSourcePropType;
-}
+import { data, SlideItem } from './welcome-config';
 
 export function WelcomePage({
   navigation,
 }: RootStackScreenProps<'Welcome'>) {
-  const [index, setIndex] = useState(0);
-  const progressValue = useSharedValue(0);
   const carouselRef = useRef<ICarouselInstance>(null);
+  const progressValue = useSharedValue(0);
+  const [index, setIndex] = useState(0);
+  const { width, height } = useWindowDimensions();
 
-  const renderItem = ({ item }: SlideItem) => (
-    <Image source={item} style={StyleSheet.absoluteFill} />
-  );
+  const renderItem = ({ item }: { item: SlideItem }) => {
+    const isScreenLarge = width > 900;
+    const splitStyle = isScreenLarge
+      ? { width: width / 2, height }
+      : { width, height: height / 2 };
+    return (
+      <View style={{ flexDirection: isScreenLarge ? 'row' : 'column' }}>
+        <Image source={item.image} style={splitStyle} />
+        <View style={[splitStyle, styles.slideText]}>
+          <Title>{item.title}</Title>
+          <Text>{item.text}</Text>
+        </View>
+      </View>
+    );
+  };
 
   const handleSlideChange = () => {
     setIndex(carouselRef.current?.getCurrentIndex() ?? 0);
@@ -85,10 +85,10 @@ export function WelcomePage({
   };
 
   return (
-    <Screen style={{ position: 'relative' }}>
+    <Screen edges={['top', 'bottom']}>
       <Carousel
         data={data}
-        width={windowWidth}
+        width={width}
         renderItem={renderItem}
         onSnapToItem={handleSlideChange}
         onProgressChange={(_offset, absolute) =>
@@ -97,20 +97,18 @@ export function WelcomePage({
         ref={carouselRef}
         loop={false}
         pagingEnabled={true}
-        windowSize={3}
       />
       <SafeAreaView
         style={[StyleSheet.absoluteFillObject, styles.controls]}
         pointerEvents="box-none"
-        edges={['bottom']}
       >
         <View style={styles.pagination}>
-          {data.map((value, index, arr) => (
+          {data.map((_value, index, array) => (
             <PaginationItem
               index={index}
               animValue={progressValue}
               key={index}
-              length={arr.length}
+              length={array.length}
               scrollTo={(index: number) =>
                 carouselRef.current?.scrollTo({ index, animated: true })
               }
@@ -146,7 +144,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: 100,
+  },
+  slideText: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+    textAlign: 'center',
   },
 });
 
@@ -186,9 +189,10 @@ const PaginationItem: FC<{
   return (
     <Pressable
       style={{
-        backgroundColor,
         width,
         height: width,
+        marginHorizontal: width / 2,
+        backgroundColor,
         borderRadius: 50,
         overflow: 'hidden',
       }}
