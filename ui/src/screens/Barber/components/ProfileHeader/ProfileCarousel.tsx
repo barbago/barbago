@@ -1,21 +1,18 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import { Image, View } from 'react-native';
+import { Image, useWindowDimensions, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import { windowWidth } from '../../../../config';
 import { useVendor } from '../../context';
 
 // using memo prevents rerender on tab change
 export const ProfileCarousel = memo(() => {
   const { vendor: barber } = useVendor();
+  const { width, height } = useWindowDimensions();
 
   const urls = useMemo(() => barber?.images, [barber]);
 
   const renderItem = useCallback(
     ({ item }: any) => (
-      <Image
-        source={{ uri: item }}
-        style={{ width: '100%', height: '100%' }}
-      />
+      <Image source={{ uri: item }} style={{ width, height }} />
     ),
     [urls],
   );
@@ -24,12 +21,10 @@ export const ProfileCarousel = memo(() => {
   return (
     <View>
       <Carousel
-        width={windowWidth < 900 ? windowWidth : windowWidth / 2}
+        width={width < 900 ? width : width / 2}
         height={300}
         data={urls!}
-        style={{
-          width: windowWidth,
-        }}
+        style={{ width }}
         autoPlay
         autoPlayInterval={5000}
         renderItem={renderItem}
