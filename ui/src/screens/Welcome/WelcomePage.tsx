@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useMemo, useRef, useState } from 'react';
 import {
   Image,
   Pressable,
@@ -17,7 +17,10 @@ import Animated, {
 import Carousel, {
   ICarouselInstance,
 } from 'react-native-reanimated-carousel';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 import { Screen } from '../../components';
 import { useThemeColor } from '../../hooks';
@@ -30,7 +33,14 @@ export function WelcomePage({
   const carouselRef = useRef<ICarouselInstance>(null);
   const progressValue = useSharedValue(0);
   const [index, setIndex] = useState(0);
-  const { width, height } = useWindowDimensions();
+  const { bottom, top } = useSafeAreaInsets();
+  let { width, height: winHeight } = useWindowDimensions();
+
+  const height = useMemo(() => {
+    console.log(winHeight, bottom, top);
+    const buttonOffset = 75;
+    return winHeight - (bottom + top + buttonOffset);
+  }, [winHeight, bottom, top]);
 
   const renderItem = ({ item }: { item: SlideItem }) => {
     const isScreenLarge = width > 900;
@@ -38,13 +48,18 @@ export function WelcomePage({
       ? { width: width / 2, height }
       : { width, height: height / 2 };
     return (
-      <View style={{ flexDirection: isScreenLarge ? 'row' : 'column' }}>
+      <SafeAreaView
+        style={{
+          flexDirection: isScreenLarge ? 'row' : 'column',
+          paddingBottom: 100,
+        }}
+      >
         <Image source={item.image} style={splitStyle} />
         <View style={[splitStyle, styles.slideText]}>
           <Title>{item.title}</Title>
           <Text>{item.text}</Text>
         </View>
-      </View>
+      </SafeAreaView>
     );
   };
 
@@ -85,7 +100,7 @@ export function WelcomePage({
   };
 
   return (
-    <Screen edges={['top', 'bottom']}>
+    <Screen>
       <Carousel
         data={data}
         width={width}
