@@ -37,7 +37,6 @@ export function WelcomePage({
   let { width, height: winHeight } = useWindowDimensions();
 
   const height = useMemo(() => {
-    console.log(winHeight, bottom, top);
     const buttonOffset = 75;
     return winHeight - (bottom + top + buttonOffset);
   }, [winHeight, bottom, top]);
