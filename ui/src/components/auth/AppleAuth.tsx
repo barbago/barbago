@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useWindowDimensions } from 'react-native';
 import {
   isAvailableAsync,
   AppleAuthenticationButton,
@@ -11,9 +11,22 @@ import {
 import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 import { OAuthProvider } from 'firebase/auth';
 import { useAuth } from '../../providers';
+import { useColorScheme } from '../../hooks';
+import { AuthButtonProps } from './AuthButton';
 
-export const AppleAuth = () => {
+export const AppleAuth = ({ onAuthSuccess }: AuthButtonProps) => {
   const { signIn } = useAuth();
+  const scheme = useColorScheme();
+
+  const isDarkMode = useMemo(() => scheme === 'dark', [scheme]);
+
+  const buttonStyle = useMemo(
+    () =>
+      isDarkMode
+        ? AppleAuthenticationButtonStyle.WHITE
+        : AppleAuthenticationButtonStyle.WHITE_OUTLINE,
+    [isDarkMode],
+  );
 
   const signInApple = async () => {
     const nonce = Math.random().toString(36).substring(2, 10);
@@ -34,7 +47,7 @@ export const AppleAuth = () => {
       idToken: identityToken!,
       rawNonce: nonce,
     });
-    await signIn(oAuthCredential);
+    await signIn(oAuthCredential).then(onAuthSuccess);
   };
 
   const [isAppleReady, setIsAppleReady] = useState(false);
@@ -47,12 +60,16 @@ export const AppleAuth = () => {
 
   return (
     <AppleAuthenticationButton
-      buttonStyle={AppleAuthenticationButtonStyle.WHITE}
-      buttonType={AppleAuthenticationButtonType.SIGN_IN}
-      cornerRadius={0}
+      buttonStyle={buttonStyle}
+      buttonType={AppleAuthenticationButtonType.CONTINUE}
+      cornerRadius={25}
       onPress={signInApple}
       style={{
-        width: Dimensions.get('screen').width - 32,
+        marginHorizontal: 16,
+        marginVertical: 8,
+        width: '100%',
+        maxWidth: 350,
+        alignSelf: 'center',
         height: 50,
       }}
     />
