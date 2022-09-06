@@ -20,7 +20,7 @@ export const LoginScreen = ({
   const onAuthSuccess = async (user?: User) => {
     if (!user) return navigation.replace(next!, { ...rest });
     const { data: record } = await getUser();
-    if (!record) return navigation.replace(next!, { ...rest });
+    if (record) return navigation.replace(next!, { ...rest });
     return navigation.replace('Signup', { next, ...rest });
   };
   return (
