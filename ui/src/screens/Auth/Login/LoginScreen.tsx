@@ -14,9 +14,8 @@ import { userApi } from '../../../store';
 
 export const LoginScreen = ({
   navigation,
-  route: { params: { next, ...rest } = {} },
+  route: { params: { next = 'Main', ...rest } = {} },
 }: RootStackScreenProps<'Login'>) => {
-  next ?? (next = 'Main');
   const [getUser] = userApi.useLazyGetUserQuery();
   const onAuthSuccess = async (user?: User) => {
     if (!user) return navigation.replace(next!, { ...rest });

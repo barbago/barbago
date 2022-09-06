@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { RootStackScreenProps } from '../../../navigation';
 
 export const SignupScreen = ({
   navigation,
-  route: { params: { next, ...rest } = {} },
+  route: { params: { next = 'Main', ...rest } = {} },
 }: RootStackScreenProps<'Signup'>) => {
   return (
     <View>
