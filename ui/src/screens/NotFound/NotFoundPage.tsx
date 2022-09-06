@@ -17,8 +17,8 @@ export function NotFoundScreen({
       <Text style={{ marginHorizontal: 'auto', marginBottom: 20 }}>
         Oops, There was an error! Try again later.
       </Text>
-      <Button onPress={() => navigation.replace('Root')}>
-        Go to Home
+      <Button onPress={() => navigation.replace('Main')}>
+        Go Home
       </Button>
       {navigation.canGoBack() && (
         <Button onPress={() => navigation.goBack()}>Go Back</Button>

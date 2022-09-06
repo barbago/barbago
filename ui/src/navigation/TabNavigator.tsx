@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export function TabNavigator({
   navigation,
-}: RootStackScreenProps<'Root'>) {
+}: RootStackScreenProps<'Main'>) {
 
   return (
     <Tab.Navigator

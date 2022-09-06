@@ -17,13 +17,13 @@ import { RootStackParamList } from './types';
 export const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL('/')],
   config: {
-    initialRouteName: 'Root',
+    initialRouteName: 'Main',
     screens: {
       Barber: 'barber/:id',
       Chat: 'messages/:id',
       Login: 'login',
       Welcome: 'welcome',
-      Root: {
+      Main: {
         screens: {
           Home: 'home',
           Search: 'search',

@@ -21,7 +21,7 @@ export type RootStackParamList = {
   Chat: { id: string };
   Login: undefined;
   Welcome?: undefined;
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  Main: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;
 };
 

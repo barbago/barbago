@@ -31,7 +31,7 @@ export function RootNavigator() {
         />
       )}
       <Stack.Screen
-        name="Root"
+        name="Main"
         component={TabNavigator}
         options={{ headerShown: false }}
       />
