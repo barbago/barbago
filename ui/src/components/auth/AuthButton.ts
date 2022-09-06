@@ -1,5 +1,5 @@
-import { User, UserCredential } from 'firebase/auth';
+import { User } from 'firebase/auth';
 
 export interface AuthButtonProps {
-  onAuthSuccess?: (user: User | UserCredential) => any;
+  onAuthSuccess?: (user?: User) => any;
 }

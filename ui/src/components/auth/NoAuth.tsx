@@ -1,8 +1,6 @@
-import { signInAnonymously } from 'firebase/auth';
 import React from 'react';
 import { Button } from 'react-native-paper';
 
-import { auth } from '../../config';
 import { AuthButtonProps } from './AuthButton';
 
 export function NoAuth({ onAuthSuccess }: AuthButtonProps) {
@@ -26,7 +24,7 @@ export function NoAuth({ onAuthSuccess }: AuthButtonProps) {
         letterSpacing: 0,
         fontSize: 18,
       }}
-      onPress={() => signInAnonymously(auth).then(onAuthSuccess)}
+      onPress={() => onAuthSuccess?.()}
     >
       Continue without account
     </Button>
