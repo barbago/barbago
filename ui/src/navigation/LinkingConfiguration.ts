@@ -22,6 +22,7 @@ export const linking: LinkingOptions<RootStackParamList> = {
       Barber: 'barber/:id',
       Chat: 'messages/:id',
       Login: 'login',
+      Signup: 'signup',
       Welcome: 'welcome',
       Main: {
         screens: {

@@ -19,7 +19,8 @@ declare global {
 export type RootStackParamList = {
   Barber: { id: string };
   Chat: { id: string };
-  Login: undefined;
+  Login?: { next?: keyof RootStackParamList; [key: string]: any };
+  Signup: { next?: keyof RootStackParamList; [key: string]: any };
   Welcome?: undefined;
   Main: NavigatorScreenParams<RootTabParamList> | undefined;
   NotFound: undefined;

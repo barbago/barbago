@@ -5,8 +5,9 @@ import { RootStackParamList } from './types';
 import {
   BarberPage,
   Chat,
-  LoginPage,
+  LoginScreen,
   NotFoundScreen,
+  SignupScreen,
   WelcomePage,
 } from '../screens';
 import { TabNavigator } from './TabNavigator';
@@ -35,7 +36,8 @@ export function RootNavigator() {
         component={TabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Login" component={LoginPage} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
