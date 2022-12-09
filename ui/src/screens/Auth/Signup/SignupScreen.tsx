@@ -1,15 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { Button, Text, TextInput } from 'react-native-paper';
 import { RootStackScreenProps } from '../../../navigation';
+import { useAuth } from '../../../providers';
 
 export const SignupScreen = ({
   navigation,
   route: { params: { next = 'Main', ...rest } = {} },
 }: RootStackScreenProps<'Signup'>) => {
-  return (
-    <View>
-      <Text>Signup</Text>
-    </View>
-  );
+  const { user } = useAuth();
+
+  return <View>
+    <TextInput value={user?.displayName} />
+  </View>;
 };

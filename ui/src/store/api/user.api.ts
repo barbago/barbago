@@ -7,6 +7,7 @@ export interface UserResponse {
   phone?: string;
   photo?: string;
   pushTokens?: string[];
+  registered?: boolean;
 }
 
 const userPath = 'users';
