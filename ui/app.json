@@ -7,12 +7,16 @@
     "icon": "./src/assets/icons/icon.png",
     "scheme": "barbago",
     "userInterfaceStyle": "automatic",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
     "splash": {
       "image": "./src/assets/icons/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
     "updates": {
+      "url": "https://u.expo.dev/5ac3abb8-36b7-4e76-b88f-33c97c351d11",
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
@@ -50,6 +54,11 @@
       "favicon": "./src/assets/icons/favicon.png"
     },
     "description": "",
-    "githubUrl": "https://github.com/barbago/barago-mobile"
+    "githubUrl": "https://github.com/barbago/barago-mobile",
+    "extra": {
+      "eas": {
+        "projectId": "5ac3abb8-36b7-4e76-b88f-33c97c351d11"
+      }
+    }
   }
 }

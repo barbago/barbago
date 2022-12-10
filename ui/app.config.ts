@@ -1,4 +1,4 @@
-import { ExpoConfig, ConfigContext } from '@expo/config';
+import { ExpoConfig, ConfigContext } from 'expo/config';
 import 'dotenv/config';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
@@ -6,9 +6,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: config.name!,
   slug: config.slug!,
   extra: {
+    ...config.extra,
     api: {
       url: process.env.API_URL,
-      devUrl: process.env.API_DEV_URL
+      devUrl: process.env.API_DEV_URL,
     },
     facebook: {
       clientId: process.env.FACEBOOK_CLIENT_ID,

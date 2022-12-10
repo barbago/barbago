@@ -7,6 +7,7 @@ import {
   AttributionControl,
   Popup,
   ZoomControl,
+  useMap,
 } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -30,14 +31,37 @@ const icon = L.icon({
 
 export const Map = () => {
   const theme = useColorScheme();
-  const [map, setMap] = useState<L.Map>();
-  const { coords, vendors, selected, setSelected, openVendor } =
-    useSearch();
 
   let url =
     theme === 'dark'
       ? 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png'
       : 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+
+  return (
+    <MapContainer
+      center={[35.7796, -78.6382]}
+      zoom={6}
+      minZoom={4}
+      scrollWheelZoom={true}
+      dragging={true}
+      maxBoundsViscosity={1}
+      style={{ height: '100%', width: '100%' }}
+      attributionControl={false}
+      zoomControl={false}
+      closePopupOnClick={false}
+    >
+      <AttributionControl position="topright" prefix={false} />
+      <ZoomControl position="topleft" />
+      <TileLayer url={url} attribution={attribution} />
+      <MapContent />
+    </MapContainer>
+  );
+};
+
+export const MapContent = () => {
+  const map = useMap();
+  const { coords, vendors, selected, setSelected, openVendor } =
+    useSearch();
 
   const eventHandlers: L.LeafletEventHandlerFnMap = {
     click: ({ target, originalEvent }) => {
@@ -98,51 +122,34 @@ export const Map = () => {
 
   useEffect(() => {
     if (map && coords?.latitude && coords.longitude) {
+      console.log(coords);
       const { latitude: lat, longitude: lng } = coords;
       map.flyTo({ lat, lng }, 11);
     }
   }, [map, coords]);
 
   return (
-    <MapContainer
-      center={[35.7796, -78.6382]}
-      zoom={6}
-      minZoom={4}
-      scrollWheelZoom={true}
-      dragging={true}
-      maxBoundsViscosity={1}
-      style={{ height: '100%', width: '100%' }}
-      attributionControl={false}
-      zoomControl={false}
-      closePopupOnClick={false}
-      /// @ts-ignore
-      whenCreated={setMap}
+    <MarkerClusterGroup
+      showCoverageOnHover={false}
+      onClick={(e: any) => console.log(e)}
     >
-      <AttributionControl position="topright" prefix={false} />
-      <ZoomControl position="topleft" />
-      <TileLayer url={url} attribution={attribution} />
-      <MarkerClusterGroup
-        showCoverageOnHover={false}
-        onClick={(e: any) => console.log(e)}
-      >
-        {vendors?.map((vendor, index) => {
-          return (
-            vendor.latitude &&
-            vendor.longitude && (
-              <Marker
-                data-vendor={vendor}
-                position={[vendor.latitude, vendor.longitude]}
-                eventHandlers={eventHandlers}
-                icon={icon}
-                key={index}
-              >
-                <VendorPopup vendor={vendor} />
-              </Marker>
-            )
-          );
-        })}
-      </MarkerClusterGroup>
-    </MapContainer>
+      {vendors?.map((vendor, index) => {
+        return (
+          vendor.latitude &&
+          vendor.longitude && (
+            <Marker
+              data-vendor={vendor}
+              position={[vendor.latitude, vendor.longitude]}
+              eventHandlers={eventHandlers}
+              icon={icon}
+              key={index}
+            >
+              <VendorPopup vendor={vendor} />
+            </Marker>
+          )
+        );
+      })}
+    </MarkerClusterGroup>
   );
 };
 
