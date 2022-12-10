@@ -2,12 +2,12 @@ import {
   ComponentProps,
   createContext,
   FC,
+  PropsWithChildren,
   useContext,
   useEffect,
   useState,
 } from 'react';
-import { Button, Snackbar } from 'react-native-paper';
-import { SnackbarProps } from 'react-native-paper/lib/typescript/components/Snackbar';
+import { Button, Snackbar, SnackbarProps } from 'react-native-paper';
 
 import { useThemeColor } from '../hooks';
 
@@ -28,7 +28,7 @@ export interface ToastSettings {
 
 export const ToastContext = createContext<ToastState>(undefined!);
 
-export const ToastProvider: FC = ({ children }) => {
+export const ToastProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isOpen, setOpen] = useState(false);
   const [settings, setSettings] = useState<ToastSettings>({});
 

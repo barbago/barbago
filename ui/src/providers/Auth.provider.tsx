@@ -14,7 +14,7 @@ import {
   doc,
   updateDoc,
 } from 'firebase/firestore';
-import React, { createContext, FC, useContext } from 'react';
+import React, { createContext, FC, PropsWithChildren, useContext } from 'react';
 import { auth, db } from '../config';
 import { setPushToken, useAppDispatch, useAppSelector } from '../store';
 import { isMobile } from '../utils';
@@ -30,7 +30,7 @@ export const AuthContext = createContext<AuthContextState>(undefined!);
 export const useAuth = () =>
   useContext(AuthContext) ?? console.error('AuthContext not found!');
 
-export const AuthProvider: FC = ({ children }) => {
+export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const { user, pushToken } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 

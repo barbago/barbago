@@ -1,12 +1,12 @@
 import { onIdTokenChanged } from 'firebase/auth';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 
 import { auth } from '../config';
 import { useCachedResources } from '../hooks';
 import { signedIn, signedOut, store } from '../store';
 
-export const StoreProvider: FC = ({ children }) => {
+export const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const resourcesLoaded = useCachedResources();
 
