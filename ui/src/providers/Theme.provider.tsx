@@ -1,14 +1,10 @@
-import React from 'react';
-import {
-  DefaultTheme,
-  Provider as PaperProvider,
-  DarkTheme,
-} from 'react-native-paper';
+import React, { FC, PropsWithChildren } from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { dark, light } from '../config';
 
 import { useColorScheme } from '../hooks';
 
-export const ThemeProvider: React.FC = ({ children }) => {
+export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const scheme = useColorScheme();
 
   // https://buttercms.com/blog/implement-dark-mode-react-native

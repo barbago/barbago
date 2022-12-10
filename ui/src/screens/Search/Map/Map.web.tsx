@@ -115,6 +115,7 @@ export const Map = () => {
       attributionControl={false}
       zoomControl={false}
       closePopupOnClick={false}
+      /// @ts-ignore
       whenCreated={setMap}
     >
       <AttributionControl position="topright" prefix={false} />
@@ -122,7 +123,6 @@ export const Map = () => {
       <TileLayer url={url} attribution={attribution} />
       <MarkerClusterGroup
         showCoverageOnHover={false}
-        /// @ts-ignore
         onClick={(e: any) => console.log(e)}
       >
         {vendors?.map((vendor, index) => {

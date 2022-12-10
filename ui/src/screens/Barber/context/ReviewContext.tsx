@@ -1,6 +1,7 @@
 import {
   createContext,
   FC,
+  PropsWithChildren,
   useContext,
   useEffect,
   useMemo,
@@ -36,7 +37,7 @@ export const ReviewContext = createContext<ReviewState>(undefined!);
 
 export const useReview = () => useContext(ReviewContext);
 
-export const ReviewService: FC = ({ children }) => {
+export const ReviewService: FC<PropsWithChildren> = ({ children }) => {
   const { vendor } = useVendor();
   const response = reviewApi.useFetchReviewsByUidQuery(vendor!.uid);
 

@@ -30,7 +30,6 @@ export const linking: LinkingOptions<RootStackParamList> = {
           Search: 'search',
           Messages: 'messages',
           SettingsStack: {
-            initialRouteName: 'Settings',
             screens: {
               Settings: 'settings',
               Account: 'account',
