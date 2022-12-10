@@ -5,6 +5,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: config.name!,
   slug: config.slug!,
+  currentFullName: '@julianheckerdev/barbago-mobile',
+  originalFullName: '@julianheckerdev/barbago-mobile',
   extra: {
     ...config.extra,
     api: {
