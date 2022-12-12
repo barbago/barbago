@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Barbago Mobile",
-    "slug": "barbago-mobile",
+    "name": "Barbago",
+    "slug": "barbago",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icons/icon.png",
@@ -16,7 +16,7 @@
       "backgroundColor": "#000000"
     },
     "updates": {
-      "url": "https://u.expo.dev/5ac3abb8-36b7-4e76-b88f-33c97c351d11",
+      "url": "https://u.expo.dev/8d1d73af-8b3f-4677-b3ad-eeaf9eae8019",
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
@@ -29,7 +29,7 @@
       ]
     ],
     "ios": {
-      "bundleIdentifier": "app.barbago.mobile",
+      "bundleIdentifier": "app.barbago.native",
       "supportsTablet": true,
       "usesAppleSignIn": true
     },
@@ -43,7 +43,7 @@
           "apiKey": "AIzaSyDFfOOF2bglIb79qcPFQgd8Rzmo4mwLKF4"
         }
       },
-      "package": "app.barbago.mobile"
+      "package": "app.barbago.native"
     },
     "web": {
       "build": {
@@ -54,10 +54,10 @@
       "favicon": "./src/assets/icons/favicon.png"
     },
     "description": "",
-    "githubUrl": "https://github.com/barbago/barago-mobile",
+    "githubUrl": "https://github.com/barbago/barago",
     "extra": {
       "eas": {
-        "projectId": "5ac3abb8-36b7-4e76-b88f-33c97c351d11"
+        "projectId": "8d1d73af-8b3f-4677-b3ad-eeaf9eae8019"
       }
     }
   }
