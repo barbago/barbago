@@ -7,27 +7,10 @@ name: Deploy to Firebase Hosting on merge
     branches:
       - main
 jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Copy Secrets
-        run: sh ./.github/scripts/env.sh
-
   deploy_web:
+    name: Web Deploy with Firebase
     runs-on: ubuntu-latest
-    needs: [install]
+    uses: ./.github/workflows/checkout-and-install.yml
     steps:
       - name: Firebase Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -38,8 +21,9 @@ jobs:
           projectId: barbago-dev
 
   deploy_mobile:
+    name: Mobile Deploy with EAS
     runs-on: ubuntu-latest
-    needs: [install]
+    uses: ./.github/workflows/checkout-and-install.yml
     steps:
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v7
