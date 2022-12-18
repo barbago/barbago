@@ -78,7 +78,6 @@ export const Summary = () => {
           </Button>
           <TextInput
             dense
-            autoComplete="none"
             label="Search Reviews"
             value={filter}
             onChange={(e) => setFilter(e.nativeEvent.text)}

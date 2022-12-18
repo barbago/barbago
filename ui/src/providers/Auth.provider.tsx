@@ -14,7 +14,12 @@ import {
   doc,
   updateDoc,
 } from 'firebase/firestore';
-import React, { createContext, FC, PropsWithChildren, useContext } from 'react';
+import React, {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+} from 'react';
 import { auth, db } from '../config';
 import { setPushToken, useAppDispatch, useAppSelector } from '../store';
 import { isMobile } from '../utils';

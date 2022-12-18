@@ -1,0 +1,91 @@
+diff --git a/node_modules/redux/dist/redux.js b/node_modules/redux/dist/redux.js
+index 600b255..ea2ee05 100644
+--- a/node_modules/redux/dist/redux.js
++++ b/node_modules/redux/dist/redux.js
+@@ -744,17 +744,6 @@ function applyMiddleware() {
+   };
+ }
+ 
+-/*
+- * This is a dummy function to check if the function name has been altered by minification.
+- * If the function has been minified and NODE_ENV !== 'production', warn the user.
+- */
+-
+-function isCrushed() {}
+-
+-if (typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+-  warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
+-}
+-
+ exports.__DO_NOT_USE__ActionTypes = ActionTypes;
+ exports.applyMiddleware = applyMiddleware;
+ exports.bindActionCreators = bindActionCreators;
+diff --git a/node_modules/redux/lib/redux.js b/node_modules/redux/lib/redux.js
+index 9218f82..8a39141 100644
+--- a/node_modules/redux/lib/redux.js
++++ b/node_modules/redux/lib/redux.js
+@@ -710,17 +710,6 @@ function applyMiddleware() {
+   };
+ }
+ 
+-/*
+- * This is a dummy function to check if the function name has been altered by minification.
+- * If the function has been minified and NODE_ENV !== 'production', warn the user.
+- */
+-
+-function isCrushed() {}
+-
+-if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+-  warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
+-}
+-
+ exports.__DO_NOT_USE__ActionTypes = ActionTypes;
+ exports.applyMiddleware = applyMiddleware;
+ exports.bindActionCreators = bindActionCreators;
+diff --git a/node_modules/redux/src/index.js b/node_modules/redux/src/index.js
+index 141a84e..532ef87 100644
+--- a/node_modules/redux/src/index.js
++++ b/node_modules/redux/src/index.js
+@@ -6,26 +6,6 @@ import compose from './compose'
+ import warning from './utils/warning'
+ import __DO_NOT_USE__ActionTypes from './utils/actionTypes'
+ 
+-/*
+- * This is a dummy function to check if the function name has been altered by minification.
+- * If the function has been minified and NODE_ENV !== 'production', warn the user.
+- */
+-function isCrushed() {}
+-
+-if (
+-  process.env.NODE_ENV !== 'production' &&
+-  typeof isCrushed.name === 'string' &&
+-  isCrushed.name !== 'isCrushed'
+-) {
+-  warning(
+-    'You are currently using minified code outside of NODE_ENV === "production". ' +
+-      'This means that you are running a slower development build of Redux. ' +
+-      'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' +
+-      'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' +
+-      'to ensure you have the correct code for your production build.'
+-  )
+-}
+-
+ export {
+   createStore,
+   legacy_createStore,
+diff --git a/node_modules/redux/src/utils/warning.js b/node_modules/redux/src/utils/warning.js
+index d35e99b..b7542d8 100644
+--- a/node_modules/redux/src/utils/warning.js
++++ b/node_modules/redux/src/utils/warning.js
+@@ -9,11 +9,4 @@ export default function warning(message) {
+   if (typeof console !== 'undefined' && typeof console.error === 'function') {
+     console.error(message)
+   }
+-  /* eslint-enable no-console */
+-  try {
+-    // This error was thrown as a convenience so that if you enable
+-    // "break on all exceptions" in your console,
+-    // it would pause the execution at this line.
+-    throw new Error(message)
+-  } catch (e) {} // eslint-disable-line no-empty
+ }

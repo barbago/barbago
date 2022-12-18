@@ -10,7 +10,9 @@ export const SignupScreen = ({
 }: RootStackScreenProps<'Signup'>) => {
   const { user } = useAuth();
 
-  return <View>
-    <TextInput value={user?.displayName} />
-  </View>;
+  return (
+    <View>
+      <TextInput value={user?.displayName ?? ''} />
+    </View>
+  );
 };

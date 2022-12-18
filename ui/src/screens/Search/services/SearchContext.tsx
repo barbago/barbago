@@ -1,4 +1,4 @@
-import React, { createContext, FC, useContext, useState } from 'react';
+import React, { createContext, FC, PropsWithChildren, useContext, useState } from 'react';
 
 import { RootTabScreenProps } from '../../../navigation';
 import { vendorApi } from '../../../store';
@@ -22,13 +22,12 @@ export const SearchContext = createContext<SearchState>(undefined!);
 
 export const useSearch = () => useContext(SearchContext);
 
-export const SearchService: FC<RootTabScreenProps<'Search'>> = ({
+export const SearchService: FC<PropsWithChildren & RootTabScreenProps<'Search'>> = ({
   children,
   navigation,
   route,
 }) => {
-  const [query, response] =
-    vendorApi.useLazyVendorSearchQuery();
+  const [query, response] = vendorApi.useLazyVendorSearchQuery();
 
   const [selected, setSelected] = useState<VendorResponse>();
   const [sort, setSort] = useState<string>();

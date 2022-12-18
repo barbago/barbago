@@ -1,4 +1,4 @@
 export * from './colors';
-export * from './consts';
+export * from './env';
 export * from './firebase';
 export * from './layout';

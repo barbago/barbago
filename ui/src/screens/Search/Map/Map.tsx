@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, {
   EdgePadding,
@@ -19,6 +19,7 @@ export const Map = () => {
     useSearch();
   const theme = useColorScheme();
   const mapRef = useRef<MapView>(null);
+  /// @ts-ignore idk why this makes a problem
   const markerRefs = useRef<(Marker | null)[]>([]);
 
   const initialRegion: Region = {

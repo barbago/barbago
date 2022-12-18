@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Text } from '../../../../components';
-import { Summary, Pagination, Review } from '../../components';
+import { Summary, Pagination, Review } from './';
 import { useReview } from '../../context';
 
 export const ReviewSection = () => {

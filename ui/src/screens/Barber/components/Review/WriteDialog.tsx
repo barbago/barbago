@@ -86,7 +86,6 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
             disabled={isLoading}
           />
           <TextInput
-            autoComplete="none"
             placeholder="This shop gives the best cuts"
             numberOfLines={7}
             style={styles.input}

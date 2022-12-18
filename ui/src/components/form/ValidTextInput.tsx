@@ -5,8 +5,7 @@ import {
   FieldValues,
   RegisterOptions,
 } from 'react-hook-form';
-import { HelperText, TextInput } from 'react-native-paper';
-import { TextInputProps } from 'react-native-paper/lib/typescript/components/TextInput/TextInput';
+import { HelperText, TextInput, TextInputProps } from 'react-native-paper';
 
 type ControllerProps = {
   name: string;

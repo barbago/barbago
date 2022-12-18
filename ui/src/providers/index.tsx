@@ -8,7 +8,9 @@ import { StoreProvider } from './Store.provider';
 import { ThemeProvider } from './Theme.provider';
 import { ToastProvider } from './Toast.provider';
 
-export const ContextProvider: FC<PropsWithChildren> = ({ children }) => (
+export const ContextProvider: FC<PropsWithChildren> = ({
+  children,
+}) => (
   <StoreProvider>
     <AuthProvider>
       <ActionSheetProvider>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button } from 'react-native-paper';
-import { Screen, Text } from '../../components/Themed';
+import { Screen, Text } from '../../components';
 
 import { RootStackScreenProps } from '../../navigation/types';
 

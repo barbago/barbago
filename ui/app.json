@@ -1,9 +1,11 @@
 {
   "expo": {
-    "name": "Barbago",
-    "slug": "barbago",
+    "name": "Barbago Mobile",
+    "slug": "barbago-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
+    "description": "",
+    "githubUrl": "https://github.com/barbago/barago",
     "icon": "./src/assets/icons/icon.png",
     "scheme": "barbago",
     "userInterfaceStyle": "automatic",
@@ -16,7 +18,7 @@
       "backgroundColor": "#000000"
     },
     "updates": {
-      "url": "https://u.expo.dev/8d1d73af-8b3f-4677-b3ad-eeaf9eae8019",
+      "url": "https://u.expo.dev/4237973e-792d-4779-a1a4-d58739bc9823",
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
@@ -29,11 +31,12 @@
       ]
     ],
     "ios": {
-      "bundleIdentifier": "app.barbago.native",
+      "bundleIdentifier": "app.barbago.mobile",
       "supportsTablet": true,
       "usesAppleSignIn": true
     },
     "android": {
+      "package": "app.barbago.mobile",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -42,8 +45,7 @@
         "googleMaps": {
           "apiKey": "AIzaSyDFfOOF2bglIb79qcPFQgd8Rzmo4mwLKF4"
         }
-      },
-      "package": "app.barbago.native"
+      }
     },
     "web": {
       "build": {
@@ -53,11 +55,9 @@
       },
       "favicon": "./src/assets/icons/favicon.png"
     },
-    "description": "",
-    "githubUrl": "https://github.com/barbago/barago",
     "extra": {
       "eas": {
-        "projectId": "8d1d73af-8b3f-4677-b3ad-eeaf9eae8019"
+        "projectId": "4237973e-792d-4779-a1a4-d58739bc9823"
       }
     }
   }

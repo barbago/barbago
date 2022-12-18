@@ -38,7 +38,6 @@ export const AccountInfoPage = ({
             name="name"
             control={control}
             defaultValue={user?.name ?? ''}
-            autoCompleteType="name"
             rules={{
               required: 'Name must not be empty!',
               minLength: {
@@ -58,7 +57,6 @@ export const AccountInfoPage = ({
         <Card.Content>
           <ValidTextInput
             label="Email Address"
-            autoCompleteType="email"
             disabled={!!user?.email}
             defaultValue={user?.email ?? ''}
             name="email"
@@ -66,7 +64,6 @@ export const AccountInfoPage = ({
           />
           <ValidTextInput
             label="Phone Number"
-            autoCompleteType="tel"
             defaultValue={user?.phone ?? ''}
             name="phone"
             control={control}
