@@ -4,17 +4,49 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
-  build_and_preview:
+  install:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: sh ./.github/scripts/env.sh
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Copy Secrets
+        run: sh ./.github/scripts/env.sh
+
+  deploy_web:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: Firebase Deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV }}'
           projectId: barbago-dev
+
+  deploy_mobile:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          packager: npm
+          token: '${{ secrets.EXPO_TOKEN }}'
+      - name: Publish for Expo Go
+        run: eas update --non-interactive --auto
+
 env:
   ENV_FILE: '${{secrets.ENV_FILE}}'
