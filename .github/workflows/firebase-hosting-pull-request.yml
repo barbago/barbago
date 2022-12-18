@@ -8,7 +8,6 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     name: Web Deploy with Firebase
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/checkout-and-install.yml
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -36,7 +35,6 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     name: Mobile Deploy with EAS
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/checkout-and-install.yml
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2

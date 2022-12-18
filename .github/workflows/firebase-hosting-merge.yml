@@ -10,7 +10,6 @@ jobs:
   deploy_web:
     name: Web Deploy with Firebase
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/checkout-and-install.yml
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -38,7 +37,6 @@ jobs:
   deploy_mobile:
     name: Mobile Deploy with EAS
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/checkout-and-install.yml
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
