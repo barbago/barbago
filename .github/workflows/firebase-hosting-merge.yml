@@ -12,6 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     uses: ./.github/workflows/checkout-and-install.yml
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Copy Secrets
+        run: sh ./.github/scripts/env.sh
+
       - name: Firebase Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -25,6 +40,21 @@ jobs:
     runs-on: ubuntu-latest
     uses: ./.github/workflows/checkout-and-install.yml
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Copy Secrets
+        run: sh ./.github/scripts/env.sh
+
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v7
         with:
