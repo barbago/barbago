@@ -49,7 +49,9 @@ jobs:
           packager: npm
           token: '${{ secrets.EXPO_TOKEN }}'
       - name: Publish for Expo Go
-        run: eas update --non-interactive --auto
+        run: |
+          cd ui
+          eas update --non-interactive --auto
 
 env:
   ENV_FILE: '${{secrets.ENV_FILE}}'
