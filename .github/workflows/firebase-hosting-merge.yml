@@ -51,7 +51,7 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ env.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ env.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV }}'
+          firebaseServiceAccount: '${{ env.FIREBASE_ACCT }}'
           channelId: live
           projectId: barbago-dev
 
