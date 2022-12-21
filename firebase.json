@@ -11,7 +11,7 @@
   },
   "hosting": [
     {
-      "target": "app-dev",
+      "target": "app",
       "public": "ui/web-build",
       "predeploy": ["npm run build --prefix ui"],
       "rewrites": [
@@ -22,27 +22,29 @@
       ]
     },
     {
-      "target": "api-dev",
+      "target": "api",
+      "public": "functions/docs",
+      "cleanUrls": true,
+      "ignore": ["**/.*", "**/node_modules/**"],
+      "trailingSlash": false,
+      "predeploy": ["npm run docs --prefix functions"],
+      "redirects": [
+        {
+          "source": "/",
+          "destination": "/docs",
+          "type": 301
+        }
+      ],
       "rewrites": [
+        {
+          "source": "/docs",
+          "destination": "/index.html"
+        },
         {
           "source": "**",
           "function": "api"
         }
       ]
-    },
-    {
-      "target": "api-docs",
-      "public": "functions/docs",
-      "predeploy": ["npm run docs --prefix functions"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ],
-      "cleanUrls": true,
-      "ignore": ["**/.*", "**/node_modules/**"],
-      "trailingSlash": false
     },
     {
       "target": "site",

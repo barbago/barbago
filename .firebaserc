@@ -1,20 +1,18 @@
 {
   "projects": {
     "dev": "barbago-dev",
+    "stage": "barbago-stage",
     "prod": "barbago-prod",
     "default": "barbago-dev"
   },
   "targets": {
     "barbago-dev": {
       "hosting": {
-        "app-dev": [
-          "barbago-dev"
-        ],
-        "api-dev": [
+        "api": [
           "api-barbago-dev"
         ],
-        "api-docs": [
-          "docs-barbago-dev"
+        "app": [
+          "barbago-dev"
         ],
         "site": [
           "site-barbago-dev"
@@ -22,7 +20,31 @@
       }
     },
     "barbago-prod": {
-      "hosting": {}
+      "hosting": {
+        "api": [
+          "api-barbago-prod"
+        ],
+        "app": [
+          "barbago-prod"
+        ],
+        "site": [
+          "site-barbago-prod"
+        ]
+      }
+    },
+    "barbago-stage": {
+      "hosting": {
+        "api": [
+          "api-barbago-stage"
+        ],
+        "app": [
+          "barbago-stage"
+        ],
+        "site": [
+          "site-barbago-stage"
+        ]
+      }
     }
-  }
+  },
+  "etags": {}
 }
