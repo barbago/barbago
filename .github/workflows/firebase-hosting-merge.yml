@@ -58,7 +58,7 @@ jobs:
   deploy_mobile:
     name: Mobile Deploy with EAS
     runs-on: ubuntu-latest
-    needs: [install]
+    needs: [deploy_web]
     steps:
       # - name: Checkout Code
       #   uses: actions/checkout@v2
@@ -90,5 +90,5 @@ jobs:
 env:
   ENV_FILE: '${{ secrets.ENV_FILE }}'
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
-  FIREBASE_ACCT: '${{ secrets.secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV }}'
+  FIREBASE_ACCT: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
