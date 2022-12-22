@@ -3,13 +3,17 @@
     "version": ">= 3.0.0"
   },
   "build": {
-    "production": {},
+    "production": {
+      "channel": "production"
+    },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "preview"
     },
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "development"
     }
   },
   "submit": {

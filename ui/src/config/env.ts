@@ -3,7 +3,6 @@
 export const env = {
   api: {
     url: process.env.API_URL ?? '',
-    devUrl: process.env.API_DEV_URL ?? '',
   },
   facebook: {
     clientId: process.env.FACEBOOK_CLIENT_ID ?? '',
@@ -32,7 +31,5 @@ export const {
   firebase: firebaseConfig,
   google: googleConfig,
   sentry: sentryConfig,
-  api: apiConfig,
+  api: { url: apiUrl },
 } = env;
-
-export const apiUrl = __DEV__ ? apiConfig.devUrl : apiConfig.url;

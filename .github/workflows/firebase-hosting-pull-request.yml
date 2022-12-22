@@ -19,6 +19,7 @@ jobs:
           cache: npm
 
       - name: Install Dependencies
+        working-directory: ui
         run: npm ci
 
       - name: Copy Secrets
@@ -59,9 +60,8 @@ jobs:
           packager: npm
           token: '${{ secrets.EXPO_TOKEN }}'
       - name: Publish for Expo Go
-        run: |
-          cd ui
-          eas update --non-interactive --auto
+        working-directory: ui
+        run: eas update --non-interactive --auto
 
 env:
   ENV_FILE: '${{secrets.ENV_FILE}}'
