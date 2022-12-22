@@ -23,7 +23,6 @@ jobs:
           cache: npm
 
       - name: Install Dependencies
-        working-directory: ui
         run: npm ci
 
       - name: Copy Secrets
