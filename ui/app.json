@@ -23,6 +23,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "plugins": [
+      "expo-apple-authentication",
       [
         "expo-image-picker",
         {
@@ -43,6 +44,8 @@
       },
       "config": {
         "googleMaps": {
+          // make this dynamic instead?
+          // find out if you can use env for config.ts
           "apiKey": "AIzaSyDFfOOF2bglIb79qcPFQgd8Rzmo4mwLKF4"
         }
       }

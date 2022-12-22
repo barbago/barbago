@@ -77,3 +77,5 @@ export const AppleAuth = ({ onAuthSuccess }: AuthButtonProps) => {
 };
 
 // https://medium.com/nerd-for-tech/apple-google-authentication-in-expo-apps-using-firebase-997125440032
+// "wrong audience error" https://github.com/expo/expo/issues/16162
+// firebase auth > apple auth > services ID, switch to host.exp.Exponent when developing with Go App. use 7SX5753SJF.app.barbago.mobile otherwise
