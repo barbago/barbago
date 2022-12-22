@@ -67,7 +67,7 @@ jobs:
         run: npm ci
 
       - name: Firebase Deploy
-        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_ACCOUNT }}' -P '${{ env.FIREBASE_PROJECT }}'
+        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ env.FIREBASE_PROJECT }}'
 
 
 env:
