@@ -1,8 +1,9 @@
 import { openBrowserAsync } from 'expo-web-browser';
 import React from 'react';
-import { List } from 'react-native-paper';
+import { Button, List } from 'react-native-paper';
 
 import { AuthCard, Screen, SignInOutButton } from '../../components';
+import { env } from '../../config';
 import { SettingsStackScreenProps } from '../../navigation';
 import { settingsConfig } from './settings-config';
 
@@ -43,6 +44,7 @@ export const SettingsPage = ({
         </List.Section>
       ))}
       <SignInOutButton />
+      <Button onPress={() => alert(JSON.stringify(env))} style={{ 'alignSelf': 'flex-start'}}>Debug</Button>
     </Screen>
   );
 };
