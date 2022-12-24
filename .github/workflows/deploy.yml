@@ -78,12 +78,7 @@ jobs:
         run: sh ./.github/scripts/env.sh
 
       - name: Web Deploy with Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ env.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ env.FIREBASE_ACCOUNT }}'
-          projectId: '${{ inputs.environment }}'
-          channelId: 'live'
+        run: npx firebase-tools deploy --only hosting --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.environment }}'
     env:
       ENV_FILE: '${{ secrets.ENV_FILE }}'
 
@@ -139,7 +134,7 @@ env:
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-  FIREBASE_ACCOUNT: "${{ inputs.environment == 'prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
+  # FIREBASE_ACCOUNT: "${{ inputs.environment == 'prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
 
 concurrency:
   group: ${{ inputs.environment }}-${{ github.workflow }}
