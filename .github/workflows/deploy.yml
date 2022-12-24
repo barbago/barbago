@@ -5,7 +5,7 @@ on:
   workflow_call:
     inputs:
       environment:
-        description: 'Environment to deploy to <dev|stage|prod>'
+        description: 'Environment to deploy to <development|staging|production>'
         required: true
         type: string
         default: 'dev'
@@ -22,10 +22,10 @@ on:
         required: true
         type: choice
         options:
-          - dev
-          - stage
-          - prod
-        default: 'dev'
+          - development
+          - staging
+          - production
+        default: 'development'
       deployApps:
         description: 'Apps to deploy'
         required: false
@@ -41,6 +41,7 @@ jobs:
   deploy_web:
     name: Deploy Web
     runs-on: ubuntu-latest
+    environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
     steps:
       - name: Checkout Code
@@ -69,6 +70,7 @@ jobs:
   deploy_mobile:
     name: Deploy Expo Go
     runs-on: ubuntu-latest
+    environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'mobile'
     steps:
       - name: Checkout Code
@@ -101,6 +103,7 @@ jobs:
   deploy_backend:
     name: Deploy Backend API
     runs-on: ubuntu-latest
+    environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'api'
     steps:
       - name: Checkout Code
@@ -118,15 +121,18 @@ jobs:
 
       - name: Functions Deploy with Firebase
         run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ env.projectId }}'
+    # env:
+    #   ENV_FILE: "${{ secrets.ENV_FILE }}"
 
 env:
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
   # https://github.com/orgs/community/discussions/25725
-  ENV_FILE: "${{ inputs.environment == 'prod' && secrets.ENV_FILE_PROD || inputs.environment == 'stage' && secrets.ENV_FILE_STAGE || inputs.environment == 'dev' && secrets.ENV_FILE_DEV || null }}"
-  FIREBASE_ACCOUNT: "${{ inputs.environment == 'prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
-  projectId: "${{ inputs.environment == 'prod' && 'barbago-prod' || inputs.environment == 'stage' && 'barbago-stage' || inputs.environment == 'dev' && 'barbago-dev' || null }}"
+  # ENV_FILE: "${{ inputs.environment == 'production' && secrets.ENV_FILE_PROD || inputs.environment == 'staging' && secrets.ENV_FILE_STAGE || inputs.environment == 'develop' && secrets.ENV_FILE_DEV || null }}"
+  ENV_FILE: "${{ secrets.ENV_FILE }}"
+  FIREBASE_ACCOUNT: "${{ inputs.environment == 'production' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'staging' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'develop' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
+  projectId: "${{ inputs.environment == 'production' && 'barbago-prod' || inputs.environment == 'staging' && 'barbago-stage' || inputs.environment == 'develop' && 'barbago-dev' || null }}"
 
 concurrency:
   group: ${{ inputs.environment }}-${{ github.workflow }}

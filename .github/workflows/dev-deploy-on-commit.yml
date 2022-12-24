@@ -1,14 +1,14 @@
-name: Stage Deploy on Main
-'on':
+name: Dev Deploy on 
+on:
   push:
     branches:
-      - main
+      - develop
   workflow_dispatch:
 
 jobs:
   stage_deploy:
-    name: Stage
+    name: Dev
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: staging
+      environment: develop
     secrets: inherit
