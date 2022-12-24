@@ -10,5 +10,5 @@ jobs:
     name: Production Deploy
     uses: ./.github/workflows/deploy.yml
     with:
-      projectId: barbago-prod
+      environment: prod
     secrets: inherit
