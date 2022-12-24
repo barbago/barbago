@@ -118,7 +118,7 @@ jobs:
         run: npm ci
 
       - name: Functions Deploy with Firebase
-        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.projectId }}'
+        run: npx firebase-tools deploy --only functions -P '${{ inputs.projectId }}'
 
 env:
   ENV_FILE: ''
@@ -130,7 +130,7 @@ env:
   FIREBASE_ACCOUNT_DEV: ''
   FIREBASE_ACCOUNT_STAGE: ''
   FIREBASE_ACCOUNT_PROD: ''
-  FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
+  GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
