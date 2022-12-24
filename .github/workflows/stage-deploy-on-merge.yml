@@ -1,4 +1,4 @@
-name: Deploy on Push to Main
+name: Stage Deploy on Main
 'on':
   push:
     branches:
