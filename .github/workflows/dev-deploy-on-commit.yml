@@ -1,4 +1,4 @@
-name: Dev Deploy on 
+name: Dev Deploy on commit
 on:
   push:
     branches:

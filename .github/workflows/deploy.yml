@@ -66,6 +66,9 @@ jobs:
           firebaseServiceAccount: '${{ env.FIREBASE_ACCOUNT }}'
           projectId: '${{ env.projectId }}'
           channelId: 'live'
+    env:
+      ENV_FILE: "${{ secrets.ENV_FILE }}"
+
 
   deploy_mobile:
     name: Deploy Expo Go
@@ -99,6 +102,9 @@ jobs:
       - name: Mobile Deploy with EAS
         working-directory: ui
         run: eas update --non-interactive --auto --branch '${{ inputs.environment }}'
+    env:
+      ENV_FILE: "${{ secrets.ENV_FILE }}"
+
 
   deploy_backend:
     name: Deploy Backend API
@@ -121,18 +127,17 @@ jobs:
 
       - name: Functions Deploy with Firebase
         run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ env.projectId }}'
-    # env:
-    #   ENV_FILE: "${{ secrets.ENV_FILE }}"
+    env:
+      ENV_FILE: "${{ secrets.ENV_FILE }}"
 
 env:
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
   # https://github.com/orgs/community/discussions/25725
-  # ENV_FILE: "${{ inputs.environment == 'production' && secrets.ENV_FILE_PROD || inputs.environment == 'staging' && secrets.ENV_FILE_STAGE || inputs.environment == 'develop' && secrets.ENV_FILE_DEV || null }}"
-  ENV_FILE: "${{ secrets.ENV_FILE }}"
-  FIREBASE_ACCOUNT: "${{ inputs.environment == 'production' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'staging' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'develop' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
-  projectId: "${{ inputs.environment == 'production' && 'barbago-prod' || inputs.environment == 'staging' && 'barbago-stage' || inputs.environment == 'develop' && 'barbago-dev' || null }}"
+  # ENV_FILE: "${{ inputs.environment == 'production' && secrets.ENV_FILE_PROD || inputs.environment == 'staging' && secrets.ENV_FILE_STAGE || inputs.environment == 'development' && secrets.ENV_FILE_DEV || null }}"
+  FIREBASE_ACCOUNT: "${{ inputs.environment == 'production' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'staging' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'development' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
+  projectId: "${{ inputs.environment == 'production' && 'barbago-prod' || inputs.environment == 'staging' && 'barbago-stage' || inputs.environment == 'development' && 'barbago-dev' || null }}"
 
 concurrency:
   group: ${{ inputs.environment }}-${{ github.workflow }}
