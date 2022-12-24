@@ -1,13 +1,14 @@
-name: Dev Deploy on Commit
+name: Prod Deploy on Merge Main
+
 on:
   push:
     branches:
-      - develop
+      - 'main'
 
 jobs:
-  stage_deploy:
-    name: Dev
+  prod_deploy:
+    name: Prod
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: dev
+      environment: prod
     secrets: inherit

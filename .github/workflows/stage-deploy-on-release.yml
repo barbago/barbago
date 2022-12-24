@@ -1,14 +1,13 @@
-name: Stage Deploy on Merge
+name: Stage Deploy on Release
 'on':
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - release/**
 
 jobs:
   stage_deploy:
     name: Stage
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: staging
+      environment: stage
     secrets: inherit
