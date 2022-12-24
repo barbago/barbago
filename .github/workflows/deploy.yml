@@ -140,7 +140,7 @@ env:
   # https://github.com/orgs/community/discussions/25725
   ENV_FILE: "${{ inputs.environment == 'prod' && secrets.ENV_FILE_PROD || inputs.environment == 'stage' && secrets.ENV_FILE_STAGE || inputs.environment == 'dev' && secrets.ENV_FILE_DEV || null }}"
   FIREBASE_ACCOUNT: "${{ inputs.environment == 'prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
-  projectId: '${{ fromJSON('{"dev": "barbago-dev", "stage": "barbago-stage", "prod": "barbago-prod"}')[inputs.environment] }}'
+  projectId: "${{ inputs.environment == 'prod' && 'barbago-prod' || inputs.environment == 'stage' && 'barbago-stage' || inputs.environment == 'dev' && 'barbago-dev' || null }}"
 
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
 concurrency:
