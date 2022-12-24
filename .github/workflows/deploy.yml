@@ -56,10 +56,10 @@ jobs:
       - name: Copy Secrets
         run: sh ./.github/scripts/env.sh
 
-      - name: Upload Code Artifact
-        uses: actions/upload-artifact@v3
+      - name: Cache Code
+        uses: actions/cache@v3
         with:
-          name: 'project'
+          key: 'project'
           path: './'
 
   deploy_web:
@@ -72,6 +72,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: 'project'
+          path: './'
+
       # - name: Checkout Code
       #   uses: actions/checkout@v3
 
@@ -102,9 +104,10 @@ jobs:
     needs: install
     steps:
       - name: Download Code
-        uses: actions/download-artifact@v3
+        uses: actions/cache@v3
         with:
-          name: 'project'
+          key: 'project'
+          path: './'
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
@@ -140,9 +143,10 @@ jobs:
     needs: install
     steps:
       - name: Download Code
-        uses: actions/download-artifact@v3
+        uses: actions/cache@v3
         with:
-          name: 'project'
+          key: 'project'
+          path: './'
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
