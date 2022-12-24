@@ -122,7 +122,7 @@ jobs:
 
 # https://github.com/orgs/community/discussions/25725#discussioncomment-3248924
 env:
-  ENV_FILE: '${{ fromJSON('{"barbago-dev": "secrets.ENV_FILE_DEV", "barbago-stage": "secrets.ENV_FILE_STAGE", "barbago-prod": "${{secrets.ENV_FILE_PROD}}" }')[inputs.projectId] }}'
+  ENV_FILE: '${{ fromJSON('{"barbago-prod": "${{secrets.ENV_FILE_PROD}}" }')[inputs.projectId] }}'
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_ACCOUNT: ''
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
