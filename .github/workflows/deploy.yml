@@ -1,5 +1,5 @@
 name: Deploy to Environment
-run-name: Deploying to ${{ inputs.environment }}
+run-name: Deploy to ${{ inputs.environment }}
 
 on:
   workflow_call:
@@ -38,9 +38,10 @@ on:
         default: 'all'
 
 jobs:
-  setup:
-    name: Setup Project
+  deploy_web:
+    name: Deploy Web
     runs-on: ubuntu-latest
+    if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -57,39 +58,6 @@ jobs:
       - name: Copy Secrets
         run: sh ./.github/scripts/env.sh
 
-      - name: Cache Code
-        uses: actions/cache@v3
-        with:
-          key: 'project'
-          path: './'
-
-  deploy_web:
-    name: Deploy Web
-    runs-on: ubuntu-latest
-    if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
-    needs: setup
-    steps:
-      - name: Retrieve Cache
-        uses: actions/cache@v3
-        with:
-          key: 'project'
-          path: './'
-
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
-
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.x
-      #     cache: npm
-
-      # - name: Install Dependencies
-      #   run: npm ci
-
-      # - name: Copy Secrets
-      #   run: sh ./.github/scripts/env.sh
-
       - name: Web Deploy with Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -102,29 +70,22 @@ jobs:
     name: Deploy Expo Go
     runs-on: ubuntu-latest
     if: inputs.deployApps == 'all' || inputs.deployApps == 'mobile'
-    needs: setup
     steps:
-      - name: Retrieve Cache
-        uses: actions/cache@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          key: 'project'
-          path: './'
+          node-version: 16.x
+          cache: npm
 
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
+      - name: Install Dependencies
+        working-directory: ui
+        run: npm ci
 
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.x
-      #     cache: npm
-
-      # - name: Install Dependencies
-      #   working-directory: ui
-      #   run: npm ci
-
-      # - name: Copy Secrets
-      #   run: sh ./.github/scripts/env.sh
+      - name: Copy Secrets
+        run: sh ./.github/scripts/env.sh
 
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v7
@@ -141,26 +102,19 @@ jobs:
     name: Deploy Backend API
     runs-on: ubuntu-latest
     if: inputs.deployApps == 'all' || inputs.deployApps == 'api'
-    needs: setup
     steps:
-      - name: Retrieve Cache
-        uses: actions/cache@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          key: 'project'
-          path: './'
+          node-version: 16.x
+          cache: npm
 
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
-
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.x
-      #     cache: npm
-
-      # - name: Install Dependencies
-      #   working-directory: functions
-      #   run: npm ci
+      - name: Install Dependencies
+        working-directory: functions
+        run: npm ci
 
       - name: Functions Deploy with Firebase
         run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ env.projectId }}'
