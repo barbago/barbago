@@ -8,13 +8,8 @@ on:
         required: true
         type: string
         default: 'dev'
-      # projectId:
-      #   description: 'Firebase Project'
-      #   required: true
-      #   type: string
-      #   default: 'barbago-dev'
-      runJob:
-        description: 'Which jobs to run'
+      deployApps:
+        description: 'Apps to deploy <all|api|mobile|web>'
         required: false
         type: string
         default: 'all'
@@ -30,17 +25,8 @@ on:
           - stage
           - prod
         default: 'dev'
-      # projectId:
-      #   description: 'Firebase Project'
-      #   required: true
-      #   type: choice
-      #   options:
-      #     - barbago-dev
-      #     - barbago-stage
-      #     - barbago-prod
-      #   default: 'barbago-dev'
-      runJob:
-        description: 'Which jobs to run'
+      deployApps:
+        description: 'Apps to deploy'
         required: false
         type: choice
         options:
@@ -54,7 +40,7 @@ jobs:
   deploy_web:
     name: Deploy Web
     runs-on: ubuntu-latest
-    if: inputs.runJob == 'all' || inputs.runJob == 'web'
+    if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -82,7 +68,7 @@ jobs:
   deploy_mobile:
     name: Deploy Expo Go
     runs-on: ubuntu-latest
-    if: inputs.runJob == 'all' || inputs.runJob == 'mobile'
+    if: inputs.deployApps == 'all' || inputs.deployApps == 'mobile'
 
     steps:
       - name: Checkout Code
@@ -115,7 +101,7 @@ jobs:
   deploy_backend:
     name: Deploy Backend API
     runs-on: ubuntu-latest
-    if: inputs.runJob == 'all' || inputs.runJob == 'api'
+    if: inputs.deployApps == 'all' || inputs.deployApps == 'api'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -142,7 +128,6 @@ env:
   FIREBASE_ACCOUNT: "${{ inputs.environment == 'prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
   projectId: "${{ inputs.environment == 'prod' && 'barbago-prod' || inputs.environment == 'stage' && 'barbago-stage' || inputs.environment == 'dev' && 'barbago-dev' || null }}"
 
-# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ inputs.environment }}-${{ github.workflow }}
   cancel-in-progress: true
