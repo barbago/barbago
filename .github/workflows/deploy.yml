@@ -1,0 +1,151 @@
+name: Barbago Deploy
+
+on:
+  workflow_call:
+    inputs:
+      projectId:
+        description: 'Firebase Project'
+        required: true
+        type: choice
+        options:
+          - barbago-dev
+          - barbago-stage
+          - barbago-prod
+        default: 'barbago-dev'
+      channelId:
+        description: 'Firebase Channel'
+        required: false
+        type: choice
+        options:
+          - live
+          - null
+        default: 'live'
+      runJob:
+        description: 'Which jobs to run'
+        required: false
+        type: choice
+        options:
+          - all
+          - api
+          - ui
+        default: 'all'
+
+
+    secrets:
+      EXPO_TOKEN:
+        required: true
+      FIREBASE_TOKEN:
+        required: true
+      GITHUB_TOKEN:
+        required: true
+
+  workflow_dispatch:
+    inputs:
+      projectId:
+        description: 'Firebase Project'
+        required: true
+        type: choice
+        options:
+          - barbago-dev
+          - barbago-stage
+          - barbago-prod
+        default: 'barbago-dev'
+      channelId:
+        description: 'Firebase Channel'
+        required: false
+        type: choice
+        options:
+          - live
+          - null
+        default: 'live'
+      runJob:
+        description: 'Which jobs to run'
+        required: false
+        type: choice
+        options:
+          - all
+          - api
+          - ui
+        default: 'all'
+
+jobs:
+  deploy_ui:
+    name: Deploy User Interface Apps
+    runs-on: ubuntu-latest
+    if: inputs.runJob == 'all' || inputs.runJob == 'ui'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # Figure out how to get ENV in here
+      - name: Copy Secrets
+        run: sh ./.github/scripts/env.sh
+
+      - name: Web Deploy with Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ env.GITHUB_TOKEN }}'
+          # Figure out which environment
+          firebaseServiceAccount: '${{ env.FIREBASE_ACCOUNT }}'
+          projectId: '${{ inputs.projectId }}'
+          channelId: '${{ inputs.channelId }}'
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          packager: npm
+          token: '${{ env.EXPO_TOKEN }}'
+
+      - name: Mobile Deploy with EAS
+        working-directory: ui
+        run: eas update --non-interactive --auto --branch feature'
+
+  deploy_backend:
+    name: Deploy Backend API
+    runs-on: ubuntu-latest
+    if: inputs.runJob == 'all' || inputs.runJob == 'api'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install Dependencies
+        working-directory: functions
+        run: npm ci
+
+      - name: Functions Deploy with Firebase
+        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.projectId }}'
+
+env:
+  ENV_FILE: ''
+  ENV_FILE_DEV: ''
+  ENV_FILE_STAGE: ''
+  ENV_FILE_PROD: ''
+  EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
+  FIREBASE_ACCOUNT: ''
+  FIREBASE_ACCOUNT_DEV: ''
+  FIREBASE_ACCOUNT_STAGE: ''
+  FIREBASE_ACCOUNT_PROD: ''
+  FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
+  GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
