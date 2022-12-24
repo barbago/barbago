@@ -65,19 +65,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
+    needs: setup
     steps:
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
-
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.x
-      #     cache: npm
-
-      # - name: Install Dependencies
-      #   run: npm ci
-
       - name: Retrieve Code from Cache
         uses: actions/cache@v3
         with:
@@ -103,20 +92,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'mobile'
+    needs: setup
     steps:
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
-
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.x
-      #     cache: npm
-
-      # - name: Install Dependencies
-      #   working-directory: ui
-      #   run: npm ci
-
       - name: Retrieve Code from Cache
         uses: actions/cache@v3
         with:
@@ -145,20 +122,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'api'
+    needs: setup
     steps:
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
-
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16.x
-      #     cache: npm
-
-      # - name: Install Dependencies
-      #   working-directory: functions
-      #   run: npm ci
-
       - name: Retrieve Code from Cache
         uses: actions/cache@v3
         with:
