@@ -1,34 +1,26 @@
 name: Barbago Deploy
 
 on:
-  workflow_call:
-    inputs:
-      projectId:
-        description: 'Firebase Project'
-        required: true
-        type: choice
-        options:
-          - barbago-dev
-          - barbago-stage
-          - barbago-prod
-        default: 'barbago-dev'
-      channelId:
-        description: 'Firebase Channel'
-        required: false
-        type: choice
-        options:
-          - live
-          - null
-        default: 'live'
-      runJob:
-        description: 'Which jobs to run'
-        required: false
-        type: choice
-        options:
-          - all
-          - api
-          - ui
-        default: 'all'
+  # workflow_call:
+  #   inputs:
+  #     projectId:
+  #       description: 'Firebase Project'
+  #       required: true
+  #       type: string
+  #       default: 'barbago-dev'
+  #     channelId:
+  #       description: 'Firebase Channel'
+  #       required: false
+  #       default: 'live'
+  #     runJob:
+  #       description: 'Which jobs to run'
+  #       required: false
+  #       type: choice
+  #       options:
+  #         - all
+  #         - api
+  #         - ui
+  #       default: 'all'
 
 
     # secrets:
