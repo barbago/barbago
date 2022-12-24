@@ -1,18 +1,18 @@
-name: Barbago Deploy
+name: Deploy to Environment
 
 on:
   workflow_call:
     inputs:
-      projectId:
-        description: 'Firebase Project'
+      environment:
+        description: 'Environment to deploy to <dev|stage|prod>'
         required: true
         type: string
-        default: 'barbago-dev'
-      channelId:
-        description: 'Firebase Channel'
-        required: false
-        type: string
-        default: 'live'
+        default: 'dev'
+      # projectId:
+      #   description: 'Firebase Project'
+      #   required: true
+      #   type: string
+      #   default: 'barbago-dev'
       runJob:
         description: 'Which jobs to run'
         required: false
@@ -21,23 +21,24 @@ on:
 
   workflow_dispatch:
     inputs:
-      projectId:
-        description: 'Firebase Project'
+      environment:
+        description: 'Environment'
         required: true
         type: choice
         options:
-          - barbago-dev
-          - barbago-stage
-          - barbago-prod
-        default: 'barbago-dev'
-      channelId:
-        description: 'Firebase Channel'
-        required: false
-        type: choice
-        options:
-          - live
-          - null
-        default: 'live'
+          - dev
+          - stage
+          - prod
+        default: 'dev'
+      # projectId:
+      #   description: 'Firebase Project'
+      #   required: true
+      #   type: choice
+      #   options:
+      #     - barbago-dev
+      #     - barbago-stage
+      #     - barbago-prod
+      #   default: 'barbago-dev'
       runJob:
         description: 'Which jobs to run'
         required: false
@@ -75,8 +76,8 @@ jobs:
         with:
           repoToken: '${{ env.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ env.FIREBASE_ACCOUNT }}'
-          projectId: '${{ inputs.projectId }}'
-          channelId: '${{ inputs.channelId }}'
+          projectId: '${{ env.projectId }}'
+          channelId: 'live'
 
   deploy_mobile:
     name: Deploy Expo Go
@@ -94,6 +95,7 @@ jobs:
           cache: npm
 
       - name: Install Dependencies
+        working-directory: ui
         run: npm ci
 
       - name: Copy Secrets
@@ -108,7 +110,7 @@ jobs:
 
       - name: Mobile Deploy with EAS
         working-directory: ui
-        run: eas update --non-interactive --auto --branch feature
+        run: eas update --non-interactive --auto --branch '${{ inputs.environment }}'
 
   deploy_backend:
     name: Deploy Backend API
@@ -129,15 +131,16 @@ jobs:
         run: npm ci
 
       - name: Functions Deploy with Firebase
-        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.projectId }}'
+        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ env.projectId }}'
 
 env:
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
   # https://github.com/orgs/community/discussions/25725
-  ENV_FILE: "${{ inputs.projectId == 'barbago-prod' && secrets.ENV_FILE_PROD || inputs.projectId == 'barbago-stage' && secrets.ENV_FILE_STAGE || inputs.projectId == 'barbago-dev' && secrets.ENV_FILE_DEV || null }}"
-  FIREBASE_ACCOUNT: "${{ inputs.projectId == 'barbago-prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.projectId == 'barbago-stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.projectId == 'barbago-dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
+  ENV_FILE: "${{ inputs.environment == 'prod' && secrets.ENV_FILE_PROD || inputs.environment == 'stage' && secrets.ENV_FILE_STAGE || inputs.environment == 'dev' && secrets.ENV_FILE_DEV || null }}"
+  FIREBASE_ACCOUNT: "${{ inputs.environment == 'prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
+  projectId: '${{ fromJSON('{"dev": "barbago-dev", "stage": "barbago-stage", "prod": "barbago-prod"}')[inputs.environment] }}'
 
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
 concurrency:

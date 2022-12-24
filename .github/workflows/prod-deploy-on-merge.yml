@@ -7,7 +7,7 @@ name: Deploy on Push to Main
 
 jobs:
   prod_deploy:
-    name: Prod Deploy
+    name: Production Deploy
     uses: ./.github/workflows/deploy.yml
     with:
       projectId: barbago-prod
