@@ -10,5 +10,5 @@ jobs:
     name: Dev
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: develop
+      environment: development
     secrets: inherit
