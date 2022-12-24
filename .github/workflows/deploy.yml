@@ -38,7 +38,8 @@ on:
         default: 'all'
 
 jobs:
-  install:
+  setup:
+    name: Setup Project
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -66,12 +67,12 @@ jobs:
     name: Deploy Web
     runs-on: ubuntu-latest
     if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
-    needs: install
+    needs: setup
     steps:
-      - name: Download Code Artifact
-        uses: actions/download-artifact@v3
+      - name: Retrieve Cache
+        uses: actions/cache@v3
         with:
-          name: 'project'
+          key: 'project'
           path: './'
 
       # - name: Checkout Code
@@ -101,9 +102,9 @@ jobs:
     name: Deploy Expo Go
     runs-on: ubuntu-latest
     if: inputs.deployApps == 'all' || inputs.deployApps == 'mobile'
-    needs: install
+    needs: setup
     steps:
-      - name: Download Code
+      - name: Retrieve Cache
         uses: actions/cache@v3
         with:
           key: 'project'
@@ -140,9 +141,9 @@ jobs:
     name: Deploy Backend API
     runs-on: ubuntu-latest
     if: inputs.deployApps == 'all' || inputs.deployApps == 'api'
-    needs: install
+    needs: setup
     steps:
-      - name: Download Code
+      - name: Retrieve Cache
         uses: actions/cache@v3
         with:
           key: 'project'
