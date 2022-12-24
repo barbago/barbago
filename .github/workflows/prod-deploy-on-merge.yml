@@ -6,73 +6,9 @@ name: Deploy on Push to Main
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Deploy
+  prod_deploy:
+    name: Prod Deploy
     uses: ./.github/workflows/deploy.yml
     with:
       projectId: barbago-prod
     secrets: inherit
-
-env:
-  ENV_FILE: '${{ secrets.ENV_FILE }}'
-  EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
-  FIREBASE_ACCOUNT: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV }}'
-  GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-  # deploy_web:
-  #   name: Web Deploy with Firebase
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v3
-
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
-  #         cache: npm
-
-  #     - name: Install Dependencies
-  #       run: npm ci
-
-  #     - name: Copy Secrets
-  #       run: sh ./.github/scripts/env.sh
-
-  #     - name: Firebase Deploy
-  #       uses: FirebaseExtended/action-hosting-deploy@v0
-  #       with:
-  #         repoToken: '${{ env.GITHUB_TOKEN }}'
-  #         firebaseServiceAccount: '${{ env.FIREBASE_ACCOUNT }}'
-  #         channelId: live
-  #         projectId: barbago-dev
-
-  # deploy_mobile:
-  #   name: Mobile Deploy with EAS
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2
-
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 16.x
-  #         cache: npm
-
-  #     - name: Install Dependencies
-  #       run: npm ci
-
-  #     - name: Copy Secrets
-  #       run: sh ./.github/scripts/env.sh
-
-  #     - name: Setup Expo and EAS
-  #       uses: expo/expo-github-action@v7
-  #       with:
-  #         expo-version: latest
-  #         eas-version: latest
-  #         packager: npm
-  #         token: '${{ env.EXPO_TOKEN }}'
-  #     - name: Publish for Expo Go
-  #       run: |
-  #         cd ui
-  #         eas update --non-interactive --auto

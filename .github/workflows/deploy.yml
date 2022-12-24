@@ -19,14 +19,6 @@ on:
         type: string
         default: 'all'
 
-    # secrets:
-    #   EXPO_TOKEN:
-    #     required: true
-    #   FIREBASE_TOKEN:
-    #     required: true
-    #   GITHUB_TOKEN:
-    #     required: true
-
   workflow_dispatch:
     inputs:
       projectId:
@@ -53,14 +45,15 @@ on:
         options:
           - all
           - api
-          - ui
+          - mobile
+          - web
         default: 'all'
 
 jobs:
-  deploy_ui:
-    name: Deploy User Interface Apps
+  deploy_web:
+    name: Deploy Web
     runs-on: ubuntu-latest
-    if: inputs.runJob == 'all' || inputs.runJob == 'ui'
+    if: inputs.runJob == 'all' || inputs.runJob == 'web'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -74,7 +67,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      # Figure out how to get ENV in here
       - name: Copy Secrets
         run: sh ./.github/scripts/env.sh
 
@@ -82,15 +74,34 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ env.GITHUB_TOKEN }}'
-          # Figure out which environment
           firebaseServiceAccount: '${{ env.FIREBASE_ACCOUNT }}'
           projectId: '${{ inputs.projectId }}'
           channelId: '${{ inputs.channelId }}'
 
+  deploy_mobile:
+    name: Deploy Expo Go
+    runs-on: ubuntu-latest
+    if: inputs.runJob == 'all' || inputs.runJob == 'mobile'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Copy Secrets
+        run: sh ./.github/scripts/env.sh
+
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v7
         with:
-          # expo-version: latest
           eas-version: latest
           packager: npm
           token: '${{ env.EXPO_TOKEN }}'
@@ -120,13 +131,13 @@ jobs:
       - name: Functions Deploy with Firebase
         run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.projectId }}'
 
-# https://github.com/orgs/community/discussions/25725#discussioncomment-3248924
 env:
-  ENV_FILE: "${{ inputs.projectId == 'barbago-prod' && secrets.ENV_FILE_PROD || inputs.projectId == 'barbago-stage' && secrets.ENV_FILE_STAGE || inputs.projectId == 'barbago-dev' && secrets.ENV_FILE_DEV || null }}"
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
-  FIREBASE_ACCOUNT: "${{ inputs.projectId == 'barbago-prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.projectId == 'barbago-stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.projectId == 'barbago-dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+  # https://github.com/orgs/community/discussions/25725
+  ENV_FILE: "${{ inputs.projectId == 'barbago-prod' && secrets.ENV_FILE_PROD || inputs.projectId == 'barbago-stage' && secrets.ENV_FILE_STAGE || inputs.projectId == 'barbago-dev' && secrets.ENV_FILE_DEV || null }}"
+  FIREBASE_ACCOUNT: "${{ inputs.projectId == 'barbago-prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.projectId == 'barbago-stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.projectId == 'barbago-dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
 
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
 concurrency:
