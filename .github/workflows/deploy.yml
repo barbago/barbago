@@ -124,7 +124,7 @@ jobs:
 env:
   ENV_FILE: "${{ inputs.projectId == 'barbago-prod' && secrets.ENV_FILE_PROD || inputs.projectId == 'barbago-stage' && secrets.ENV_FILE_STAGE || secrets.ENV_FILE_DEV }}"
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
-  FIREBASE_ACCOUNT: ''
+  FIREBASE_ACCOUNT: "${{ inputs.projectId == 'barbago-prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.projectId == 'barbago-stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV }}"
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
