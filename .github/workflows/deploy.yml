@@ -31,13 +31,13 @@ on:
         default: 'all'
 
 
-    secrets:
-      EXPO_TOKEN:
-        required: true
-      FIREBASE_TOKEN:
-        required: true
-      GITHUB_TOKEN:
-        required: true
+    # secrets:
+    #   EXPO_TOKEN:
+    #     required: true
+    #   FIREBASE_TOKEN:
+    #     required: true
+    #   GITHUB_TOKEN:
+    #     required: true
 
   workflow_dispatch:
     inputs:
