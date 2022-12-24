@@ -120,16 +120,11 @@ jobs:
       - name: Functions Deploy with Firebase
         run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.projectId }}'
 
+# https://github.com/orgs/community/discussions/25725#discussioncomment-3248924
 env:
-  ENV_FILE: ''
-  ENV_FILE_DEV: ''
-  ENV_FILE_STAGE: ''
-  ENV_FILE_PROD: ''
+  ENV_FILE: '${{ fromJSON('{"barbago-dev": secrets.ENV_FILE_DEV, "barbago-stage": secrets.ENV_FILE_STAGE, "barbago-prod": secrets.ENV_FILE_PROD }')[inputs.projectId] }}'
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_ACCOUNT: ''
-  FIREBASE_ACCOUNT_DEV: ''
-  FIREBASE_ACCOUNT_STAGE: ''
-  FIREBASE_ACCOUNT_PROD: ''
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
