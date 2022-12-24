@@ -53,10 +53,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: npm
@@ -70,7 +70,7 @@ jobs:
 
 
 env:
-  ENV_FILE: '${{secrets.ENV_FILE_STAGE}}'
+  ENV_FILE: '${{ secrets.ENV_FILE_STAGE }}'
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_ACCOUNT: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE }}'
   FIREBASE_PROJECT: 'barbago-stage'
