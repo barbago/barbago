@@ -6,9 +6,9 @@ name: Deploy on Push to Main
   workflow_dispatch:
 
 jobs:
-  prod_deploy:
-    name: Production Deploy
+  stage_deploy:
+    name: Stage
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: prod
+      environment: stage
     secrets: inherit
