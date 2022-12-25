@@ -1,9 +1,8 @@
-name: Stage Deploy on Main
+name: Stage Deploy on Release
 'on':
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - release/**
 
 jobs:
   stage_deploy:

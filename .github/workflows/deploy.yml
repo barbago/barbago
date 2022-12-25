@@ -38,10 +38,9 @@ on:
         default: 'all'
 
 jobs:
-  deploy_web:
-    name: Deploy Web
+  setup:
+    name: Setup Project
     runs-on: ubuntu-latest
-    if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -54,35 +53,46 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+
+      - name: Cache Code
+        uses: actions/cache@v3
+        with:
+          key: '${{ github.run_id }}'
+          path: './'
+
+  deploy_web:
+    name: Deploy Web
+    runs-on: ubuntu-latest
+    environment: '${{ inputs.environment }}'
+    if: inputs.deployApps == 'all' || inputs.deployApps == 'web'
+    needs: setup
+    steps:
+      - name: Retrieve Code from Cache
+        uses: actions/cache@v3
+        with:
+          key: '${{ github.run_id }}'
+          path: './'
 
       - name: Copy Secrets
         run: sh ./.github/scripts/env.sh
 
       - name: Web Deploy with Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ env.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ env.FIREBASE_ACCOUNT }}'
-          projectId: '${{ env.projectId }}'
-          channelId: 'live'
+        run: npx firebase-tools deploy --only hosting --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.environment }}'
+    env:
+      ENV_FILE: '${{ secrets.ENV_FILE }}'
 
   deploy_mobile:
     name: Deploy Expo Go
     runs-on: ubuntu-latest
+    environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'mobile'
+    needs: setup
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Retrieve Code from Cache
+        uses: actions/cache@v3
         with:
-          node-version: 16.x
-          cache: npm
-
-      - name: Install Dependencies
-        working-directory: ui
-        run: npm ci
+          key: '${{ github.run_id }}'
+          path: './'
 
       - name: Copy Secrets
         run: sh ./.github/scripts/env.sh
@@ -97,37 +107,32 @@ jobs:
       - name: Mobile Deploy with EAS
         working-directory: ui
         run: eas update --non-interactive --auto --branch '${{ inputs.environment }}'
+    env:
+      ENV_FILE: '${{ secrets.ENV_FILE }}'
 
   deploy_backend:
     name: Deploy Backend API
     runs-on: ubuntu-latest
+    environment: '${{ inputs.environment }}'
     if: inputs.deployApps == 'all' || inputs.deployApps == 'api'
+    needs: setup
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Retrieve Code from Cache
+        uses: actions/cache@v3
         with:
-          node-version: 16.x
-          cache: npm
-
-      - name: Install Dependencies
-        working-directory: functions
-        run: npm ci
+          key: '${{ github.run_id }}'
+          path: './'
 
       - name: Functions Deploy with Firebase
-        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ env.projectId }}'
+        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.environment }}'
+    env:
+      ENV_FILE: '${{ secrets.ENV_FILE }}'
 
 env:
   EXPO_TOKEN: '${{ secrets.EXPO_TOKEN }}'
   FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
   GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-  # https://github.com/orgs/community/discussions/25725
-  ENV_FILE: "${{ inputs.environment == 'prod' && secrets.ENV_FILE_PROD || inputs.environment == 'stage' && secrets.ENV_FILE_STAGE || inputs.environment == 'dev' && secrets.ENV_FILE_DEV || null }}"
-  FIREBASE_ACCOUNT: "${{ inputs.environment == 'prod' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_PROD || inputs.environment == 'stage' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_STAGE || inputs.environment == 'dev' && secrets.FIREBASE_SERVICE_ACCOUNT_BARBAGO_DEV || null }}"
-  projectId: "${{ inputs.environment == 'prod' && 'barbago-prod' || inputs.environment == 'stage' && 'barbago-stage' || inputs.environment == 'dev' && 'barbago-dev' || null }}"
 
 concurrency:
-  group: ${{ inputs.environment }}-${{ github.workflow }}
+  group: ${{ github.run_id }}
   cancel-in-progress: true

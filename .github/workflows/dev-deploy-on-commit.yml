@@ -1,0 +1,13 @@
+name: Dev Deploy on Commit
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  stage_deploy:
+    name: Dev
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: dev
+    secrets: inherit

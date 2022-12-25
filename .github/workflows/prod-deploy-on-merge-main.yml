@@ -1,0 +1,14 @@
+name: Prod Deploy on Merge Main
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  prod_deploy:
+    name: Prod
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: prod
+    secrets: inherit
