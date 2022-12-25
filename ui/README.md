@@ -1,12 +1,11 @@
+# todo
 
-Login screen, allow barbers to sign up
-Find barber, barber detail, checkout flow
+- setup a logging platform like sentry for debugging
+  - latest sentry is broken, try older version
+- decide what features are next
+  - Login screen, allow barbers to sign up
+  - Find barber, barber detail, checkout flow
 
+# future todo
 
-# replace ui with new-ui
-# todo: configure automatic deploys with github actions
-# create branching style
-# setup a logging platform like sentry for debugging
-# upgrade react-native-paper to v5
-# implement apple authentication
-# decide what features are next
+- update environment variables from local machine with a script https://docs.github.com/en/rest/actions/secrets?apiVersion=2022-11-28#create-or-update-a-repository-secret

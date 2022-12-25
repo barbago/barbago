@@ -1,10 +1,10 @@
 import {
   DarkTheme as NavDarkTheme,
-  DefaultTheme as NavDefaultTheme,
+  DefaultTheme as NavLightTheme,
 } from '@react-navigation/native';
 import {
-  DarkTheme as PaperDarkTheme,
-  DefaultTheme as PaperDefaultTheme,
+  MD2DarkTheme as PaperDarkTheme,
+  MD2LightTheme as PaperLightTheme,
 } from 'react-native-paper';
 
 const tintColorLight = '#ff0000';
@@ -34,11 +34,11 @@ export const light = {
   tabIconDefault: '#ccc',
   tabIconSelected: tintColorLight,
 
-  ...PaperDefaultTheme,
-  ...NavDefaultTheme,
+  ...PaperLightTheme,
+  ...NavLightTheme,
   colors: {
-    ...PaperDefaultTheme.colors,
-    ...NavDefaultTheme.colors,
+    ...PaperLightTheme.colors,
+    ...NavLightTheme.colors,
     primary: '#ff0000',
     accent: '#1a1a1a',
   },
