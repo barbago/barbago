@@ -6,34 +6,28 @@ Barbago is an app that connects barbers to their clients.
 
 This project is organized as a monorepository, with all code pertaining to Barbago being stored in one place.
 
-### Functions Directory
+| Directory        | Description                     | Endpoint                |
+| ---------------- | ------------------------------- | ----------------------- |
+| `/functions`     | Firebase functions, Backend API | `api.barbago.app`       |
+| `functions/docs` | API Documentation               | `api.barbago.app/docs`  |
+| `/site`          | Static HTML for pages           | `site.barbago.app`      |
+| `/ui`            | React Native code               | `barbago.app` & Expo Go |
 
-Contains Firebase functions and Express app. Deploys to <https://api.barbago.app>.
+## Deployment and Environments
 
-Also contains a `/docs` directory for API Documentation which deploys to <https://docs.barbago.app>.
+### Environments
 
-### Site Directory
+This project has 3 live environments in Firebase and Expo:
+`dev`, `stage`, and `prod`.
 
-Contains static HTML for deployment. Deploys to <https://site.barbago.app>.
+Code will automatically be deployed with GitHub Actions via Firebase and Expo Go to its corresponding environment depending on which branch it is committed to.
 
-### UI Directory
+| Environment | Branch      | Deploy Target             |
+| ----------- | ----------- | ------------------------- |
+| `dev`       | `develop`   | `dev.<app>.barbago.app`   |
+| `stage`     | `release/*` | `stage.<app>.barbago.app` |
+| `prod`      | `main`      | `<app>.barbago.app`       |
 
-All the code for the React Native project is located here. Deploys to <https://barbago.app>.
+### Development Workflow
 
-## Deployment
-
-This project uses Expo and Firebase for deployment.
-
-There are two deployment environments: `dev` and `prod`.
-
-### Functions Deployment
-
-To deploy Functions in development, use `firebase deploy` or `npm run deploy`. This will upload all statically hosted files as well as update firebase functions.
-
-### UI Deployment
-
-Todo: automatic deploys of the Expo app have not been implemented yet.
-
-## Development Workflow
-
-Todo: create an automatic build pipeline with github actions and such.
+This project uses the [Git Flow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for commits and branches. All changes should be made via `feature/*` branches merging into to `develop`, organized into `release/*` branches, and eventually merged into `main`.

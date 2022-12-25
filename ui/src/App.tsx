@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ErrorBoundary from 'react-native-error-boundary';
 
-import { sentryConfig } from './config';
 import { useColorScheme, usePushNotifications } from './hooks';
 import { Navigation } from './navigation';
 import { ContextProvider } from './providers';
