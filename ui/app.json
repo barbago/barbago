@@ -22,8 +22,16 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps"
+        }
+      ]
+    },
     "plugins": [
       "expo-apple-authentication",
+      "sentry-expo",
       [
         "expo-image-picker",
         {
@@ -53,7 +61,7 @@
     "web": {
       "build": {
         "babel": {
-          "include": ["react-leaflet"]
+          "include": ["react-leaflet", "@sentry/react-native"]
         }
       },
       "favicon": "./src/assets/icons/favicon.png"
