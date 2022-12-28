@@ -124,7 +124,7 @@ jobs:
           path: './'
 
       - name: Functions Deploy with Firebase
-        run: npx firebase-tools deploy --only functions --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.environment }}'
+        run: npx firebase-tools deploy --only functions,firestore --token '${{ env.FIREBASE_TOKEN }}' -P '${{ inputs.environment }}'
     env:
       ENV_FILE: '${{ secrets.ENV_FILE }}'
 

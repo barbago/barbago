@@ -1,7 +1,5 @@
 # todo
 
-- setup a logging platform like sentry for debugging
-  - latest sentry is broken, try older version
 - decide what features are next
   - Login screen, allow barbers to sign up
   - Find barber, barber detail, checkout flow
