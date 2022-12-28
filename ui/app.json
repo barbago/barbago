@@ -25,7 +25,12 @@
     "hooks": {
       "postPublish": [
         {
-          "file": "sentry-expo/upload-sourcemaps"
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "barbago",
+            "project": "barbago-mobile",
+            "authToken": "fcbcd35b3bdd43ceac6b8b8b2aba78b486b53fb3e66a4406b02cbb03ad034889"
+          }
         }
       ]
     },
