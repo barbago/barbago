@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Barbago Mobile",
+    "name": "Barbago",
     "slug": "barbago-mobile",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "description": "",
     "githubUrl": "https://github.com/barbago/barago",
