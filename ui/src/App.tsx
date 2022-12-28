@@ -2,13 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ErrorBoundary from 'react-native-error-boundary';
 import { init } from 'sentry-expo';
-
 import { version } from '../package.json';
 import { firebaseConfig, sentryConfig } from './config';
 import { useColorScheme, usePushNotifications } from './hooks';
 import { Navigation } from './navigation';
 import { ContextProvider } from './providers';
 import { userApi } from './store';
+import { Button } from 'react-native-paper';
 
 init({
   dsn: sentryConfig.dsn,
@@ -24,6 +24,13 @@ export const App = () => {
       <ContextProvider>
         <AppContainer />
         <StatusBar />
+        <Button
+          onPress={() => {
+            throw new Error('CRASH');
+          }}
+        >
+          CRASH
+        </Button>
       </ContextProvider>
     </ErrorBoundary>
   );
