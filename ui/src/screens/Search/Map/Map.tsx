@@ -82,7 +82,7 @@ export const Map = () => {
 
   return (
     <ClusterMapView
-      mapType="mutedStandard"
+      mapType="standard"
       initialRegion={initialRegion}
       moveOnMarkerPress={false}
       showsUserLocation={true}

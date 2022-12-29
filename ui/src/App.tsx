@@ -1,3 +1,4 @@
+import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import ErrorBoundary from 'react-native-error-boundary';
