@@ -81,7 +81,7 @@ export const Summary = () => {
             label="Search Reviews"
             value={filter}
             onChange={(e) => setFilter(e.nativeEvent.text)}
-            left={<TextInput.Icon name="magnify" />}
+            left={<TextInput.Icon icon="magnify" />}
           />
         </View>
       </View>
