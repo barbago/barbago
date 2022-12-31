@@ -23,7 +23,9 @@ export function GoogleAuth({ onAuthSuccess }: AuthButtonProps) {
   const isDarkMode = useMemo(() => scheme === 'dark', [scheme]);
 
   const [request, response, promptAsync] = useIdTokenAuthRequest({
-    clientId: googleConfig.clientId,
+    clientId: googleConfig.webClientId,
+    iosClientId: googleConfig.iosClientId,
+    androidClientId: googleConfig.androidClientId,
   });
 
   useEffect(() => {

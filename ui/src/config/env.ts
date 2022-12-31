@@ -25,8 +25,9 @@ export const env = {
     measurementId: process.env.FIREBASE_MEASUREMENT_ID ?? '',
   },
   google: {
-    clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-    mapKeyAndroid: process.env.GOOGLE_MAPS_API_KEY ?? '',
+    webClientId: process.env.GOOGLE_WEB_CLIENT_ID ?? '',
+    iosClientId: process.env.GOOGLE_IOS_CLIENT_ID ?? '',
+    androidClientId: process.env.GOOGLE_ANDROID_CLIENT_ID ?? '',
     geocodingKey: process.env.GOOGLE_GEOCODING_API_KEY ?? '',
     iosMapsKey: process.env.GOOGLE_IOS_MAPS_API_KEY ?? '',
     androidMapsKey: process.env.GOOGLE_ANDROID_MAPS_API_KEY ?? '',
