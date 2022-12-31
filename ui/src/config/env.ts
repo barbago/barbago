@@ -1,13 +1,3 @@
-import Constants from 'expo-constants';
-
-console.log(
-  JSON.stringify([
-    Constants.manifest,
-    Constants.manifest2,
-    Constants.expoConfig,
-  ]),
-);
-
 export const env = {
   api: {
     url: process.env.API_URL ?? '',
