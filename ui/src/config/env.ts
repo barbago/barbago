@@ -1,4 +1,12 @@
-// For when changing secrets: update .env, eas secrets, and here
+import Constants from 'expo-constants';
+
+console.log(
+  JSON.stringify([
+    Constants.manifest,
+    Constants.manifest2,
+    Constants.expoConfig,
+  ]),
+);
 
 export const env = {
   api: {
@@ -20,12 +28,8 @@ export const env = {
     clientId: process.env.GOOGLE_CLIENT_ID ?? '',
     mapKeyAndroid: process.env.GOOGLE_MAPS_API_KEY ?? '',
     geocodingKey: process.env.GOOGLE_GEOCODING_API_KEY ?? '',
-  },
-  sentry: {
-    dsn: process.env.SENTRY_DSN ?? '',
-    org: process.env.SENTRY_ORG ?? '',
-    project: process.env.SENTRY_PROJECT ?? '',
-    authToken: process.env.SENTRY_AUTH_TOKEN ?? '',
+    iosMapsKey: process.env.GOOGLE_IOS_MAPS_API_KEY ?? '',
+    androidMapsKey: process.env.GOOGLE_ANDROID_MAPS_API_KEY ?? '',
   },
 };
 
@@ -33,6 +37,5 @@ export const {
   facebook: facebookConfig,
   firebase: firebaseConfig,
   google: googleConfig,
-  sentry: sentryConfig,
   api: { url: apiUrl },
 } = env;

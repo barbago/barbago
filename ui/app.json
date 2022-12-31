@@ -35,13 +35,6 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "config": {
-        "googleMaps": {
-          // make this dynamic instead?
-          // find out if you can use env for config.ts
-          "apiKey": "AIzaSyDFfOOF2bglIb79qcPFQgd8Rzmo4mwLKF4"
-        }
       }
     },
     "web": {

@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import MapView, {
   EdgePadding,
   Marker,
+  PROVIDER_GOOGLE,
   Region,
 } from 'react-native-maps';
 import ClusterMapView from 'react-native-map-clustering';
@@ -83,6 +84,7 @@ export const Map = () => {
   return (
     <ClusterMapView
       mapType="standard"
+      provider={PROVIDER_GOOGLE}
       initialRegion={initialRegion}
       moveOnMarkerPress={false}
       showsUserLocation={true}
