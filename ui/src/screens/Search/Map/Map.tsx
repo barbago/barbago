@@ -33,7 +33,8 @@ export const Map = () => {
   const mapPadding: EdgePadding = {
     top: 100,
     right: 0,
-    bottom: selected ? (isIOS() ? 440 : 390) : isIOS() ? 175 : 125,
+    /* selected ? (isIOS() ? 440 : 390) : */
+    bottom: isIOS() ? 175 : 125,
     left: 0,
   };
 
@@ -88,6 +89,7 @@ export const Map = () => {
       initialRegion={initialRegion}
       moveOnMarkerPress={false}
       showsUserLocation={true}
+      showsMyLocationButton={false}
       toolbarEnabled={false}
       pitchEnabled={false}
       rotateEnabled={false}
