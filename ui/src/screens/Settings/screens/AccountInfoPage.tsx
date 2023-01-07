@@ -6,14 +6,14 @@ import {
   Screen,
   ValidTextInput,
 } from '../../../components';
-import { SettingsStackScreenProps } from '../../../navigation';
+import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation';
 import { userApi } from '../../../store';
 
 // you can change firebase auth user profile information
 // https://firebase.google.com/docs/auth/web/manage-users
 export const AccountInfoPage = ({
   navigation,
-}: SettingsStackScreenProps<'Account'>) => {
+}: SettingsStackScreenProps<SettingsRoutes.Account>) => {
   const { data: user, isLoading } = userApi.useGetUserQuery();
   const [updateUser, { isLoading: isUpdateLoading }] =
     userApi.useUpdateUserMutation();

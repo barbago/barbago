@@ -6,7 +6,6 @@ import ErrorBoundary from 'react-native-error-boundary';
 import { useColorScheme, usePushNotifications } from './hooks';
 import { Navigation } from './navigation';
 import { ContextProvider } from './providers';
-import { userApi } from './store';
 
 export const App = () => {
   return (

@@ -24,12 +24,12 @@ import {
 
 import { Screen } from '../../components';
 import { useThemeColor } from '../../hooks';
-import { RootStackScreenProps } from '../../navigation/types';
+import { RootRoutes, RootStackScreenProps } from '../../navigation';
 import { data, SlideItem } from './welcome-config';
 
 export function WelcomePage({
   navigation,
-}: RootStackScreenProps<'Welcome'>) {
+}: RootStackScreenProps<RootRoutes.Welcome>) {
   const carouselRef = useRef<ICarouselInstance>(null);
   const progressValue = useSharedValue(0);
   const [index, setIndex] = useState(0);
@@ -67,7 +67,7 @@ export function WelcomePage({
   };
 
   const onDone = () => {
-    navigation.push('Login');
+    navigation.push(RootRoutes.Login);
   };
 
   const LeftButton = () => {

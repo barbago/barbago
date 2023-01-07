@@ -4,21 +4,24 @@ import React from 'react';
 
 import { HomePage, MessagePage, Search } from '../screens';
 import { SettingsNavigator } from '../screens/Settings';
-import { RootStackScreenProps, RootTabParamList } from './types';
+import { MainRoutes, RootRoutes } from './enums';
+import {
+  RootStackScreenProps,
+  RootTabParamList,
+} from './types';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export function TabNavigator({
   navigation,
-}: RootStackScreenProps<'Main'>) {
-
+}: RootStackScreenProps<RootRoutes.Main>) {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName={MainRoutes.Home}
       screenOptions={{ tabBarLabelPosition: 'below-icon' }}
     >
       <Tab.Screen
-        name="Home"
+        name={MainRoutes.Home}
         component={HomePage}
         options={{
           tabBarIcon: ({ color }) => (
@@ -31,7 +34,7 @@ export function TabNavigator({
         }}
       />
       <Tab.Screen
-        name="Search"
+        name={MainRoutes.Search}
         component={Search}
         options={{
           headerShown: false,
@@ -45,7 +48,7 @@ export function TabNavigator({
         }}
       />
       <Tab.Screen
-        name="Messages"
+        name={MainRoutes.Messages}
         component={MessagePage}
         options={{
           tabBarIcon: ({ color }) => (
@@ -58,7 +61,7 @@ export function TabNavigator({
         }}
       />
       <Tab.Screen
-        name="SettingsStack"
+        name={MainRoutes.SettingsStack}
         component={SettingsNavigator}
         options={{
           headerShown: false,

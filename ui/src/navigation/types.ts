@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootRoutes, MainRoutes, SettingsRoutes } from './enums';
 
 declare global {
   namespace ReactNavigation {
@@ -16,26 +17,36 @@ declare global {
   }
 }
 
+
 export type RootStackParamList = {
-  Barber: { id: string };
-  Chat: { id: string };
-  Login?: { next?: keyof RootStackParamList; [key: string]: any };
-  Signup: { next?: keyof RootStackParamList; [key: string]: any };
-  Welcome?: undefined;
-  Main: NavigatorScreenParams<RootTabParamList> | undefined;
-  NotFound: undefined;
+  [RootRoutes.Barber]: { id: string };
+  [RootRoutes.Chat]: { id: string };
+  [RootRoutes.Login]?: {
+    next?: keyof RootStackParamList;
+    [key: string]: any;
+  };
+  [RootRoutes.Signup]: {
+    next?: keyof RootStackParamList;
+    [key: string]: any;
+  };
+  [RootRoutes.Welcome]?: undefined;
+  [RootRoutes.Main]:
+    | NavigatorScreenParams<RootTabParamList>
+    | undefined;
+  [RootRoutes.NotFound]: undefined;
 };
 
 export type RootStackScreenProps<
   Screen extends keyof RootStackParamList,
 > = NativeStackScreenProps<RootStackParamList, Screen>;
 
+
 export type RootTabParamList = {
-  Home: undefined;
+  [MainRoutes.Home]: undefined;
   // Attach filter, sort, coords, etc params here
-  Search: undefined;
-  Messages: undefined;
-  SettingsStack: NavigatorScreenParams<SettingsStackParamList>;
+  [MainRoutes.Search]: undefined;
+  [MainRoutes.Messages]: undefined;
+  [MainRoutes.SettingsStack]: NavigatorScreenParams<SettingsStackParamList>;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
@@ -45,12 +56,12 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   >;
 
 export type SettingsStackParamList = {
-  Settings: undefined;
-  'Contact Us': undefined;
-  Account: undefined;
-  Notifications: undefined;
-  'Payment Details': undefined;
-  Preferences: undefined;
+  [SettingsRoutes.Settings]: undefined;
+  [SettingsRoutes.Contact]: undefined;
+  [SettingsRoutes.Account]: undefined;
+  [SettingsRoutes.Notifications]: undefined;
+  [SettingsRoutes.Payment]: undefined;
+  [SettingsRoutes.Preferences]: undefined;
 };
 
 export type SettingsStackScreenProps<

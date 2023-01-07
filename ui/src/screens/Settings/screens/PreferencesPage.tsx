@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { List, Switch, Title } from 'react-native-paper';
 import { Screen } from '../../../components';
-import { SettingsStackScreenProps } from '../../../navigation';
+import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation';
 
 export const PreferencesPage = ({
   navigation,
-}: SettingsStackScreenProps<'Preferences'>) => {
+}: SettingsStackScreenProps<SettingsRoutes.Preferences>) => {
   const [darkMode, setDarkMode] = useState(false);
 
   return (

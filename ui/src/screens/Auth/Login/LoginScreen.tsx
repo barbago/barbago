@@ -9,20 +9,21 @@ import {
   NoAuth,
   Screen,
 } from '../../../components';
-import { RootStackScreenProps } from '../../../navigation';
+import { RootRoutes, RootStackScreenProps } from '../../../navigation';
 import { userApi } from '../../../store';
 
 export const LoginScreen = ({
   navigation,
-  route: { params: { next = 'Main', ...rest } = {} },
-}: RootStackScreenProps<'Login'>) => {
-  const [getUser] = userApi.useLazyGetUserQuery();
+  route: { params: { next = RootRoutes.Main, ...rest } = {} },
+}: RootStackScreenProps<RootRoutes.Login>) => {
+  const [triggerIsNewUser] = userApi.useLazyIsNewUserQuery();
   const onAuthSuccess = async (user?: User) => {
-    if (!user) return navigation.replace(next!, { ...rest });
-    const { data: record } = await getUser();
-    if (record?.registered)         
-      return navigation.replace(next!, { ...rest });
-    return navigation.replace('Signup', { next, ...rest });
+    // if (!user) return navigation.replace(next!, { ...rest });
+    // if (!user) return navigation.pop();
+    const { data: isNewUser } = await triggerIsNewUser();
+    console.log(isNewUser);
+    if (!isNewUser) return navigation.replace(next!, { ...rest });
+    return navigation.replace(RootRoutes.Signup, { next, ...rest });
   };
   return (
     <Screen style={{ padding: 16 }}>

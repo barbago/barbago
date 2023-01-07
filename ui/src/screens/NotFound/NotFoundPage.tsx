@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Button } from 'react-native-paper';
 import { Screen, Text } from '../../components';
 
-import { RootStackScreenProps } from '../../navigation/types';
+import { RootRoutes, RootStackScreenProps } from '../../navigation';
 
 export function NotFoundScreen({
   navigation,
-}: RootStackScreenProps<'NotFound'>) {
+}: RootStackScreenProps<RootRoutes.NotFound>) {
   return (
     <Screen
       style={{
@@ -17,7 +17,7 @@ export function NotFoundScreen({
       <Text style={{ marginHorizontal: 'auto', marginBottom: 20 }}>
         Oops, There was an error! Try again later.
       </Text>
-      <Button onPress={() => navigation.replace('Main')}>
+      <Button onPress={() => navigation.replace(RootRoutes.Main)}>
         Go Home
       </Button>
       {navigation.canGoBack() && (

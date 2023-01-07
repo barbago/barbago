@@ -1,3 +1,4 @@
+import { SettingsRoutes } from '../../navigation/enums';
 import { SettingsStackParamList } from '../../navigation';
 
 export interface SettingSection {
@@ -20,7 +21,7 @@ export const settingsConfig: SettingSection[] = [
         title: 'Personal Information',
         leftIcon: 'account-circle',
         rightIcon: 'chevron-right',
-        navigate: 'Account',
+        navigate: SettingsRoutes.Account,
       },
       // {
       //   title: 'Notifications',
@@ -32,7 +33,7 @@ export const settingsConfig: SettingSection[] = [
         title: 'Payment Details',
         leftIcon: 'currency-usd',
         rightIcon: 'chevron-right',
-        navigate: 'Payment Details',
+        navigate: SettingsRoutes.Payment,
       },
       // {
       //   title: 'App Preferences',
@@ -49,7 +50,7 @@ export const settingsConfig: SettingSection[] = [
         title: 'Contact Us',
         leftIcon: 'message-alert',
         rightIcon: 'chevron-right',
-        navigate: 'Contact Us',
+        navigate: SettingsRoutes.Contact,
       },
       {
         title: 'Learn More',

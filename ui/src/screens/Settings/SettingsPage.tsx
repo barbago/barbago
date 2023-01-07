@@ -4,12 +4,12 @@ import { Button, List } from 'react-native-paper';
 
 import { AuthCard, Screen, SignInOutButton } from '../../components';
 import { env } from '../../config';
-import { SettingsStackScreenProps } from '../../navigation';
+import { SettingsRoutes, SettingsStackScreenProps } from '../../navigation';
 import { settingsConfig } from './settings-config';
 
 export const SettingsPage = ({
   navigation,
-}: SettingsStackScreenProps<'Settings'>) => {
+}: SettingsStackScreenProps<SettingsRoutes.Settings>) => {
   return (
     <Screen
       edges={['top']}

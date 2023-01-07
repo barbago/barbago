@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
-import { RootStackScreenProps } from '../../../navigation';
+import { RootRoutes, RootStackScreenProps } from '../../../navigation';
 import { useAuth } from '../../../providers';
 
 export const SignupScreen = ({
   navigation,
-  route: { params: { next = 'Main', ...rest } = {} },
-}: RootStackScreenProps<'Signup'>) => {
+  route: { params: { next = RootRoutes.Main, ...rest } = {} },
+}: RootStackScreenProps<RootRoutes.Signup>) => {
   const { user } = useAuth();
 
   return (
