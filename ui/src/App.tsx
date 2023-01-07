@@ -23,7 +23,5 @@ const AppContainer = () => {
   const colorScheme = useColorScheme();
   usePushNotifications();
 
-  userApi.useGetUserQuery();
-
   return <Navigation colorScheme={colorScheme} />;
 };
