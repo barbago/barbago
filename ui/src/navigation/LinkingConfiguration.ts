@@ -46,7 +46,7 @@ export const linking: LinkingOptions<RootStackParamList> = {
           },
         },
       },
-      NotFound: '*',
+      [RootRoutes.NotFound]: '*',
     },
   },
   async getInitialURL() {

@@ -2,19 +2,22 @@
 
 ## upcoming features
 
-- figure out login redirects
-
-- Login screen, allow barbers to sign up
-  - email provider, remove facebook for now
-- Find barber, barber detail, checkout flow
+- allow barbers to sign up
+  - add email provider, fix facebook
+- Find barber improvements, barber detail, checkout flow
+  - let barbers customize page, add services, etc
+  - let customers order barber
 - implement search with query parameters
   - make search take a +- lat/lon
   - display current location on web map
 - get notifications working on android
+- home page
+- add messaging for edge cases
 
 ## refactoring
 
 - remove map api keys from env, use prod env instead
+- remove google maps from ios
 - upgrade to functions v2 or relocate to cloud run
 
 ## future todo

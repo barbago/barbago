@@ -15,7 +15,7 @@ const signInFacebook = (access_token: string) => {
   return FacebookAuthProvider.credential(access_token);
 };
 
-export const FacebookAuth = ({ onAuthSuccess }: AuthButtonProps) => {
+export const FacebookAuth = ({ nextFunc }: AuthButtonProps) => {
   const { signIn } = useAuth();
   const scheme = useColorScheme();
   const primary = '#4267B2';
@@ -31,7 +31,7 @@ export const FacebookAuth = ({ onAuthSuccess }: AuthButtonProps) => {
     if (response?.type === 'success') {
       const { access_token } = response.params;
       const credential = signInFacebook(access_token);
-      signIn(credential).then(onAuthSuccess);
+      signIn(credential).then(nextFunc);
     }
   }, [response]);
 

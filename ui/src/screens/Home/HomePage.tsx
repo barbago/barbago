@@ -20,22 +20,10 @@ export const HomePage = ({
       <Button onPress={() => navigation.navigate(RootRoutes.Welcome)}>
         Welcome
       </Button>
-      <Button
-        onPress={() =>
-          navigation.navigate(RootRoutes.Login, {
-            next: RootRoutes.Main,
-          })
-        }
-      >
+      <Button onPress={() => navigation.navigate(RootRoutes.Login)}>
         Login
       </Button>
-      <Button
-        onPress={() =>
-          navigation.navigate(RootRoutes.Signup, {
-            next: RootRoutes.Main,
-          })
-        }
-      >
+      <Button onPress={() => navigation.navigate(RootRoutes.Signup)}>
         Signup
       </Button>
     </Screen>

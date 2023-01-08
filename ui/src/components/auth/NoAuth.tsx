@@ -3,7 +3,7 @@ import { Button } from 'react-native-paper';
 
 import { AuthButtonProps } from './AuthButton';
 
-export function NoAuth({ onAuthSuccess }: AuthButtonProps) {
+export function NoAuth({ nextFunc }: AuthButtonProps) {
   return (
     <Button
       uppercase={false}
@@ -24,7 +24,7 @@ export function NoAuth({ onAuthSuccess }: AuthButtonProps) {
         letterSpacing: 0,
         fontSize: 18,
       }}
-      onPress={() => onAuthSuccess?.()}
+      onPress={() => nextFunc?.()}
     >
       Continue without account
     </Button>

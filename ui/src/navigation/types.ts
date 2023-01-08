@@ -45,14 +45,8 @@ export const enum SettingsRoutes {
 export type RootStackParamList = {
   [RootRoutes.Barber]: { id: string };
   [RootRoutes.Chat]: { id: string };
-  [RootRoutes.Login]?: {
-    next?: keyof RootStackParamList;
-    [key: string]: any;
-  };
-  [RootRoutes.Signup]: {
-    next?: keyof RootStackParamList;
-    [key: string]: any;
-  };
+  [RootRoutes.Login]?: undefined;
+  [RootRoutes.Signup]: undefined;
   [RootRoutes.Welcome]?: undefined;
   [RootRoutes.Main]:
     | NavigatorScreenParams<RootTabParamList>
