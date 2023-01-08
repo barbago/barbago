@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import React from 'react';
 import { List, Text } from 'react-native-paper';
-import { MainRoutes, RootRoutes, RootTabScreenProps } from '../../navigation';
+import { MainRoutes, RootRoutes, RootTabScreenProps } from '../../navigation/types';
 import { messageApi } from '../../store';
 import { relativeTimeFromDates } from '../../utils';
 import { ChatListLoader } from './ChatListLoader';

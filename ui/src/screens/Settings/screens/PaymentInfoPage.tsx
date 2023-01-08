@@ -1,6 +1,6 @@
 import React from 'react';
 import { Screen, Text } from '../../../components';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation';
+import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation/types';
 
 export const PaymentInfoPage = ({
   navigation,

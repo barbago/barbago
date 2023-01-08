@@ -4,7 +4,7 @@ import { useForm, FieldValues } from 'react-hook-form';
 import { Button, Card, List, Menu } from 'react-native-paper';
 import { Screen, ValidTextInput } from '../../../components';
 import { useAuth } from '../../../providers';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation';
+import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation/types';
 
 export const ContactPage = ({
   navigation,

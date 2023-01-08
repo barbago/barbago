@@ -9,7 +9,10 @@ import {
   NoAuth,
   Screen,
 } from '../../../components';
-import { RootRoutes, RootStackScreenProps } from '../../../navigation';
+import {
+  RootRoutes,
+  RootStackScreenProps,
+} from '../../../navigation/types';
 import { userApi } from '../../../store';
 
 export const LoginScreen = ({

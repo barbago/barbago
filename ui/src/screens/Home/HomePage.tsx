@@ -5,7 +5,7 @@ import {
   MainRoutes,
   RootRoutes,
   RootTabScreenProps,
-} from '../../navigation';
+} from '../../navigation/types';
 import { GoogleAuth, NoAuth, SignOut } from '../../components';
 
 export const HomePage = ({

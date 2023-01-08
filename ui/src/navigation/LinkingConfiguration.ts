@@ -11,9 +11,13 @@ import {
   getLastNotificationResponseAsync,
   removeNotificationSubscription,
 } from 'expo-notifications';
-import { RootRoutes, MainRoutes, SettingsRoutes } from './enums';
 
-import { RootStackParamList } from './types';
+import {
+  MainRoutes,
+  RootRoutes,
+  RootStackParamList,
+  SettingsRoutes,
+} from './types';
 
 export const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL('/')],

@@ -4,8 +4,9 @@ import React from 'react';
 
 import { HomePage, MessagePage, Search } from '../screens';
 import { SettingsNavigator } from '../screens/Settings';
-import { MainRoutes, RootRoutes } from './enums';
 import {
+  MainRoutes,
+  RootRoutes,
   RootStackScreenProps,
   RootTabParamList,
 } from './types';

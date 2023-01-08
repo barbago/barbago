@@ -4,7 +4,7 @@ import { Button, List } from 'react-native-paper';
 
 import { AuthCard, Screen, SignInOutButton } from '../../components';
 import { env } from '../../config';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../navigation';
+import { SettingsRoutes, SettingsStackScreenProps } from '../../navigation/types';
 import { settingsConfig } from './settings-config';
 
 export const SettingsPage = ({

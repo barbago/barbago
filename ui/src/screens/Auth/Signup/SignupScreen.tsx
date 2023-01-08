@@ -1,7 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
-import { RootRoutes, RootStackScreenProps } from '../../../navigation';
+import {
+  RootRoutes,
+  RootStackScreenProps,
+} from '../../../navigation/types';
 import { useAuth } from '../../../providers';
 
 export const SignupScreen = ({

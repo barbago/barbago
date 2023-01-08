@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MainRoutes, RootTabScreenProps } from '../../navigation';
+import { MainRoutes, RootTabScreenProps } from '../../navigation/types';
 import { SearchPage } from './SearchPage';
 import { SearchService } from './services';
 

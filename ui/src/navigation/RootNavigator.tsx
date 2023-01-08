@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 
-import { RootStackParamList } from './types';
+import { useAuth } from '../providers';
 import {
   BarberPage,
   Chat,
@@ -10,9 +10,8 @@ import {
   SignupScreen,
   WelcomePage,
 } from '../screens';
+import { RootRoutes, RootStackParamList } from './types';
 import { TabNavigator } from './TabNavigator';
-import { useAuth } from '../providers';
-import { RootRoutes } from './enums';
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -39,12 +38,15 @@ export function RootNavigator() {
       />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name={RootRoutes.Login} component={LoginScreen} />
-        <Stack.Screen name={RootRoutes.Signup} component={SignupScreen} />
+        <Stack.Screen
+          name={RootRoutes.Signup}
+          component={SignupScreen}
+        />
       </Stack.Group>
       <Stack.Screen
         name={RootRoutes.NotFound}
         component={NotFoundScreen}
-        options={{ title: 'Oops!' }}
+        options={{ title: 'Sorry...' }}
       />
       <Stack.Screen name={RootRoutes.Barber} component={BarberPage} />
       <Stack.Screen name={RootRoutes.Chat} component={Chat} />

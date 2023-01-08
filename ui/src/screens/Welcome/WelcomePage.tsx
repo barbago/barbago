@@ -24,7 +24,10 @@ import {
 
 import { Screen } from '../../components';
 import { useThemeColor } from '../../hooks';
-import { RootRoutes, RootStackScreenProps } from '../../navigation';
+import {
+  RootRoutes,
+  RootStackScreenProps,
+} from '../../navigation/types';
 import { data, SlideItem } from './welcome-config';
 
 export function WelcomePage({

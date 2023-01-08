@@ -1,5 +1,4 @@
-import { SettingsRoutes } from '../../navigation/enums';
-import { SettingsStackParamList } from '../../navigation';
+import { SettingsRoutes, SettingsStackParamList } from '../../navigation/types';
 
 export interface SettingSection {
   title: string;

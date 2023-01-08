@@ -6,7 +6,7 @@ import {
   Screen,
   ValidTextInput,
 } from '../../../components';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation';
+import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation/types';
 import { userApi } from '../../../store';
 
 // you can change firebase auth user profile information
