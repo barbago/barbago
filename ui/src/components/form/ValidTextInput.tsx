@@ -1,17 +1,21 @@
 import {
   useController,
-  useForm,
   Control,
   FieldValues,
   RegisterOptions,
 } from 'react-hook-form';
-import { HelperText, TextInput, TextInputProps } from 'react-native-paper';
+import {
+  HelperText,
+  TextInput,
+  TextInputProps,
+} from 'react-native-paper';
 
 type ControllerProps = {
   name: string;
   control: Control<FieldValues>;
   rules?: RegisterOptions;
   defaultValue?: string;
+  helperText?: string;
 };
 
 type ValidInputProps = ControllerProps & Omit<TextInputProps, 'theme'>;
@@ -21,6 +25,7 @@ export const ValidTextInput = ({
   control,
   rules,
   defaultValue = '',
+  helperText = '',
   ...inputProps
 }: ValidInputProps) => {
   const { field, fieldState } = useController({
@@ -38,8 +43,8 @@ export const ValidTextInput = ({
         onBlur={field.onBlur}
         {...inputProps}
       />
-      <HelperText type="error" visible={!!fieldState.error}>
-        {fieldState.error?.message}
+      <HelperText type={fieldState.error ? 'error' : 'info'}>
+        {fieldState.error?.message || helperText || ' '}
       </HelperText>
     </>
   );
