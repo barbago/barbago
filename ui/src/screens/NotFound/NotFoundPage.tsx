@@ -2,10 +2,7 @@ import * as React from 'react';
 import { Button } from 'react-native-paper';
 import { Screen, Text } from '../../components';
 
-import {
-  RootRoutes,
-  RootStackScreenProps,
-} from '../../navigation/types';
+import { RootRoutes, RootStackScreenProps } from '../../navigation';
 
 export function NotFoundScreen({
   navigation,

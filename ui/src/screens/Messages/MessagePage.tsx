@@ -2,7 +2,7 @@ import { requestPermissionsAsync } from 'expo-notifications';
 import React, { useEffect } from 'react';
 
 import { Screen } from '../../components';
-import { MainRoutes, RootTabScreenProps } from '../../navigation/types';
+import { MainRoutes, RootTabScreenProps } from '../../navigation';
 import { useAuth } from '../../providers';
 import { isMobile } from '../../utils';
 import { ChatList } from './ChatList';

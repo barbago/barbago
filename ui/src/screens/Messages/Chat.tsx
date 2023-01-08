@@ -17,7 +17,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemeColor } from '../../hooks';
-import { RootRoutes, RootStackScreenProps } from '../../navigation/types';
+import { RootRoutes, RootStackScreenProps } from '../../navigation';
 import { useAuth } from '../../providers';
 import { messageApi } from '../../store';
 import { isWeb } from '../../utils';

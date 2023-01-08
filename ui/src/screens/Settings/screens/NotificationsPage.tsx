@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Checkbox, DataTable, List, Switch } from 'react-native-paper';
 import { Screen } from '../../../components';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation/types';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../../navigation';
 
 export const NotificationsPage = ({
   navigation,

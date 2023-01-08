@@ -4,7 +4,7 @@ import React from 'react';
 import ErrorBoundary from 'react-native-error-boundary';
 
 import { useColorScheme, usePushNotifications } from './hooks';
-import { Navigation } from './navigation';
+import { Navigation } from './navigation/Navigation';
 import { ContextProvider } from './providers';
 
 export const App = () => {

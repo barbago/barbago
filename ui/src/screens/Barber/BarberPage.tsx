@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import { Screen } from '../../components';
 
-import {
-  RootRoutes,
-  RootStackScreenProps,
-} from '../../navigation/types';
+import { RootRoutes, RootStackScreenProps } from '../../navigation';
 import { Toast } from '../../providers';
 import { vendorApi } from '../../store';
 import { ProfileHeader } from './components';

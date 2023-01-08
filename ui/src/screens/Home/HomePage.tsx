@@ -5,7 +5,7 @@ import {
   MainRoutes,
   RootRoutes,
   RootTabScreenProps,
-} from '../../navigation/types';
+} from '../../navigation';
 import { GoogleAuth, NoAuth, SignOut } from '../../components';
 
 export const HomePage = ({
@@ -28,6 +28,15 @@ export const HomePage = ({
         }
       >
         Login
+      </Button>
+      <Button
+        onPress={() =>
+          navigation.navigate(RootRoutes.Signup, {
+            next: RootRoutes.Main,
+          })
+        }
+      >
+        Signup
       </Button>
     </Screen>
   );

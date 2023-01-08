@@ -5,7 +5,7 @@ import {
   RootTabScreenProps,
   SettingsRoutes,
   SettingsStackParamList,
-} from '../../navigation/types';
+} from '../../navigation';
 import { useAuth } from '../../providers';
 import {
   AccountInfoPage,

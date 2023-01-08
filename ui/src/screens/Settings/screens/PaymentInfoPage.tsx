@@ -1,6 +1,9 @@
 import React from 'react';
 import { Screen, Text } from '../../../components';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation/types';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../../navigation';
 
 export const PaymentInfoPage = ({
   navigation,

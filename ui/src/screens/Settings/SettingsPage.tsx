@@ -4,7 +4,10 @@ import { Button, List } from 'react-native-paper';
 
 import { AuthCard, Screen, SignInOutButton } from '../../components';
 import { env } from '../../config';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../navigation/types';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../navigation';
 import { settingsConfig } from './settings-config';
 
 export const SettingsPage = ({
@@ -44,7 +47,12 @@ export const SettingsPage = ({
         </List.Section>
       ))}
       <SignInOutButton />
-      <Button onPress={() => alert(JSON.stringify(env))} style={{ 'alignSelf': 'flex-start'}}>Debug</Button>
+      <Button
+        onPress={() => alert(JSON.stringify(env))}
+        style={{ alignSelf: 'flex-start' }}
+      >
+        Debug
+      </Button>
     </Screen>
   );
 };

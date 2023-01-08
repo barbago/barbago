@@ -10,7 +10,7 @@ import {
   MainRoutes,
   RootRoutes,
   RootTabScreenProps,
-} from '../../../navigation/types';
+} from '../../../navigation';
 import { vendorApi } from '../../../store';
 import { Coordinates, VendorResponse } from '../../../types';
 

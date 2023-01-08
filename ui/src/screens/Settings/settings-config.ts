@@ -1,4 +1,7 @@
-import { SettingsRoutes, SettingsStackParamList } from '../../navigation/types';
+import {
+  SettingsRoutes,
+  SettingsStackParamList,
+} from '../../navigation';
 
 export interface SettingSection {
   title: string;
