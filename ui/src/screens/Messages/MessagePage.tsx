@@ -8,6 +8,7 @@ import {
   RootTabScreenProps,
 } from '../../navigation';
 import { useAuth } from '../../providers';
+import { messageApi } from '../../store';
 import { isMobile } from '../../utils';
 import { ChatList } from './ChatList';
 
@@ -23,7 +24,7 @@ export const MessagePage = ({
   }, []);
 
   return (
-    <Screen scrolling>
+    <Screen scrolling needsAuth>
       {user ? (
         <ChatList user={user} navigation={navigation} />
       ) : (

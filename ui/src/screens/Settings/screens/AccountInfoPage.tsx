@@ -6,7 +6,10 @@ import {
   Screen,
   ValidTextInput,
 } from '../../../components';
-import { SettingsRoutes, SettingsStackScreenProps } from '../../../navigation/types';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../../navigation';
 import { userApi } from '../../../store';
 
 // you can change firebase auth user profile information
@@ -26,7 +29,7 @@ export const AccountInfoPage = ({
   if (isLoading) return <Text>Loading Account Data...</Text>;
 
   return (
-    <Screen scrolling>
+    <Screen scrolling needsAuth>
       <Card>
         <Card.Title
           title="Public Information"
