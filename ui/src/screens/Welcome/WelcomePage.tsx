@@ -67,6 +67,7 @@ export function WelcomePage({
   };
 
   const onDone = () => {
+    navigation.navigate(RootRoutes.Main);
     navigation.push(RootRoutes.Login);
   };
 
