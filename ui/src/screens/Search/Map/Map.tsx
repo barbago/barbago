@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import MapView, {
   EdgePadding,
   Marker,
+  PROVIDER_DEFAULT,
   PROVIDER_GOOGLE,
   Region,
 } from 'react-native-maps';
@@ -85,7 +86,7 @@ export const Map = () => {
   return (
     <ClusterMapView
       mapType="standard"
-      provider={PROVIDER_GOOGLE}
+      provider={isIOS() ? PROVIDER_DEFAULT : PROVIDER_GOOGLE}
       initialRegion={initialRegion}
       moveOnMarkerPress={false}
       showsUserLocation={true}

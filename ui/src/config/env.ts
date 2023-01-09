@@ -19,8 +19,6 @@ export const env = {
     iosClientId: process.env.GOOGLE_IOS_CLIENT_ID ?? '',
     androidClientId: process.env.GOOGLE_ANDROID_CLIENT_ID ?? '',
     geocodingKey: process.env.GOOGLE_GEOCODING_API_KEY ?? '',
-    iosMapsKey: process.env.GOOGLE_IOS_MAPS_API_KEY ?? '',
-    androidMapsKey: process.env.GOOGLE_ANDROID_MAPS_API_KEY ?? '',
   },
 };
 

@@ -26,10 +26,7 @@
     "ios": {
       "bundleIdentifier": "app.barbago.mobile",
       "supportsTablet": true,
-      "usesAppleSignIn": true,
-      "config": {
-        "googleMapsApiKey": "AIzaSyCkAw-zFAoRKhAvdB79ZJLzRZsNRUnqxbU"
-      }
+      "usesAppleSignIn": true
     },
     "android": {
       "package": "app.barbago.mobile",
@@ -39,7 +36,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyDFfOOF2bglIb79qcPFQgd8Rzmo4mwLKF4"
+          "apiKey": "AIzaSyDl8VhDREDCUVo0doL91pgiqGlbK_UgtyE"
         }
       }
     },
