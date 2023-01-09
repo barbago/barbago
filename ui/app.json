@@ -22,7 +22,7 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
-    "plugins": ["expo-apple-authentication", "expo-notifications"],
+    "plugins": ["expo-apple-authentication", "expo-notifications", "expo-image-picker"],
     "ios": {
       "bundleIdentifier": "app.barbago.mobile",
       "supportsTablet": true,
