@@ -10,12 +10,12 @@ service cloud.firestore {
         allow read, write: if uid() in get(/databases/$(database)/documents/chats/$(chatId)).data.members;
       }
     }
-    match /users/{uid} {
-      allow read, write: if auth() && uid() == resource.id;
+    match /users/{userId} {
+      allow read, write: if auth() && uid() == userId;
     }
-    match /vendors/{uid} {
+    match /vendors/{userId} {
       allow read: if true;
-      allow write: if auth() && uid() == resource.id;
+      allow write: if auth() && uid() == userId;
     }
 
   }

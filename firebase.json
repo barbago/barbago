@@ -7,13 +7,17 @@
   },
   "functions": {
     "source": "functions",
-    "predeploy": ["npm run build --prefix functions"]
+    "predeploy": [
+      "npm run build --prefix functions"
+    ]
   },
   "hosting": [
     {
       "target": "app",
       "public": "ui/web-build",
-      "predeploy": ["npm run build --prefix ui"],
+      "predeploy": [
+        "npm run build --prefix ui"
+      ],
       "rewrites": [
         {
           "source": "**",
@@ -25,9 +29,14 @@
       "target": "api",
       "public": "functions/docs",
       "cleanUrls": true,
-      "ignore": ["**/.*", "**/node_modules/**"],
+      "ignore": [
+        "**/.*",
+        "**/node_modules/**"
+      ],
       "trailingSlash": false,
-      "predeploy": ["npm run docs --prefix functions"],
+      "predeploy": [
+        "npm run docs --prefix functions"
+      ],
       "redirects": [
         {
           "source": "/",
@@ -54,5 +63,8 @@
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "firebase-storage.rules"
   }
 }
