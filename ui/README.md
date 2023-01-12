@@ -11,6 +11,10 @@
   - make search take a +- lat/lon
   - display current location on web map
 - get notifications working on android
+  - fix certificates for multiple environments
+  - https://docs.expo.dev/app-signing/app-credentials/
+  - need sha-1 fingerprint for oauth client id in stage, prod
+  - can i generate multiple fingerprints? one for each env?
 - home page
 - add messaging for edge cases
 

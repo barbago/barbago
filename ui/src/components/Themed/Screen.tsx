@@ -47,7 +47,7 @@ export function Screen({
 
   useEffect(() => {
     if (needsAuth && !auth.currentUser) {
-      navigation.navigate(RootRoutes.Login);
+      navigation.isFocused() && navigation.navigate(RootRoutes.Login);
     }
   }, [needsAuth, auth.currentUser]);
 

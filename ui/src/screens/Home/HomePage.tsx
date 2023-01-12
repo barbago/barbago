@@ -6,7 +6,7 @@ import {
   RootRoutes,
   RootTabScreenProps,
 } from '../../navigation';
-import { GoogleAuth, NoAuth, SignOut } from '../../components';
+import { SignOut } from '../../components';
 
 export const HomePage = ({
   navigation,
@@ -14,8 +14,6 @@ export const HomePage = ({
   return (
     <Screen scrolling>
       <Text>Home Page</Text>
-      <GoogleAuth />
-      <NoAuth />
       <SignOut />
       <Button onPress={() => navigation.navigate(RootRoutes.Welcome)}>
         Welcome
