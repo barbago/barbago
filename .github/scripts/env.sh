@@ -2,3 +2,4 @@
 # Save the result of `cat ui/.env | base64 -w 0` into GitHub Secret ENV_FILE
 
 echo $ENV_FILE | base64 --decode > ui/.env
+echo $GOOGLE_SERVICES | base64 --decode > ui/google-services.json
