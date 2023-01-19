@@ -35,6 +35,11 @@ export const AccountInfoPage = ({
           title="Public Information"
           subtitle="This data is visible to others in the app"
         />
+        <AvatarPicker
+          name="photo"
+          control={control}
+          defaultValue={user?.photo}
+        />
         <Card.Content>
           <ValidTextInput
             label="Full Name"
@@ -49,8 +54,6 @@ export const AccountInfoPage = ({
               },
             }}
           />
-          <AvatarPicker />
-          {/* Todo: Find a way to connect this to form */}
         </Card.Content>
 
         <Card.Title

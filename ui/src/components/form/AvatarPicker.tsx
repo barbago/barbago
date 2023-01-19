@@ -111,7 +111,10 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   container: {
-    marginRight: 8,
+    position: 'relative',
+    marginRight: 10,
+    width: size,
+    height: size,
   },
   icon: {
     position: 'absolute',
