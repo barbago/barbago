@@ -1,24 +1,14 @@
-import {
-  useController,
-  Control,
-  FieldValues,
-  RegisterOptions,
-} from 'react-hook-form';
+import { useController, UseControllerProps } from 'react-hook-form';
 import {
   HelperText,
   TextInput,
   TextInputProps,
 } from 'react-native-paper';
 
-type ControllerProps = {
-  name: string;
-  control: Control<FieldValues>;
-  rules?: RegisterOptions;
-  defaultValue?: string;
+type ValidInputProps = {
   helperText?: string;
-};
-
-type ValidInputProps = ControllerProps & Omit<TextInputProps, 'theme'>;
+} & UseControllerProps &
+  Omit<TextInputProps, 'theme'>;
 
 export const ValidTextInput = ({
   name,

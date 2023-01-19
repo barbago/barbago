@@ -1,6 +1,5 @@
 import { uuidv4 } from '@firebase/util';
 import {
-  getDownloadURL,
   ref,
   StorageError,
   uploadBytesResumable,
@@ -21,13 +20,17 @@ export interface UseUploadOptions {
 }
 
 export interface UseUploadReturn {
-  uploadUri: (uri: string, refUrl?: string) => Promise<string>;
-  cancelUpload: () => boolean;
-  pauseUpload: () => boolean;
-  resumeUpload: () => boolean;
+  /** Uploads a file to Firebase Storage */
+  uploadUri: (uri: string, refUrl?: string) => Promise<UploadTask>;
+  /** uploadTask, can be used to cancel, pause, resume upload */
+  uploadTask?: UploadTask | null;
+  /** Whether file is being uploaded */
   isUploading: boolean;
+  /** Firebase StorageError or null */
   error: StorageError | null;
+  /** Percent of bytes transferred, from 0 to 1 */
   progress: number;
+  /** Whether upload has been completed */
   isComplete: boolean;
 }
 
@@ -46,18 +49,11 @@ export function useUpload({
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [uploadTask, setUploadTask] = useState<UploadTask | null>(null);
 
-  const cancelUpload = () => {
-    return (isUploading && uploadTask?.cancel()) ?? false;
-  };
-  const pauseUpload = () => {
-    return (isUploading && uploadTask?.pause()) ?? false;
-  };
-  const resumeUpload = () => {
-    return (isUploading && uploadTask?.resume()) ?? false;
-  };
-
   // https://github.com/firebase/firebase-js-sdk/issues/5848#issuecomment-1277499602
-  const uploadUri = async (uri: string, refUrl = uuidv4()) => {
+  const uploadUri = async (
+    uri: string,
+    refUrl = uuidv4(),
+  ): Promise<UploadTask> => {
     const blob = await (await fetch(uri)).blob();
     const fileRef = ref(storage, refUrl);
     setIsUploading(true);
@@ -65,7 +61,6 @@ export function useUpload({
     setError(null);
     setProgress(0);
     onStart?.();
-    const downloadUrl = await getDownloadURL(fileRef);
     const uploadTask = uploadBytesResumable(fileRef, blob);
     setUploadTask(uploadTask);
     uploadTask.on(
@@ -87,14 +82,12 @@ export function useUpload({
         onComplete?.();
       },
     );
-    return downloadUrl;
+    return uploadTask;
   };
 
   return {
     uploadUri,
-    cancelUpload,
-    pauseUpload,
-    resumeUpload,
+    uploadTask,
     isUploading,
     progress,
     error,
