@@ -5,8 +5,12 @@ service firebase.storage {
       allow read, write: if false;
     }
     match /users/{userId}/{filePath=**} {
-    	allow read: if true;
+      allow read: if true;
       allow write: if auth() && uid() == userId;
+    }
+    match /shared/{filePath=**} {
+      allow read: if true;
+      allow write: if false;
     }
   }
 }

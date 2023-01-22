@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "scripts": {
     "postinstall": "patch-package",
-    "start": "expo start --dev-client --clear --web",
+    "start": "expo start --dev-client",
     "publish": "eas update",
     "android": "expo start --android",
     "ios": "expo start --ios",
