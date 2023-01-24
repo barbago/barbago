@@ -7,7 +7,7 @@ export interface UserResponse {
   email?: string;
   phone?: string;
   photo?: string;
-  pushTokens?: string[];
+  pushToken?: string;
   registered?: boolean;
 }
 

@@ -13,6 +13,7 @@ import { authReducer } from './auth';
 import { listenerMiddleware } from './listenerMiddleware';
 import { searchReducer } from './search';
 import { settingsReducer } from './settings';
+import './effects';
 
 const reducer = {
   auth: authReducer,

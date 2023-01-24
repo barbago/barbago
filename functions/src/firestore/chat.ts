@@ -38,7 +38,7 @@ export const messageCreated = firestore
     const messages: ExpoPushMessage[] = members
       .filter(({ uid }) => uid !== senderId)
       .map((recipient) => ({
-        to: recipient.pushTokens,
+        to: recipient.pushToken,
         body: text,
         title: sender.name,
         sound: 'default',

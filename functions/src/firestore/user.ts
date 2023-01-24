@@ -6,8 +6,8 @@ export const userChanged = firestore
   .document('users/{uid}')
   .onWrite(async ({ after }, context) => {
     if (context.eventType === 'google.firestore.document.create')
-    // if the document has just been created,
-    // there is nothing to update
+      // if the document has just been created,
+      // there is nothing to update
       return;
 
     const newData = after.data();
@@ -25,7 +25,9 @@ export const userChanged = firestore
         phoneNumber: newData?.phone,
         email: newData?.email,
       });
-    } catch (_) {}
+    } catch (err) {
+      console.warn('error while trying to update auth user: ', err);
+    }
 
     const batch = db().batch();
 
