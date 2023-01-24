@@ -1,5 +1,10 @@
 # todo
 
+## big ticket items
+
+- barber side
+- checkout
+
 ## upcoming features
 
 - allow barbers to sign up
@@ -13,7 +18,7 @@
 - home page
 - add messaging for edge cases
 
-## refactoring
+## todo in the future
 
 - organize google api keys / clientids for multiple environments???
   - fix certificates for multiple environments
@@ -25,8 +30,6 @@
 - delete old profile pictures periodically or whenever updated
   - https://medium.com/google-developer-experts/automatically-delete-your-firebase-storage-files-from-firestore-with-cloud-functions-for-firebase-36542c39ba0d
   - whenever a new pushtoken added, remove it from any other users
-
-## future todo
-
+- add failure handling logic in various places
 - update environment variables from local machine with a script https://docs.github.com/en/rest/actions/secrets?apiVersion=2022-11-28#create-or-update-a-repository-secret
 - refactor messages to use realtime database
