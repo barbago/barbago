@@ -4,11 +4,14 @@ import { useForm, FieldValues } from 'react-hook-form';
 import { Button, Card, List, Menu } from 'react-native-paper';
 import { Screen, ValidTextInput } from '../../../components';
 import { useAuth } from '../../../providers';
-import { SettingsStackScreenProps } from '../../../navigation';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../../navigation';
 
 export const ContactPage = ({
   navigation,
-}: SettingsStackScreenProps<'Contact Us'>) => {
+}: SettingsStackScreenProps<SettingsRoutes.Contact>) => {
   const { user } = useAuth();
   const { control, handleSubmit } = useForm();
 

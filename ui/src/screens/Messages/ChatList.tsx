@@ -1,11 +1,15 @@
 import { User } from 'firebase/auth';
 import React from 'react';
 import { List, Text } from 'react-native-paper';
-import { RootTabScreenProps } from '../../navigation';
+import { ActionMessage } from '../../components';
+import {
+  MainRoutes,
+  RootRoutes,
+  RootTabScreenProps,
+} from '../../navigation';
 import { messageApi } from '../../store';
 import { relativeTimeFromDates } from '../../utils';
 import { ChatListLoader } from './ChatListLoader';
-import { NoMessages } from './NoMessages';
 import { getChatName } from './utils';
 
 const right = (date?: string) =>
@@ -15,13 +19,18 @@ const right = (date?: string) =>
 
 export interface ChatListProps {
   user: User;
-  navigation: RootTabScreenProps<'Messages'>['navigation'];
+  navigation: RootTabScreenProps<MainRoutes.Messages>['navigation'];
 }
 
 export const ChatList = ({ user, navigation }: ChatListProps) => {
   const { data: chats, isLoading } = messageApi.useGetChatsQuery(
     user.uid,
   );
+
+  const findBarbers = () =>
+    navigation.navigate(RootRoutes.Main, {
+      screen: MainRoutes.Search,
+    });
 
   return (
     <>
@@ -34,14 +43,19 @@ export const ChatList = ({ user, navigation }: ChatListProps) => {
               description={chat.lastMessage}
               right={right(chat?.date)}
               onPress={() =>
-                navigation.push('Chat', {
+                navigation.push(RootRoutes.Chat, {
                   id: chat.id,
                 })
               }
             />
           ))
         ) : (
-          <NoMessages />
+          <ActionMessage
+            message="You have no messages! Find a barber to start talking now!"
+            actions={[
+              { label: 'Search for Barbers', handler: findBarbers },
+            ]}
+          />
         )
       ) : (
         <ChatListLoader />

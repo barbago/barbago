@@ -68,7 +68,7 @@ export const FilterControl = () => {
           autoComplete="street-address"
           textContentType="addressCity"
           selectTextOnFocus
-          left={<TextInput.Icon name="map-marker" />}
+          left={<TextInput.Icon icon="map-marker" />}
           style={styles.input}
         />
         <Button>Filters</Button>

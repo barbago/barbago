@@ -14,7 +14,7 @@ import { useAuth } from '../../providers';
 import { useColorScheme } from '../../hooks';
 import { AuthButtonProps } from './AuthButton';
 
-export const AppleAuth = ({ onAuthSuccess }: AuthButtonProps) => {
+export const AppleAuth = ({ nextFunc }: AuthButtonProps) => {
   const { signIn } = useAuth();
   const scheme = useColorScheme();
 
@@ -47,7 +47,7 @@ export const AppleAuth = ({ onAuthSuccess }: AuthButtonProps) => {
       idToken: identityToken!,
       rawNonce: nonce,
     });
-    await signIn(oAuthCredential).then(onAuthSuccess);
+    await signIn(oAuthCredential).then(nextFunc);
   };
 
   const [isAppleReady, setIsAppleReady] = useState(false);

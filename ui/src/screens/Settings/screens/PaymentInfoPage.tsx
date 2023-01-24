@@ -1,10 +1,13 @@
 import React from 'react';
 import { Screen, Text } from '../../../components';
-import { SettingsStackScreenProps } from '../../../navigation';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../../navigation';
 
 export const PaymentInfoPage = ({
   navigation,
-}: SettingsStackScreenProps<'Payment Details'>) => {
+}: SettingsStackScreenProps<SettingsRoutes.Payment>) => {
   return (
     <Screen scrolling>
       <Text>Payment Info</Text>

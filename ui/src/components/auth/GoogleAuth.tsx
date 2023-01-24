@@ -15,7 +15,7 @@ const signInGoogle = (id_token: string) => {
 };
 
 // https://docs.expo.dev/guides/authentication/#google
-export function GoogleAuth({ onAuthSuccess }: AuthButtonProps) {
+export function GoogleAuth({ nextFunc }: AuthButtonProps) {
   const { signIn } = useAuth();
   const scheme = useColorScheme();
   const primary = '#de5246';
@@ -23,14 +23,16 @@ export function GoogleAuth({ onAuthSuccess }: AuthButtonProps) {
   const isDarkMode = useMemo(() => scheme === 'dark', [scheme]);
 
   const [request, response, promptAsync] = useIdTokenAuthRequest({
-    clientId: googleConfig.clientId,
+    clientId: googleConfig.webClientId,
+    iosClientId: googleConfig.iosClientId,
+    androidClientId: googleConfig.androidClientId,
   });
 
   useEffect(() => {
     if (response?.type === 'success') {
       const { id_token } = response.params;
       const credential = signInGoogle(id_token);
-      signIn(credential).then(onAuthSuccess);
+      signIn(credential).then(nextFunc);
     }
   }, [response]);
 

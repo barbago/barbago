@@ -1,11 +1,35 @@
 # todo
 
-- setup a logging platform like sentry for debugging
-  - latest sentry is broken, try older version
-- decide what features are next
-  - Login screen, allow barbers to sign up
-  - Find barber, barber detail, checkout flow
+## big ticket items
 
-# future todo
+- barber side
+- checkout
 
+## upcoming features
+
+- allow barbers to sign up
+  - add email provider, fix facebook
+- Find barber improvements, barber detail, checkout flow
+  - let barbers customize page, add services, etc
+  - let customers order barber
+- implement search with query parameters
+  - make search take a +- lat/lon
+  - display current location on web map
+- home page
+- add messaging for edge cases
+
+## todo in the future
+
+- organize google api keys / clientids for multiple environments???
+  - fix certificates for multiple environments
+  - https://docs.expo.dev/app-signing/app-credentials/
+  - need sha-1 fingerprint for oauth client id in stage, prod
+  - can i generate multiple fingerprints? one for each env?
+  - SOLUTION: https://docs.expo.dev/build-reference/variants/
+- relocate api to cloud run
+- delete old profile pictures periodically or whenever updated
+  - https://medium.com/google-developer-experts/automatically-delete-your-firebase-storage-files-from-firestore-with-cloud-functions-for-firebase-36542c39ba0d
+  - whenever a new pushtoken added, remove it from any other users
+- add failure handling logic in various places
 - update environment variables from local machine with a script https://docs.github.com/en/rest/actions/secrets?apiVersion=2022-11-28#create-or-update-a-repository-secret
+- refactor messages to use realtime database

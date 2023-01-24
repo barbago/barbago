@@ -16,26 +16,55 @@ declare global {
   }
 }
 
+export const enum RootRoutes {
+  Barber = 'Barber',
+  Chat = 'Chat',
+  Login = 'Login',
+  Signup = 'Signup',
+  Welcome = 'Welcome',
+  Main = 'Main',
+  NotFound = 'NotFound',
+}
+
+export const enum MainRoutes {
+  Home = 'Home',
+  Search = 'Search',
+  Messages = 'Messages',
+  SettingsStack = 'SettingsStack',
+}
+
+export const enum SettingsRoutes {
+  Settings = 'Settings',
+  Contact = 'Contact Us',
+  Account = 'Account',
+  Notifications = 'Notifications',
+  Payment = 'Payment Details',
+  Preferences = 'Preferences',
+}
+
 export type RootStackParamList = {
-  Barber: { id: string };
-  Chat: { id: string };
-  Login?: { next?: keyof RootStackParamList; [key: string]: any };
-  Signup: { next?: keyof RootStackParamList; [key: string]: any };
-  Welcome?: undefined;
-  Main: NavigatorScreenParams<RootTabParamList> | undefined;
-  NotFound: undefined;
+  [RootRoutes.Barber]: { id: string };
+  [RootRoutes.Chat]: { id: string };
+  [RootRoutes.Login]?: undefined;
+  [RootRoutes.Signup]: undefined;
+  [RootRoutes.Welcome]?: undefined;
+  [RootRoutes.Main]:
+    | NavigatorScreenParams<RootTabParamList>
+    | undefined;
+  [RootRoutes.NotFound]: undefined;
 };
 
 export type RootStackScreenProps<
   Screen extends keyof RootStackParamList,
 > = NativeStackScreenProps<RootStackParamList, Screen>;
 
+
 export type RootTabParamList = {
-  Home: undefined;
+  [MainRoutes.Home]: undefined;
   // Attach filter, sort, coords, etc params here
-  Search: undefined;
-  Messages: undefined;
-  SettingsStack: NavigatorScreenParams<SettingsStackParamList>;
+  [MainRoutes.Search]: undefined;
+  [MainRoutes.Messages]: undefined;
+  [MainRoutes.SettingsStack]: NavigatorScreenParams<SettingsStackParamList>;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
@@ -45,12 +74,12 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   >;
 
 export type SettingsStackParamList = {
-  Settings: undefined;
-  'Contact Us': undefined;
-  Account: undefined;
-  Notifications: undefined;
-  'Payment Details': undefined;
-  Preferences: undefined;
+  [SettingsRoutes.Settings]: undefined;
+  [SettingsRoutes.Contact]: undefined;
+  [SettingsRoutes.Account]: undefined;
+  [SettingsRoutes.Notifications]: undefined;
+  [SettingsRoutes.Payment]: undefined;
+  [SettingsRoutes.Preferences]: undefined;
 };
 
 export type SettingsStackScreenProps<

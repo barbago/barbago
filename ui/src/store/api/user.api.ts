@@ -1,3 +1,4 @@
+import { auth } from '../../config';
 import { api } from './base.api';
 
 export interface UserResponse {
@@ -6,7 +7,7 @@ export interface UserResponse {
   email?: string;
   phone?: string;
   photo?: string;
-  pushTokens?: string[];
+  pushToken?: string;
   registered?: boolean;
 }
 
@@ -17,6 +18,18 @@ export const userApi = api.injectEndpoints({
     getUser: builder.query<UserResponse, void>({
       query: () => ({ url: userPath }),
       providesTags: (res) => [{ type: 'User', id: res?.uid }],
+    }),
+    isNewUser: builder.query<boolean, void>({
+      queryFn: () => {
+        const user = auth.currentUser;
+        if (!user)
+          return { error: { status: 401, data: 'Unauthorized' } };
+        const { metadata } = user;
+        if (!metadata) return { data: true };
+        // https://stackoverflow.com/questions/39550149/
+        const { lastSignInTime, creationTime } = metadata;
+        return { data: creationTime === lastSignInTime };
+      },
     }),
     updateUser: builder.mutation<
       UserResponse,

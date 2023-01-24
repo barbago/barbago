@@ -3,6 +3,7 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
+export * from './ActionMessage';
 export * from './Box';
 export * from './Loader';
 export * from './Modal';

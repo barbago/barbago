@@ -71,6 +71,7 @@ typings/
 # Environment and configuration variables
 .env*
 !.env.example
+google-services*.json
 
 # firebase
 .firebase/

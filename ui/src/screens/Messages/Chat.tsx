@@ -17,7 +17,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemeColor } from '../../hooks';
-import { RootStackScreenProps } from '../../navigation';
+import { RootRoutes, RootStackScreenProps } from '../../navigation';
 import { useAuth } from '../../providers';
 import { messageApi } from '../../store';
 import { isWeb } from '../../utils';
@@ -25,7 +25,7 @@ import { ChatListLoader } from './ChatListLoader';
 import { getChatName, getUsersFromChat } from './utils';
 
 export const Chat = memo(
-  ({ navigation, route }: RootStackScreenProps<'Chat'>) => {
+  ({ navigation, route }: RootStackScreenProps<RootRoutes.Chat>) => {
     const { id: chatId } = route.params;
     const { user } = useAuth();
     const [page, setPage] = useState(1);
@@ -74,7 +74,7 @@ export const Chat = memo(
     }, [chat]);
 
     useEffect(() => {
-      isError && navigation.replace('NotFound');
+      isError && navigation.replace(RootRoutes.NotFound);
     }, [isError]);
 
     const textColor = useThemeColor({}, 'text');

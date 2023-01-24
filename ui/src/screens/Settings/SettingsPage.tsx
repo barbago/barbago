@@ -4,12 +4,15 @@ import { Button, List } from 'react-native-paper';
 
 import { AuthCard, Screen, SignInOutButton } from '../../components';
 import { env } from '../../config';
-import { SettingsStackScreenProps } from '../../navigation';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../navigation';
 import { settingsConfig } from './settings-config';
 
 export const SettingsPage = ({
   navigation,
-}: SettingsStackScreenProps<'Settings'>) => {
+}: SettingsStackScreenProps<SettingsRoutes.Settings>) => {
   return (
     <Screen
       edges={['top']}
@@ -44,7 +47,12 @@ export const SettingsPage = ({
         </List.Section>
       ))}
       <SignInOutButton />
-      <Button onPress={() => alert(JSON.stringify(env))} style={{ 'alignSelf': 'flex-start'}}>Debug</Button>
+      <Button
+        onPress={() => alert(JSON.stringify(env))}
+        style={{ alignSelf: 'flex-start' }}
+      >
+        Debug
+      </Button>
     </Screen>
   );
 };

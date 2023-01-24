@@ -5,8 +5,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: config.name!,
   slug: config.slug!,
-  currentFullName: '@julianheckerdev/barbago-mobile',
-  originalFullName: '@julianheckerdev/barbago-mobile',
+  currentFullName: `@julianheckerdev/${config.slug!}`,
+  originalFullName: `@julianheckerdev/${config.slug!}`,
 });
 
 // https://docs.expo.dev/guides/environment-variables/

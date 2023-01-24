@@ -1,6 +1,16 @@
-import React, { createContext, FC, PropsWithChildren, useContext, useState } from 'react';
+import React, {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from 'react';
 
-import { RootTabScreenProps } from '../../../navigation';
+import {
+  MainRoutes,
+  RootRoutes,
+  RootTabScreenProps,
+} from '../../../navigation';
 import { vendorApi } from '../../../store';
 import { Coordinates, VendorResponse } from '../../../types';
 
@@ -22,11 +32,9 @@ export const SearchContext = createContext<SearchState>(undefined!);
 
 export const useSearch = () => useContext(SearchContext);
 
-export const SearchService: FC<PropsWithChildren & RootTabScreenProps<'Search'>> = ({
-  children,
-  navigation,
-  route,
-}) => {
+export const SearchService: FC<
+  PropsWithChildren & RootTabScreenProps<MainRoutes.Search>
+> = ({ children, navigation, route }) => {
   const [query, response] = vendorApi.useLazyVendorSearchQuery();
 
   const [selected, setSelected] = useState<VendorResponse>();
@@ -35,7 +43,7 @@ export const SearchService: FC<PropsWithChildren & RootTabScreenProps<'Search'>>
   const [coords, setCoords] = useState<Coordinates>();
 
   const openVendor = (vendor: VendorResponse) => {
-    navigation.push('Barber', { id: vendor.link });
+    navigation.push(RootRoutes.Barber, { id: vendor.link });
   };
 
   const searchService = {

@@ -9,21 +9,21 @@ import {
   NoAuth,
   Screen,
 } from '../../../components';
-import { RootStackScreenProps } from '../../../navigation';
+import { RootRoutes, RootStackScreenProps } from '../../../navigation';
 import { userApi } from '../../../store';
 
 export const LoginScreen = ({
   navigation,
-  route: { params: { next = 'Main', ...rest } = {} },
-}: RootStackScreenProps<'Login'>) => {
-  const [getUser] = userApi.useLazyGetUserQuery();
+  route,
+}: RootStackScreenProps<RootRoutes.Login>) => {
+  const [triggerIsNewUser] = userApi.useLazyIsNewUserQuery();
   const onAuthSuccess = async (user?: User) => {
-    if (!user) return navigation.replace(next!, { ...rest });
-    const { data: record } = await getUser();
-    if (record?.registered)         
-      return navigation.replace(next!, { ...rest });
-    return navigation.replace('Signup', { next, ...rest });
+    if (!user) return navigation.pop();
+    const { data: isNewUser } = await triggerIsNewUser();
+    if (!isNewUser) return navigation.pop();
+    return navigation.replace(RootRoutes.Signup);
   };
+
   return (
     <Screen style={{ padding: 16 }}>
       <Title style={{ textAlign: 'center', fontSize: 25 }}>
@@ -35,11 +35,11 @@ export const LoginScreen = ({
       </Text>
       <View style={{ justifyContent: 'space-between', flex: 1 }}>
         <View style={{ marginVertical: 8 }}>
-          <GoogleAuth onAuthSuccess={onAuthSuccess} />
-          <FacebookAuth onAuthSuccess={onAuthSuccess} />
-          <AppleAuth onAuthSuccess={onAuthSuccess} />
+          <GoogleAuth nextFunc={onAuthSuccess} />
+          <FacebookAuth nextFunc={onAuthSuccess} />
+          <AppleAuth nextFunc={onAuthSuccess} />
         </View>
-        <NoAuth onAuthSuccess={onAuthSuccess} />
+        <NoAuth nextFunc={onAuthSuccess} />
       </View>
     </Screen>
   );

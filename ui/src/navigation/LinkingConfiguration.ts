@@ -12,36 +12,41 @@ import {
   removeNotificationSubscription,
 } from 'expo-notifications';
 
-import { RootStackParamList } from './types';
+import {
+  MainRoutes,
+  RootRoutes,
+  RootStackParamList,
+  SettingsRoutes,
+} from './types';
 
 export const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL('/')],
   config: {
-    initialRouteName: 'Main',
+    initialRouteName: RootRoutes.Main,
     screens: {
-      Barber: 'barber/:id',
-      Chat: 'messages/:id',
-      Login: 'login',
-      Signup: 'signup',
-      Welcome: 'welcome',
-      Main: {
+      [RootRoutes.Barber]: 'barber/:id',
+      [RootRoutes.Chat]: 'messages/:id',
+      [RootRoutes.Login]: 'login',
+      [RootRoutes.Signup]: 'signup',
+      [RootRoutes.Welcome]: 'welcome',
+      [RootRoutes.Main]: {
         screens: {
-          Home: 'home',
-          Search: 'search',
-          Messages: 'messages',
-          SettingsStack: {
+          [MainRoutes.Home]: 'home',
+          [MainRoutes.Search]: 'search',
+          [MainRoutes.Messages]: 'messages',
+          [MainRoutes.SettingsStack]: {
             screens: {
-              Settings: 'settings',
-              Account: 'account',
-              'Contact Us': 'contact-us',
-              Notifications: 'notifications',
-              'Payment Details': 'payment-details',
-              Preferences: 'preferences',
+              [SettingsRoutes.Settings]: 'settings',
+              [SettingsRoutes.Account]: 'account',
+              [SettingsRoutes.Contact]: 'contact-us',
+              [SettingsRoutes.Notifications]: 'notifications',
+              [SettingsRoutes.Payment]: 'payment-details',
+              [SettingsRoutes.Preferences]: 'preferences',
             },
           },
         },
       },
-      NotFound: '*',
+      [RootRoutes.NotFound]: '*',
     },
   },
   async getInitialURL() {
@@ -54,7 +59,7 @@ export const linking: LinkingOptions<RootStackParamList> = {
   },
   subscribe(listener) {
     const onReceiveUrl = ({ url }: { url: string }) => listener(url);
-    Linking.addEventListener('url', onReceiveUrl);
+    const urlListener = Linking.addEventListener('url', onReceiveUrl);
 
     const subscription = addNotificationResponseReceivedListener(
       (response) => {
@@ -67,7 +72,7 @@ export const linking: LinkingOptions<RootStackParamList> = {
     );
 
     return () => {
-      Linking.removeEventListener('url', onReceiveUrl);
+      urlListener.remove();
       removeNotificationSubscription(subscription);
     };
   },
