@@ -54,10 +54,7 @@ export const AvatarPicker = ({
   };
 
   const uri = useMemo(
-    () =>
-      assets?.[0]?.uri ??
-      field.value ??
-      require('../../assets/images/no_avatar.png'),
+    () => assets?.[0]?.uri ?? field.value,
     [assets, field.value],
   );
 
@@ -81,6 +78,7 @@ export const AvatarPicker = ({
                 width: size,
                 height: size,
               }}
+              defaultSource={require('../../assets/images/no_avatar.png')}
               style={styles.image}
             />
             <Animated.View

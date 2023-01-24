@@ -24,6 +24,7 @@
 - relocate api to cloud run
 - delete old profile pictures periodically or whenever updated
   - https://medium.com/google-developer-experts/automatically-delete-your-firebase-storage-files-from-firestore-with-cloud-functions-for-firebase-36542c39ba0d
+  - whenever a new pushtoken added, remove it from any other users
 
 ## future todo
 
