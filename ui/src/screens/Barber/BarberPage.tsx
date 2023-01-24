@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Screen } from '../../components';
 
 import { RootRoutes, RootStackScreenProps } from '../../navigation';
-import { Toast } from '../../providers';
 import { vendorApi } from '../../store';
 import { ProfileHeader } from './components';
 import { VendorContext } from './context';
@@ -30,13 +29,12 @@ export const BarberPage = ({
   return (
     <VendorContext.Provider value={{ vendor, vendorLink }}>
       {vendor && (
-        <Screen scrolling>
+        <Screen scrolling useToast>
           <ProfileHeader />
           {/* Other Sections Here */}
           <Reviews />
         </Screen>
       )}
-      <Toast />
     </VendorContext.Provider>
   );
 };

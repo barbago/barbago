@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { ScrollView, ScrollViewProps, ViewStyle } from 'react-native';
+import { SnackbarProps } from 'react-native-paper';
 import {
   NativeSafeAreaViewProps as SafeAreaProps,
   SafeAreaView,
@@ -9,6 +10,7 @@ import { auth } from '../../config';
 
 import { useThemeColor } from '../../hooks';
 import { MainRoutes, RootRoutes } from '../../navigation';
+import { Toast } from '../../providers';
 import { ActionMessage } from './ActionMessage';
 
 export type ScreenProps = {
@@ -20,6 +22,10 @@ export type ScreenProps = {
   darkColor?: string;
   /** Whether the screen requires authentication; Will redirect user to login if not logged in */
   needsAuth?: boolean;
+  /** Whether the screen makes use of a toast */
+  useToast?: boolean;
+  /** Props for Toast if enabled */
+  toastProps?: Partial<SnackbarProps>;
 } & SafeAreaProps;
 
 export function Screen({
@@ -29,6 +35,8 @@ export function Screen({
   children,
   scrolling = false,
   needsAuth = false,
+  useToast = false,
+  toastProps,
   scrollViewProps,
   ...rest
 }: ScreenProps) {
@@ -60,10 +68,16 @@ export function Screen({
       {needsAuth && !auth.currentUser ? (
         <MustLogin />
       ) : scrolling ? (
-        <ScrollView {...scrollViewProps}>{children}</ScrollView>
-      ) : (
+        <ScrollView
+          automaticallyAdjustKeyboardInsets={true}
+          {...scrollViewProps}
+        >
+          {children}
+        </ScrollView>
+      ) : (  
         <>{children}</>
       )}
+      {!!useToast && <Toast {...toastProps} />}
     </SafeAreaView>
   );
 }
