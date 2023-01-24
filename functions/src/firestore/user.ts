@@ -22,8 +22,9 @@ export const userChanged = firestore
       await auth().updateUser(uid, {
         displayName: newName,
         photoURL: newPhoto,
-        phoneNumber: newData?.phone,
-        email: newData?.email,
+        // updating phone causes an error if it's not a valid E.164 string
+        // phoneNumber: newData?.phone,
+        // email: newData?.email,
       });
     } catch (err) {
       console.warn('error while trying to update auth user: ', err);
