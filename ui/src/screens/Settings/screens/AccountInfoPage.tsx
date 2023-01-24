@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card, Text } from 'react-native-paper';
 import { useForm, FieldValues } from 'react-hook-form';
 import {
@@ -11,25 +11,38 @@ import {
   SettingsStackScreenProps,
 } from '../../../navigation';
 import { userApi } from '../../../store';
+import { useToast } from '../../../providers';
 
 // you can change firebase auth user profile information
 // https://firebase.google.com/docs/auth/web/manage-users
 export const AccountInfoPage = ({
   navigation,
 }: SettingsStackScreenProps<SettingsRoutes.Account>) => {
-  const { data: user, isLoading } = userApi.useGetUserQuery();
-  const [updateUser, { isLoading: isUpdateLoading }] =
-    userApi.useUpdateUserMutation();
-  const { control, formState, handleSubmit } = useForm();
+  const { data: user, isLoading: userLoading } =
+    userApi.useGetUserQuery();
+  const [updateUser, { isLoading }] = userApi.useUpdateUserMutation();
+  const { control, formState, handleSubmit, reset } = useForm();
+  const { open: openToast } = useToast();
 
   const onSubmit = (data: FieldValues) => {
-    updateUser(data);
+    updateUser(data)
+      .unwrap()
+      .then(() => {
+        openToast('Successfully updated profile!');
+        reset({}, { keepValues: true });
+      })
+      .catch((err) =>
+        openToast(
+          err?.data?.message ??
+            'Failed to update information, please try again',
+        ),
+      );
   };
 
-  if (isLoading) return <Text>Loading Account Data...</Text>;
+  if (userLoading) return <Text>Loading Account Data...</Text>;
 
   return (
-    <Screen scrolling needsAuth>
+    <Screen scrolling needsAuth useToast>
       <Card>
         <Card.Title
           title="Public Information"
@@ -49,8 +62,8 @@ export const AccountInfoPage = ({
             rules={{
               required: 'Name must not be empty!',
               minLength: {
-                value: 5,
-                message: 'Name should be at least 5 characters',
+                value: 4,
+                message: 'Name should be at least 4 characters',
               },
             }}
           />
@@ -86,12 +99,10 @@ export const AccountInfoPage = ({
         <Card.Actions>
           <Button
             mode="contained"
-            disabled={!formState.isDirty || isUpdateLoading}
+            disabled={!formState.isDirty || isLoading}
             onPress={handleSubmit(onSubmit)}
           >
-            {isUpdateLoading
-              ? 'Saving Changes...'
-              : 'Update Information'}
+            {isLoading ? 'Saving Changes...' : 'Update Information'}
           </Button>
         </Card.Actions>
       </Card>
