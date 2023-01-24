@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Screen } from '../../components';
 
-import { RootStackScreenProps } from '../../navigation';
-import { Toast } from '../../providers';
+import { RootRoutes, RootStackScreenProps } from '../../navigation';
 import { vendorApi } from '../../store';
 import { ProfileHeader } from './components';
 import { VendorContext } from './context';
@@ -11,7 +10,7 @@ import { Reviews } from './Reviews';
 export const BarberPage = ({
   route,
   navigation,
-}: RootStackScreenProps<'Barber'>) => {
+}: RootStackScreenProps<RootRoutes.Barber>) => {
   const vendorLink = route.params.id;
 
   const { data: vendor, isError } =
@@ -24,19 +23,18 @@ export const BarberPage = ({
   }, [vendor]);
 
   useEffect(() => {
-    isError && navigation.replace('NotFound');
+    isError && navigation.replace(RootRoutes.NotFound);
   }, [isError]);
 
   return (
     <VendorContext.Provider value={{ vendor, vendorLink }}>
       {vendor && (
-        <Screen scrolling>
+        <Screen scrolling useToast>
           <ProfileHeader />
           {/* Other Sections Here */}
           <Reviews />
         </Screen>
       )}
-      <Toast />
     </VendorContext.Provider>
   );
 };

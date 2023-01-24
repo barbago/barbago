@@ -1,0 +1,12 @@
+diff --git a/node_modules/@firebase/storage/dist/index.esm2017.js b/node_modules/@firebase/storage/dist/index.esm2017.js
+index 8b096aa..1a6a5a6 100644
+--- a/node_modules/@firebase/storage/dist/index.esm2017.js
++++ b/node_modules/@firebase/storage/dist/index.esm2017.js
+@@ -405,7 +405,6 @@ backoffCompleteCb, timeout) {
+             return;
+         }
+         if (success) {
+-            clearGlobalTimeout();
+             triggerCallback.call(null, success, ...args);
+             return;
+         }

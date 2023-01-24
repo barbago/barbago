@@ -14,28 +14,24 @@ export const AuthCard = ({}: AuthCardProps) => {
   const { signOut, user } = useAuth();
   const navigation = useNavigation<any>();
 
-  // https://reactnavigation.org/docs/nesting-navigators/
-  // todo: route this to a login page
-  const onPress = profile
-    ? signOut
-    : () => navigation.replace('NotFound');
-  const title = user
+  const onPress = !!user ? signOut : () => navigation.push('Login');
+  const title = !!user
     ? `Welcome, ${profile?.name ?? 'User'}!`
     : 'You are not signed in!';
   const source = user
-    ? {
-        uri:
-          profile?.photo ??
-          'https://source.unsplash.com/featured?haircut',
-      }
-    : undefined;
-  const label = profile ? 'Sign Out' : 'Log in or Sign up!';
+    ? { uri: profile?.photo }
+    : require('../../assets/images/no_avatar.png');
+  const label = user ? 'Sign Out' : 'Log in or Sign up!';
 
-  if (isLoading) return <CustomLoader />;
+  if (user && isLoading) return <CustomLoader />;
 
   return (
     <Box style={styles.card}>
-      {source && <Image source={source} style={styles.image} />}
+      <Image
+        source={source}
+        defaultSource={require('../../assets/images/no_avatar.png')}
+        style={styles.image}
+      />
       <View style={styles.content}>
         <Text style={styles.text}>{title}</Text>
         <Button onPress={onPress} style={styles.button} mode="outlined">

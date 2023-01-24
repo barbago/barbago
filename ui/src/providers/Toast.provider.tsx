@@ -57,6 +57,7 @@ export const ToastProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
+/** Don't forget to use the `<Toast />` element or a screen with `useToast` */
 export const useToast = () => {
   const toastContext = useContext(ToastContext);
   if (!toastContext)
@@ -69,7 +70,7 @@ export const Toast = (props?: Partial<SnackbarProps>) => {
 
   useEffect(() => {
     return () => close();
-  }, [])
+  }, []);
 
   return (
     <Snackbar

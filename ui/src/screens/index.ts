@@ -1,4 +1,3 @@
-export * from './Account';
 export * from './Auth';
 export * from './Barber';
 export * from './Home';

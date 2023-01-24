@@ -4,8 +4,7 @@
   "main": "src/index.ts",
   "scripts": {
     "postinstall": "patch-package",
-    "start": "expo start",
-    "start:prod": "expo start --no-dev --minify",
+    "start": "expo start --dev-client",
     "publish": "eas update",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -17,9 +16,7 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "/node_modules/",
-      "\\.pnp\\.[^\\/]+$",
-      "@sentry/.*",
-      "sentry-expo"
+      "\\.pnp\\.[^\\/]+$"
     ]
   },
   "dependencies": {
@@ -30,7 +27,6 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@reduxjs/toolkit": "^1.9.1",
-    "@sentry/browser": "^7.28.1",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "dotenv": "^16.0.3",
     "expo": "~47.0.8",
@@ -54,7 +50,7 @@
     "expo-system-ui": "~2.0.1",
     "expo-updates": "~0.15.6",
     "expo-web-browser": "~12.0.0",
-    "firebase": "^9.6.11",
+    "firebase": "^9.15.0",
     "leaflet": "^1.7.1",
     "leaflet.markercluster": "^1.5.3",
     "react": "18.1.0",
@@ -65,7 +61,7 @@
     "react-native": "0.70.5",
     "react-native-error-boundary": "^1.1.16",
     "react-native-gesture-handler": "~2.8.0",
-    "react-native-gifted-chat": "^1.0.4",
+    "react-native-gifted-chat": "^1.1.0",
     "react-native-map-clustering": "^3.4.2",
     "react-native-maps": "1.3.2",
     "react-native-modalize": "^2.1.1",
@@ -79,9 +75,7 @@
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.2",
-    "sentry-expo": "~4.2.0",
-    "@sentry/react-native": "4.9.0"
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

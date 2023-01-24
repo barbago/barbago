@@ -1,19 +1,34 @@
 import { firestore } from 'firebase-functions/v1';
-import { firestore as db } from 'firebase-admin';
+import { firestore as db, auth } from 'firebase-admin';
 import { replaceAt } from '../utils';
 
 export const userChanged = firestore
   .document('users/{uid}')
   .onWrite(async ({ after }, context) => {
-    // if the document has just been created,
-    // there is nothing to update
     if (context.eventType === 'google.firestore.document.create')
+      // if the document has just been created,
+      // there is nothing to update
       return;
 
+    const newData = after.data();
     const { uid } = context.params;
 
-    let newName = after.data()?.name ?? 'Deleted User';
-    let newPhoto = after.data()?.photo ?? ''; // todo: put the url of default user icon
+    let newName = newData?.name ?? 'Deleted User';
+    let newPhoto =
+      newData?.photo ??
+      'https://firebasestorage.googleapis.com/v0/b/barbago-dev.appspot.com/o/shared%2Fno_avatar.png?alt=media&token=6ed32a24-0855-4030-b85e-dee2b214c5c3';
+
+    try {
+      await auth().updateUser(uid, {
+        displayName: newName,
+        photoURL: newPhoto,
+        // updating phone causes an error if it's not a valid E.164 string
+        // phoneNumber: newData?.phone,
+        // email: newData?.email,
+      });
+    } catch (err) {
+      console.warn('error while trying to update auth user: ', err);
+    }
 
     const batch = db().batch();
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
+  MainRoutes,
   RootTabScreenProps,
+  SettingsRoutes,
   SettingsStackParamList,
 } from '../../navigation';
 import { useAuth } from '../../providers';
@@ -18,31 +20,37 @@ const Stack = createNativeStackNavigator<SettingsStackParamList>();
 
 export function SettingsNavigator({
   navigation,
-}: RootTabScreenProps<'SettingsStack'>) {
+}: RootTabScreenProps<MainRoutes.SettingsStack>) {
   const { user } = useAuth();
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Settings"
+        name={SettingsRoutes.Settings}
         component={SettingsPage}
         options={{ headerShown: false, title: 'Settings' }}
       />
-      <Stack.Screen name="Contact Us" component={ContactPage} />
+      <Stack.Screen
+        name={SettingsRoutes.Contact}
+        component={ContactPage}
+      />
 
       <Stack.Screen
-        name="Account"
+        name={SettingsRoutes.Account}
         component={AccountInfoPage}
         options={{ title: 'Personal Information' }}
       />
       <Stack.Screen
-        name="Notifications"
+        name={SettingsRoutes.Notifications}
         component={NotificationsPage}
       />
       <Stack.Screen
-        name="Payment Details"
+        name={SettingsRoutes.Payment}
         component={PaymentInfoPage}
       />
-      <Stack.Screen name="Preferences" component={PreferencesPage} />
+      <Stack.Screen
+        name={SettingsRoutes.Preferences}
+        component={PreferencesPage}
+      />
     </Stack.Navigator>
   );
 }

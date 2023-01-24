@@ -1,7 +1,5 @@
-import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from 'firebase/auth';
-import { api } from '../api';
-import { startAppListening } from '../listenerMiddleware';
 
 const reducerName = `auth`;
 
@@ -25,6 +23,7 @@ const authSlice = createSlice({
     signedIn(state, action: PayloadAction<User>) {
       state.user = action.payload;
     },
+    logOut() {}, // used to trigger effect
     signedOut(state) {
       state.user = null;
     },
@@ -33,17 +32,5 @@ const authSlice = createSlice({
 
 export const { reducer: authReducer } = authSlice;
 
-export const { signedIn, signedOut, setPushToken } = authSlice.actions;
-
-/** Effects */
-// clear user data on login or logout
-startAppListening({
-  matcher: isAnyOf(signedIn, signedOut),
-  effect: (_action, { dispatch }) => {
-    dispatch(api.util.resetApiState());
-  },
-});
-
-// put generate token and revoke token here?
-// cant revoke token after signing out user,
-// so would have to create a new action before
+export const { logOut, signedIn, signedOut, setPushToken } =
+  authSlice.actions;

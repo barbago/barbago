@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Barbago Mobile",
+    "name": "Barbago",
     "slug": "barbago-mobile",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "description": "",
     "githubUrl": "https://github.com/barbago/barago",
@@ -22,23 +22,7 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps"
-        }
-      ]
-    },
-    "plugins": [
-      "expo-apple-authentication",
-      "sentry-expo",
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you choose a profile picture and upload testimonials or service images."
-        }
-      ]
-    ],
+    "plugins": ["expo-apple-authentication", "expo-notifications", "expo-image-picker"],
     "ios": {
       "bundleIdentifier": "app.barbago.mobile",
       "supportsTablet": true,
@@ -46,22 +30,21 @@
     },
     "android": {
       "package": "app.barbago.mobile",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "config": {
         "googleMaps": {
-          // make this dynamic instead?
-          // find out if you can use env for config.ts
-          "apiKey": "AIzaSyDFfOOF2bglIb79qcPFQgd8Rzmo4mwLKF4"
+          "apiKey": "AIzaSyDl8VhDREDCUVo0doL91pgiqGlbK_UgtyE"
         }
       }
     },
     "web": {
       "build": {
         "babel": {
-          "include": ["react-leaflet", "@sentry/react-native"]
+          "include": ["react-leaflet"]
         }
       },
       "favicon": "./src/assets/icons/favicon.png"

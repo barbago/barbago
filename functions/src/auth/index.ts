@@ -13,7 +13,15 @@ export const userCreated = auth
       phoneNumber: phone,
       photoURL: photo,
     } = user;
-    const fields = { uid, name, email, phone, photo };
+    const fields = {
+      uid,
+      name: name ?? 'New User',
+      email,
+      phone,
+      photo:
+        photo ??
+        'https://firebasestorage.googleapis.com/v0/b/barbago-dev.appspot.com/o/shared%2Fno_avatar.png?alt=media&token=6ed32a24-0855-4030-b85e-dee2b214c5c3',
+    };
 
     // todo: also create settings for user
     return await db()

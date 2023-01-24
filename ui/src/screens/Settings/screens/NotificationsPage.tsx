@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Checkbox, DataTable, List, Switch } from 'react-native-paper';
 import { Screen } from '../../../components';
-import { SettingsStackScreenProps } from '../../../navigation';
+import {
+  SettingsRoutes,
+  SettingsStackScreenProps,
+} from '../../../navigation';
 
 export const NotificationsPage = ({
   navigation,
-}: SettingsStackScreenProps<'Notifications'>) => {
+}: SettingsStackScreenProps<SettingsRoutes.Notifications>) => {
   const [allowNotifs, setAllowNotifs] = useState(true);
 
   return (

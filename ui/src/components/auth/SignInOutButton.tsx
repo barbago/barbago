@@ -14,7 +14,7 @@ export const SignInOutButton = ({ style }: SignInOutButtonProps) => {
 
   // https://reactnavigation.org/docs/nesting-navigators/
   // todo: route this to a login page
-  const onPress = user ? signOut : () => navigation.replace('NotFound');
+  const onPress = user ? signOut : () => navigation.push('Login');
   const label = user ? 'Sign Out' : 'Sign In';
   return (
     <Button
