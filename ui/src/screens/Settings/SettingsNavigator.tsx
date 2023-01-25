@@ -6,7 +6,6 @@ import {
   SettingsRoutes,
   SettingsStackParamList,
 } from '../../navigation';
-import { useAuth } from '../../providers';
 import {
   AccountInfoPage,
   ContactPage,
@@ -21,7 +20,6 @@ const Stack = createNativeStackNavigator<SettingsStackParamList>();
 export function SettingsNavigator({
   navigation,
 }: RootTabScreenProps<MainRoutes.SettingsStack>) {
-  const { user } = useAuth();
   return (
     <Stack.Navigator>
       <Stack.Screen
