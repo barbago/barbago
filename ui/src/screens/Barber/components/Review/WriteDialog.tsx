@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Alert, Keyboard, Platform, StyleSheet } from 'react-native';
-import { Button, Dialog, Portal, TextInput } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 
-import { useKeyboardChange } from '../../../../hooks';
+import { CustomDialog } from '../../../../components';
 import { useToast } from '../../../../providers';
 import { reviewApi } from '../../../../store';
 import { useVendor } from '../../context';
@@ -19,13 +19,7 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
   const { vendor } = useVendor();
   const [text, setText] = useState('');
   const [rating, setRating] = useState(0);
-  const [bottom, setBottom] = useState(0);
   const { open: openToast } = useToast();
-
-  useKeyboardChange({
-    onOpen: (e) => setBottom(e.endCoordinates.height / 2),
-    onClose: () => setBottom(0),
-  });
 
   const confirmClose = () => {
     !(text || rating)
@@ -69,15 +63,12 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
   };
 
   return (
-    <Portal>
-      <Dialog
-        visible={open}
-        dismissable={false}
-        style={{ bottom }}
-        onDismiss={closeModal}
-      >
-        <Dialog.Title>Write a review for {vendor!.name}!</Dialog.Title>
-        <Dialog.Content style={styles.content}>
+    <CustomDialog
+      open={open}
+      onDismiss={closeModal}
+      title={`Write a review for ${vendor?.name ?? 'this barber'}!`}
+      content={
+        <>
           <Stars
             rating={rating}
             setRating={setRating}
@@ -96,8 +87,11 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
             onSubmitEditing={() => Keyboard.dismiss()}
             disabled={isLoading}
           />
-        </Dialog.Content>
-        <Dialog.Actions style={styles.actions}>
+        </>
+      }
+      contentStyle={styles.content}
+      actions={
+        <>
           <Button onPress={confirmClose} style={styles.cancel}>
             Cancel
           </Button>
@@ -108,9 +102,10 @@ export const WriteDialog = ({ open, setOpen }: WriteDialogProps) => {
           >
             {isLoading ? 'Submitting...' : 'Submit Review!'}
           </Button>
-        </Dialog.Actions>
-      </Dialog>
-    </Portal>
+        </>
+      }
+      actionsStyle={styles.actions}
+    />
   );
 };
 
@@ -128,7 +123,6 @@ const styles = StyleSheet.create({
     lineHeight: 70,
   },
   input: {
-    // marginVertical: 16,
     maxHeight: 150,
   },
   actions: {

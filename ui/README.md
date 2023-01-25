@@ -1,5 +1,9 @@
 # todo
 
+## hotlist
+
+- add support for multiple android envs (google-services.env.json)
+
 ## big ticket items
 
 - barber side
@@ -16,7 +20,7 @@
   - make search take a +- lat/lon
   - display current location on web map
 - home page
-- add messaging for edge cases
+- add messaging for edge cases (failure handling)
 
 ## todo in the future
 
