@@ -6,6 +6,7 @@ import { Button } from 'react-native-paper';
 import { Box, CustomLoader, Text } from '../Themed';
 import { useAuth } from '../../providers';
 import { userApi } from '../../store';
+import { RootRoutes } from '../../navigation';
 
 export interface AuthCardProps {}
 
@@ -14,7 +15,7 @@ export const AuthCard = ({}: AuthCardProps) => {
   const { signOut, user } = useAuth();
   const navigation = useNavigation<any>();
 
-  const onPress = !!user ? signOut : () => navigation.push('Login');
+  const onPress = !!user ? signOut : () => navigation.push(RootRoutes.Login);
   const title = !!user
     ? `Welcome, ${profile?.name ?? 'User'}!`
     : 'You are not signed in!';

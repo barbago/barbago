@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
+import { RootRoutes } from '../../navigation';
 import { useAuth } from '../../providers';
 
 export interface SignInOutButtonProps {
@@ -14,7 +15,9 @@ export const SignInOutButton = ({ style }: SignInOutButtonProps) => {
 
   // https://reactnavigation.org/docs/nesting-navigators/
   // todo: route this to a login page
-  const onPress = user ? signOut : () => navigation.push('Login');
+  const onPress = user
+    ? signOut
+    : () => navigation.push(RootRoutes.Login);
   const label = user ? 'Sign Out' : 'Sign In';
   return (
     <Button
